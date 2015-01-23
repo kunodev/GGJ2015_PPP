@@ -23,7 +23,6 @@ import com.badlogic.gdx.math.Vector2;
 import com.mygdx.game.components.*;
 import com.mygdx.game.systems.RenderingSystem;
 
-
 import java.util.Random;
 
 public class World {
@@ -98,9 +97,9 @@ public class World {
 		StateComponent state = new StateComponent();
 		TextureComponent texture = new TextureComponent();
 		
-		animation.animations.put(PlayerComponent.STATE_FALL, Assets.bobFall);
-		animation.animations.put(PlayerComponent.STATE_HIT, Assets.bobHit);
-		animation.animations.put(PlayerComponent.STATE_JUMP, Assets.bobJump);
+		//animation.animations.put(PlayerComponent.STATE_FALL, Assets.bobFall);
+		//animation.animations.put(PlayerComponent.STATE_HIT, Assets.bobHit);
+		//animation.animations.put(PlayerComponent.STATE_JUMP, Assets.bobJump);
 		
 		bounds.bounds.width = PlayerComponent.WIDTH;
 		bounds.bounds.height = PlayerComponent.HEIGHT;
@@ -134,8 +133,8 @@ public class World {
 		StateComponent state = new StateComponent();
 		TextureComponent texture = new TextureComponent();
 		
-		animation.animations.put(PlatformComponent.STATE_NORMAL, Assets.platform);
-		animation.animations.put(PlatformComponent.STATE_PULVERIZING, Assets.breakingPlatform);
+		//animation.animations.put(PlatformComponent.STATE_NORMAL, Assets.platform);
+		//animation.animations.put(PlatformComponent.STATE_PULVERIZING, Assets.breakingPlatform);
 		
 		bounds.bounds.width = PlatformComponent.WIDTH;
 		bounds.bounds.height = PlatformComponent.HEIGHT;
@@ -170,7 +169,7 @@ public class World {
 		
 		position.pos.set(x, y, 2.0f);
 		
-		texture.region = Assets.spring;
+		//texture.region = Assets.spring;
 		
 		entity.add(spring);
 		entity.add(bounds);
@@ -193,7 +192,7 @@ public class World {
 		
 		movement.velocity.x = rand.nextFloat() > 0.5f ? SquirrelComponent.VELOCITY : -SquirrelComponent.VELOCITY;
 		
-		animation.animations.put(SquirrelComponent.STATE_NORMAL, Assets.squirrelFly);
+		//animation.animations.put(SquirrelComponent.STATE_NORMAL, Assets.squirrelFly);
 		
 		bounds.bounds.width = SquirrelComponent.WIDTH;
 		bounds.bounds.height = SquirrelComponent.HEIGHT;
@@ -223,7 +222,7 @@ public class World {
 		TransformComponent position = new TransformComponent();
 		TextureComponent texture = new TextureComponent();
 		
-		animation.animations.put(CoinComponent.STATE_NORMAL, Assets.coinAnim);
+		//animation.animations.put(CoinComponent.STATE_NORMAL, Assets.coinAnim);
 		
 		bounds.bounds.width = CoinComponent.WIDTH;
 		bounds.bounds.height = CoinComponent.HEIGHT;
@@ -255,7 +254,7 @@ public class World {
 		
 		position.pos.set(x, y, 2.0f);
 		
-		texture.region = Assets.castle;
+		//texture.region = Assets.castle;
 		
 		entity.add(castle);
 		entity.add(bounds);
@@ -284,7 +283,7 @@ public class World {
 		TransformComponent position = new TransformComponent();
 		TextureComponent texture = new TextureComponent();
 		
-		texture.region = Assets.backgroundRegion;
+		//texture.region = Assets.backgroundRegion;
 		
 		entity.add(background);
 		entity.add(position);
