@@ -20,32 +20,35 @@ import com.badlogic.ashley.core.ComponentMapper;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.systems.IteratingSystem;
-import com.badlogic.gdx.math.Vector2;
-import com.mygdx.game.components.MovementComponent;
+import com.mygdx.game.components.CameraComponent;
 import com.mygdx.game.components.TransformComponent;
 
-public class MovementSystem extends IteratingSystem {
-	private Vector2 tmp = new Vector2();
-
-	private ComponentMapper<TransformComponent> tm;
-	private ComponentMapper<MovementComponent> mm;
+public class CameraSystem extends IteratingSystem {
 	
-	public MovementSystem() {
-		super(Family.getFor(TransformComponent.class, MovementComponent.class));
+	private ComponentMapper<TransformComponent> tm;
+	private ComponentMapper<CameraComponent> cm;
+	
+	public CameraSystem() {
+		super(Family.getFor(CameraComponent.class));
 		
 		tm = ComponentMapper.getFor(TransformComponent.class);
-		mm = ComponentMapper.getFor(MovementComponent.class);
+		cm = ComponentMapper.getFor(CameraComponent.class);
 	}
 
 	@Override
 	public void processEntity(Entity entity, float deltaTime) {
-		TransformComponent pos = tm.get(entity);
-		MovementComponent mov = mm.get(entity);;
+		CameraComponent cam = cm.get(entity);
 		
-		tmp.set(mov.accel).scl(deltaTime);
-		mov.velocity.add(tmp);
+		if (cam.target == null) {
+			return;
+		}
 		
-		tmp.set(mov.velocity).scl(deltaTime);
-		pos.pos.add(tmp.x, tmp.y, 0.0f);
+		TransformComponent target = tm.get(cam.target);
+		
+		if (target == null) {
+			return;
+		}
+		
+		cam.camera.position.y = Math.max(cam.camera.position.y, target.pos.y);
 	}
 }

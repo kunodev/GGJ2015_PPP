@@ -20,18 +20,20 @@ import com.badlogic.ashley.core.ComponentMapper;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.systems.IteratingSystem;
-import com.badlogic.gdx.math.Vector2;
+import com.mygdx.game.World;
 import com.mygdx.game.components.MovementComponent;
+import com.mygdx.game.components.SquirrelComponent;
 import com.mygdx.game.components.TransformComponent;
 
-public class MovementSystem extends IteratingSystem {
-	private Vector2 tmp = new Vector2();
+public class SquirrelSystem extends IteratingSystem {
 
 	private ComponentMapper<TransformComponent> tm;
 	private ComponentMapper<MovementComponent> mm;
 	
-	public MovementSystem() {
-		super(Family.getFor(TransformComponent.class, MovementComponent.class));
+	public SquirrelSystem() {
+		super(Family.getFor(SquirrelComponent.class,
+				TransformComponent.class,
+				MovementComponent.class));
 		
 		tm = ComponentMapper.getFor(TransformComponent.class);
 		mm = ComponentMapper.getFor(MovementComponent.class);
@@ -39,13 +41,18 @@ public class MovementSystem extends IteratingSystem {
 
 	@Override
 	public void processEntity(Entity entity, float deltaTime) {
-		TransformComponent pos = tm.get(entity);
-		MovementComponent mov = mm.get(entity);;
+		TransformComponent t = tm.get(entity);
+		MovementComponent mov = mm.get(entity);
 		
-		tmp.set(mov.accel).scl(deltaTime);
-		mov.velocity.add(tmp);
+		if (t.pos.x < SquirrelComponent.WIDTH * 0.5f) {
+			t.pos.x = SquirrelComponent.WIDTH * 0.5f;
+			mov.velocity.x = SquirrelComponent.VELOCITY;
+		}
+		if (t.pos.x > World.WORLD_WIDTH - SquirrelComponent.WIDTH * 0.5f) {
+			t.pos.x = World.WORLD_WIDTH - SquirrelComponent.WIDTH * 0.5f;
+			mov.velocity.x = -SquirrelComponent.VELOCITY;
+		}
 		
-		tmp.set(mov.velocity).scl(deltaTime);
-		pos.pos.add(tmp.x, tmp.y, 0.0f);
+		t.scale.x = mov.velocity.x < 0.0f ? Math.abs(t.scale.x) * -1.0f : Math.abs(t.scale.x);
 	}
 }

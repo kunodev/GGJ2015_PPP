@@ -14,12 +14,25 @@
  * limitations under the License.
  ******************************************************************************/
 
-package com.mygdx.game.components;
+package com.mygdx.game.systems;
 
-import com.badlogic.ashley.core.Component;
-import com.badlogic.gdx.math.Vector2;
+import com.badlogic.ashley.core.ComponentMapper;
+import com.badlogic.ashley.core.Entity;
+import com.badlogic.ashley.core.Family;
+import com.badlogic.ashley.systems.IteratingSystem;
+import com.mygdx.game.components.StateComponent;
 
-public class MovementComponent extends Component {
-	public final Vector2 velocity = new Vector2();
-	public final Vector2 accel = new Vector2();
+public class StateSystem extends IteratingSystem {
+	private ComponentMapper<StateComponent> sm;
+	
+	public StateSystem() {
+		super(Family.getFor(StateComponent.class));
+		
+		sm = ComponentMapper.getFor(StateComponent.class);
+	}
+
+	@Override
+	public void processEntity(Entity entity, float deltaTime) {
+		sm.get(entity).time += deltaTime;
+	}
 }

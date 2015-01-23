@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2014 See AUTHORS file.
+ * Copyright 2011 See AUTHORS file.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,9 +17,9 @@
 package com.mygdx.game.components;
 
 import com.badlogic.ashley.core.Component;
-import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.utils.IntMap;
 
-public class MovementComponent extends Component {
-	public final Vector2 velocity = new Vector2();
-	public final Vector2 accel = new Vector2();
+public class AnimationComponent extends Component {
+	public IntMap<Animation> animations = new IntMap<Animation>();
 }

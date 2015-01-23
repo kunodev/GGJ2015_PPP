@@ -20,32 +20,39 @@ import com.badlogic.ashley.core.ComponentMapper;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.systems.IteratingSystem;
-import com.badlogic.gdx.math.Vector2;
-import com.mygdx.game.components.MovementComponent;
-import com.mygdx.game.components.TransformComponent;
+import com.badlogic.gdx.graphics.g2d.Animation;
+import com.mygdx.game.components.AnimationComponent;
+import com.mygdx.game.components.StateComponent;
+import com.mygdx.game.components.TextureComponent;
 
-public class MovementSystem extends IteratingSystem {
-	private Vector2 tmp = new Vector2();
-
-	private ComponentMapper<TransformComponent> tm;
-	private ComponentMapper<MovementComponent> mm;
+public class AnimationSystem extends IteratingSystem {
+	private ComponentMapper<TextureComponent> tm;
+	private ComponentMapper<AnimationComponent> am;
+	private ComponentMapper<StateComponent> sm;
 	
-	public MovementSystem() {
-		super(Family.getFor(TransformComponent.class, MovementComponent.class));
+	public AnimationSystem() {
+		super(Family.getFor(TextureComponent.class,
+				AnimationComponent.class,
+				StateComponent.class));
 		
-		tm = ComponentMapper.getFor(TransformComponent.class);
-		mm = ComponentMapper.getFor(MovementComponent.class);
+		tm = ComponentMapper.getFor(TextureComponent.class);
+		am = ComponentMapper.getFor(AnimationComponent.class);
+		sm = ComponentMapper.getFor(StateComponent.class);
 	}
 
 	@Override
 	public void processEntity(Entity entity, float deltaTime) {
-		TransformComponent pos = tm.get(entity);
-		MovementComponent mov = mm.get(entity);;
+		long id = entity.getId();
+		TextureComponent tex = tm.get(entity);
+		AnimationComponent anim = am.get(entity);
+		StateComponent state = sm.get(entity);
 		
-		tmp.set(mov.accel).scl(deltaTime);
-		mov.velocity.add(tmp);
+		Animation animation = anim.animations.get(state.get());
 		
-		tmp.set(mov.velocity).scl(deltaTime);
-		pos.pos.add(tmp.x, tmp.y, 0.0f);
+		if (animation != null) {
+			tex.region = animation.getKeyFrame(state.time); 
+		}
+		
+		state.time += deltaTime;
 	}
 }
