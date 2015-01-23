@@ -98,6 +98,7 @@ public class MapLoaderTestScreen extends ScreenAdapter {
 
 	@Override
 	public void render(float delta) {
+		renderer.render();
 		update(delta);
 	}
 

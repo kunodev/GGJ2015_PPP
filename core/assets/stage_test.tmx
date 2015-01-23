@@ -7,6 +7,11 @@
     <property name="someComponent" value=""/>
    </properties>
   </tile>
+  <tile id="10">
+   <properties>
+    <property name="PlayerComponent" value=""/>
+   </properties>
+  </tile>
   <tile id="15">
    <properties>
     <property name="FOOO" value=""/>
@@ -15,7 +20,7 @@
  </tileset>
  <layer name="Tile Layer 1" width="20" height="20">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAA7WUgQrCMAxEW+fU6dT9/9d6gwaPcG2iYuDRZSsvTWlXyzsqOIAJHEU+gxM4g4vI2VMT8xdwBTewirwI52h9UV6a19zR+jL9rkTUT7Zf893BAzzB1vKoR57vfZ7MHqjo+TI91o6z51Z7wLmdi0+c3H8hh+cfMTkKjX6ees567TyoWv5dz7fHPFivqqm8/G6hfKXvqnYUvubWRrsT+2h7oML/Y3x980Z3Qp0p5bMY/ee+8fk78asvCva9ABUp87tABgAA
+   H4sIAAAAAAAAA+3QsRGAIBAF0QMRUFTov1q2h7vEmR+8YNNNZpZxoCA5+0RFQw/oCzcGnoB+8WFiBbT3l/7pn/7p31//bZZOv3pABgAA
   </data>
  </layer>
  <objectgroup name="Object Layer 1" width="20" height="20"/>
