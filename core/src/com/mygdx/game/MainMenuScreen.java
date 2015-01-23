@@ -18,80 +18,63 @@ package com.mygdx.game;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.ScreenAdapter;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
 
 public class MainMenuScreen extends ScreenAdapter {
 	PowerfulPandaApp game;
-	OrthographicCamera guiCam;
-	Rectangle soundBounds;
 	Rectangle playBounds;
-//	Rectangle highscoresBounds;
-//	Rectangle helpBounds;
+	Rectangle creditsBounds;
+
 	Vector3 touchPoint;
 
 	public MainMenuScreen (PowerfulPandaApp game) {
 		this.game = game;
-
-		guiCam = new OrthographicCamera(320, 480);
-		guiCam.position.set(320 / 2, 480 / 2, 0);
-//		soundBounds = new Rectangle(0, 0, 64, 64);
+		game.camera.position.set(PowerfulPandaApp.DEFAULT_WIDTH / 2, PowerfulPandaApp.DEFAULT_HEIGHT / 2, 0);
 		playBounds = new Rectangle(160 - 150, 200 + 18, 300, 36);
-//		highscoresBounds = new Rectangle(160 - 150, 200 - 18, 300, 36);
-//		helpBounds = new Rectangle(160 - 150, 200 - 18 - 36, 300, 36);
+		creditsBounds = new Rectangle(10f, 10f, 128f, 32f);
 		touchPoint = new Vector3();
 	}
 
 	public void update () {
 		if (Gdx.input.justTouched()) {
-			guiCam.unproject(touchPoint.set(Gdx.input.getX(), Gdx.input.getY(), 0));
+			game.camera.unproject(touchPoint.set(Gdx.input.getX(), Gdx.input.getY(), 0));
 
 			if (playBounds.contains(touchPoint.x, touchPoint.y)) {
 				Assets.playSound(Assets.clickSound);
 				game.setScreen(new GameScreen(game));
 				return;
 			}
-//			if (highscoresBounds.contains(touchPoint.x, touchPoint.y)) {
-//				Assets.playSound(Assets.clickSound);
-//				game.setScreen(new HighscoresScreen(game));
-//				return;
-//			}
-//			if (helpBounds.contains(touchPoint.x, touchPoint.y)) {
-//				Assets.playSound(Assets.clickSound);
-//				game.setScreen(new HelpScreen(game));
-//				return;
-//			}
-//			if (soundBounds.contains(touchPoint.x, touchPoint.y)) {
-//				Assets.playSound(Assets.clickSound);
-//				Settings.soundEnabled = !Settings.soundEnabled;
-//				if (Settings.soundEnabled)
-//					Assets.music.play();
-//				else
-//					Assets.music.pause();
-//			}
 		}
 	}
 
 	public void draw () {
 		GL20 gl = Gdx.gl;
-		gl.glClearColor(1, 0, 0, 1);
+		gl.glClearColor(0, 0, 0, 1);
 		gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-		guiCam.update();
-		game.batcher.setProjectionMatrix(guiCam.combined);
+		game.camera.update();
+		game.batcher.setProjectionMatrix(game.camera.combined);
 
 		game.batcher.disableBlending();
 		game.batcher.begin();
-		game.batcher.draw(Assets.backgroundRegion, 0, 0, 320, 480);
+		// background
 		game.batcher.end();
 
 		game.batcher.enableBlending();
 		game.batcher.begin();
-		game.batcher.draw(Assets.logo, 160 - 274 / 2, 480 - 10 - 142, 274, 142);
-		game.batcher.draw(Assets.mainMenu, 10, 200 - 110 / 2, 300, 110);
-		game.batcher.draw(Settings.soundEnabled ? Assets.soundOn : Assets.soundOff, 0, 0, 64, 64);
-		game.batcher.end();	
+
+		game.batcher.end();
+
+		if(game.shapeRenderer != null){
+			game.shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
+			game.shapeRenderer.setColor(Color.GREEN);
+			game.shapeRenderer.rect(playBounds.x, playBounds.y, playBounds.width, playBounds.height);
+			game.shapeRenderer.rect(creditsBounds.x, creditsBounds.y, creditsBounds.width, creditsBounds.height);
+			game.shapeRenderer.end();
+		}
 	}
 
 	@Override
@@ -103,5 +86,16 @@ public class MainMenuScreen extends ScreenAdapter {
 	@Override
 	public void pause () {
 		Settings.save();
+	}
+
+	@Override
+	public void show() {
+		//game.assetManager.load("/pathToTexture.png", Texture.class);
+		game.assetManager.finishLoading();
+	}
+
+	@Override
+	public void dispose() {
+		game.assetManager.clear();
 	}
 }
