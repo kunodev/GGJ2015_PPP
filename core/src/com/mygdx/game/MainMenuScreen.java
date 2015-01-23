@@ -35,16 +35,16 @@ public class MainMenuScreen extends ScreenAdapter {
 	public MainMenuScreen(PowerfulPandaApp game) {
 		this.game = game;
 		game.camera.position.set(PowerfulPandaApp.DEFAULT_WIDTH / 2, PowerfulPandaApp.DEFAULT_HEIGHT / 2, 0);
-		playBounds = new Rectangle(160 - 150, 200 + 18, 300, 36);
-		tiledBounds = new Rectangle(10, 200 + 18 + 50, 300, 36);
-
-		creditsBounds = new Rectangle(10f, 10f, 128f, 32f);
+		playBounds = new Rectangle(4f, 76f, PowerfulPandaApp.DEFAULT_WIDTH - 8f, 32f);
+		tiledBounds = new Rectangle(4f, 40f, PowerfulPandaApp.DEFAULT_WIDTH - 8f, 32f);
+		creditsBounds = new Rectangle(4f, 4f, PowerfulPandaApp.DEFAULT_WIDTH - 8f, 32f);
 		touchPoint = new Vector3();
 	}
 
 	public void update() {
 		if (Gdx.input.justTouched()) {
-			game.camera.unproject(touchPoint.set(Gdx.input.getX(), Gdx.input.getY(), 0));
+			touchPoint.set(Gdx.input.getX(), Gdx.input.getY(), 0);
+			game.camera.unproject(touchPoint);
 
 			if (playBounds.contains(touchPoint.x, touchPoint.y)) {
 				game.setScreen(new GameScreen(game));
@@ -54,6 +54,11 @@ public class MainMenuScreen extends ScreenAdapter {
 				game.setScreen(new MapLoaderTestScreen(game));
 				return;
 			}
+			if(creditsBounds.contains(touchPoint.x, touchPoint.y)){
+				//game.setScreen(new CreditsScreen(game));
+				return;
+			}
+
 		}
 	}
 
@@ -75,6 +80,7 @@ public class MainMenuScreen extends ScreenAdapter {
 		game.batcher.end();
 
 		if (game.shapeRenderer != null) {
+			game.shapeRenderer.setProjectionMatrix(game.camera.combined);
 			game.shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
 			game.shapeRenderer.setColor(Color.GREEN);
 			game.shapeRenderer.rect(playBounds.x, playBounds.y, playBounds.width, playBounds.height);
