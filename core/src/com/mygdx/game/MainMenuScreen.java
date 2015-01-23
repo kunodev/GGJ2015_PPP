@@ -25,6 +25,11 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
 
 public class MainMenuScreen extends ScreenAdapter {
+	private final static float Y_GAP = 32f;
+	private final static float X_GAP = 8f;
+	private final static float BUTTON_WIDTH = PowerfulPandaApp.DEFAULT_WIDTH - X_GAP * 2;
+	private final static float BUTTON_HEIGHT = 128f;
+
 	PowerfulPandaApp game;
 	Rectangle playBounds;
 	Rectangle creditsBounds;
@@ -35,9 +40,11 @@ public class MainMenuScreen extends ScreenAdapter {
 	public MainMenuScreen(PowerfulPandaApp game) {
 		this.game = game;
 		game.camera.position.set(PowerfulPandaApp.DEFAULT_WIDTH / 2, PowerfulPandaApp.DEFAULT_HEIGHT / 2, 0);
-		playBounds = new Rectangle(4f, 76f, PowerfulPandaApp.DEFAULT_WIDTH - 8f, 32f);
-		tiledBounds = new Rectangle(4f, 40f, PowerfulPandaApp.DEFAULT_WIDTH - 8f, 32f);
-		creditsBounds = new Rectangle(4f, 4f, PowerfulPandaApp.DEFAULT_WIDTH - 8f, 32f);
+
+		creditsBounds = new Rectangle(X_GAP, Y_GAP, BUTTON_WIDTH, BUTTON_HEIGHT);
+		tiledBounds = new Rectangle(X_GAP, 2 * Y_GAP + BUTTON_HEIGHT, BUTTON_WIDTH, BUTTON_HEIGHT);
+		playBounds = new Rectangle(X_GAP, 3 * Y_GAP + 2 * BUTTON_HEIGHT, BUTTON_WIDTH, BUTTON_HEIGHT);
+
 		touchPoint = new Vector3();
 	}
 
