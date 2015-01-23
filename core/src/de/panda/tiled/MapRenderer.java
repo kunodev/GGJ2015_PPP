@@ -66,6 +66,7 @@ public class MapRenderer {
 						try {
 							Iterator<String> keys = c.getTile().getProperties().getKeys();
 							createComponent(components, e, keys);
+							engine.addEntity(e);
 
 						} catch (NullPointerException ex) {
 							// Shit happens
@@ -79,6 +80,7 @@ public class MapRenderer {
 					Entity e = new Entity();
 					Iterator<String> keys = robj.getProperties().getKeys();
 					createComponent(components, e, keys);
+					engine.addEntity(e);
 				}
 			}
 

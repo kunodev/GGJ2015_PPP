@@ -1,6 +1,5 @@
 package com.mygdx.game;
 
-import com.badlogic.ashley.core.Engine;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
@@ -11,15 +10,16 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
+
 import de.panda.tiled.MapRenderer;
 
 public class PowerfulPandaApp extends Game {
 	public SpriteBatch batcher;
-	Texture img;
-	MapRenderer renderer;
-	
+	public Texture img;
+	public MapRenderer renderer;
+
 	@Override
-	public void create () {
+	public void create() {
 		batcher = new SpriteBatch();
 		img = new Texture("badlogic.jpg");
 		AssetManager manager = new AssetManager();
@@ -29,12 +29,11 @@ public class PowerfulPandaApp extends Game {
 		OrthographicCamera cam = new OrthographicCamera();
 
 		renderer = new MapRenderer("stage_test.tmx", cam, manager);
-		renderer.loadComponentsFromMap(new Engine());
 		setScreen(new MainMenuScreen(this));
 	}
 
 	@Override
-	public void render () {
+	public void render() {
 		GL20 gl = Gdx.gl;
 		gl.glClearColor(0.0f, 1.0f, 0.0f, 0.0f);
 		gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
