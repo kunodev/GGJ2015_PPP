@@ -90,7 +90,6 @@ public class GameScreen extends ScreenAdapter {
 		};
 
 		engine = new Engine();
-		game.renderer.loadComponentsFromMap(engine);
 
 		world = new World(engine);
 
