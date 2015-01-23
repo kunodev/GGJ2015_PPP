@@ -60,7 +60,7 @@ public class World {
 
 	private void generateLevel () {
 		float y = PlatformComponent.HEIGHT / 2;
-		float maxJumpHeight = BobComponent.JUMP_VELOCITY * BobComponent.JUMP_VELOCITY / (2 * -gravity.y);
+		float maxJumpHeight = PlayerComponent.JUMP_VELOCITY * PlayerComponent.JUMP_VELOCITY / (2 * -gravity.y);
 		while (y < WORLD_HEIGHT - WORLD_WIDTH / 2) {
 			int type = rand.nextFloat() > 0.8f ? PlatformComponent.TYPE_MOVING : PlatformComponent.TYPE_STATIC;
 			float x = rand.nextFloat() * (WORLD_WIDTH - PlatformComponent.WIDTH) + PlatformComponent.WIDTH / 2;
@@ -90,7 +90,7 @@ public class World {
 		Entity entity = new Entity();
 		
 		AnimationComponent animation = new AnimationComponent();
-		BobComponent bob = new BobComponent();
+		PlayerComponent bob = new PlayerComponent();
 		BoundsComponent bounds = new BoundsComponent();
 		GravityComponent gravity = new GravityComponent();
 		MovementComponent movement = new MovementComponent();
@@ -98,16 +98,16 @@ public class World {
 		StateComponent state = new StateComponent();
 		TextureComponent texture = new TextureComponent();
 		
-		animation.animations.put(BobComponent.STATE_FALL, Assets.bobFall);
-		animation.animations.put(BobComponent.STATE_HIT, Assets.bobHit);
-		animation.animations.put(BobComponent.STATE_JUMP, Assets.bobJump);
+		animation.animations.put(PlayerComponent.STATE_FALL, Assets.bobFall);
+		animation.animations.put(PlayerComponent.STATE_HIT, Assets.bobHit);
+		animation.animations.put(PlayerComponent.STATE_JUMP, Assets.bobJump);
 		
-		bounds.bounds.width = BobComponent.WIDTH;
-		bounds.bounds.height = BobComponent.HEIGHT;
+		bounds.bounds.width = PlayerComponent.WIDTH;
+		bounds.bounds.height = PlayerComponent.HEIGHT;
 		
 		position.pos.set(5.0f, 1.0f, 0.0f);
 		
-		state.set(BobComponent.STATE_JUMP);
+		state.set(PlayerComponent.STATE_JUMP);
 		
 		entity.add(animation);
 		entity.add(bob);

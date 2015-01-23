@@ -21,13 +21,13 @@ import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.systems.IteratingSystem;
 import com.mygdx.game.World;
-import com.mygdx.game.components.BobComponent;
+import com.mygdx.game.components.PlayerComponent;
 import com.mygdx.game.components.MovementComponent;
 import com.mygdx.game.components.StateComponent;
 import com.mygdx.game.components.TransformComponent;
 
 public class BobSystem extends IteratingSystem {
-	private static final Family family = Family.getFor(BobComponent.class,
+	private static final Family family = Family.getFor(PlayerComponent.class,
 			StateComponent.class,
 			TransformComponent.class,
 			MovementComponent.class);
@@ -35,7 +35,7 @@ public class BobSystem extends IteratingSystem {
 	private float accelX = 0.0f;
 	private World world;
 	
-	private ComponentMapper<BobComponent> bm;
+	private ComponentMapper<PlayerComponent> bm;
 	private ComponentMapper<StateComponent> sm;
 	private ComponentMapper<TransformComponent> tm;
 	private ComponentMapper<MovementComponent> mm;
@@ -45,7 +45,7 @@ public class BobSystem extends IteratingSystem {
 		
 		this.world = world;
 		
-		bm = ComponentMapper.getFor(BobComponent.class);
+		bm = ComponentMapper.getFor(PlayerComponent.class);
 		sm = ComponentMapper.getFor(StateComponent.class);
 		tm = ComponentMapper.getFor(TransformComponent.class);
 		mm = ComponentMapper.getFor(MovementComponent.class);
@@ -67,25 +67,25 @@ public class BobSystem extends IteratingSystem {
 		TransformComponent t = tm.get(entity);
 		StateComponent state = sm.get(entity);
 		MovementComponent mov = mm.get(entity);
-		BobComponent bob = bm.get(entity);
+		PlayerComponent bob = bm.get(entity);
 		
-		if (state.get() != BobComponent.STATE_HIT && t.pos.y <= 0.5f) {
+		if (state.get() != PlayerComponent.STATE_HIT && t.pos.y <= 0.5f) {
 			hitPlatform(entity);
 		}
 		
-		if (state.get() != BobComponent.STATE_HIT) {
-			mov.velocity.x = -accelX / 10.0f * BobComponent.MOVE_VELOCITY;
+		if (state.get() != PlayerComponent.STATE_HIT) {
+			mov.velocity.x = -accelX / 10.0f * PlayerComponent.MOVE_VELOCITY;
 		}
 		
-		if (mov.velocity.y > 0 && state.get() != BobComponent.STATE_HIT) {
-			if (state.get() != BobComponent.STATE_JUMP) {
-				state.set(BobComponent.STATE_JUMP);
+		if (mov.velocity.y > 0 && state.get() != PlayerComponent.STATE_HIT) {
+			if (state.get() != PlayerComponent.STATE_JUMP) {
+				state.set(PlayerComponent.STATE_JUMP);
 			}
 		}
 
-		if (mov.velocity.y < 0 && state.get() != BobComponent.STATE_HIT) {
-			if (state.get() != BobComponent.STATE_FALL) {
-				state.set(BobComponent.STATE_FALL);
+		if (mov.velocity.y < 0 && state.get() != PlayerComponent.STATE_HIT) {
+			if (state.get() != PlayerComponent.STATE_FALL) {
+				state.set(PlayerComponent.STATE_FALL);
 			}
 		}
 
@@ -113,7 +113,7 @@ public class BobSystem extends IteratingSystem {
 		MovementComponent mov = mm.get(entity);
 		
 		mov.velocity.set(0, 0);
-		state.set(BobComponent.STATE_HIT);
+		state.set(PlayerComponent.STATE_HIT);
 	}
 
 	public void hitPlatform (Entity entity) {
@@ -122,8 +122,8 @@ public class BobSystem extends IteratingSystem {
 		StateComponent state = sm.get(entity);
 		MovementComponent mov = mm.get(entity);
 		
-		mov.velocity.y = BobComponent.JUMP_VELOCITY;
-		state.set(BobComponent.STATE_JUMP);
+		mov.velocity.y = PlayerComponent.JUMP_VELOCITY;
+		state.set(PlayerComponent.STATE_JUMP);
 	}
 
 	public void hitSpring (Entity entity) {
@@ -132,7 +132,7 @@ public class BobSystem extends IteratingSystem {
 		StateComponent state = sm.get(entity);
 		MovementComponent mov = mm.get(entity);
 		
-		mov.velocity.y = BobComponent.JUMP_VELOCITY * 1.5f;
-		state.set(BobComponent.STATE_JUMP);
+		mov.velocity.y = PlayerComponent.JUMP_VELOCITY * 1.5f;
+		state.set(PlayerComponent.STATE_JUMP);
 	}
 }

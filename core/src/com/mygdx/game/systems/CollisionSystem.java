@@ -40,7 +40,7 @@ public class CollisionSystem extends EntitySystem {
 	private World world;
 	private CollisionListener listener;
 	private Random rand = new Random();
-	private ImmutableArray<Entity> bobs;
+	private ImmutableArray<Entity> player;
 	private ImmutableArray<Entity> coins;
 	private ImmutableArray<Entity> squirrels;
 	private ImmutableArray<Entity> springs;
@@ -61,7 +61,7 @@ public class CollisionSystem extends EntitySystem {
 	public void addedToEngine(Engine engine) {
 		this.engine = engine;
 		
-		bobs = engine.getEntitiesFor(Family.getFor(BobComponent.class, BoundsComponent.class, TransformComponent.class, StateComponent.class));
+		player = engine.getEntitiesFor(Family.getFor(PlayerComponent.class, BoundsComponent.class, TransformComponent.class, StateComponent.class));
 		coins = engine.getEntitiesFor(Family.getFor(CoinComponent.class, BoundsComponent.class));
 		squirrels = engine.getEntitiesFor(Family.getFor(SquirrelComponent.class, BoundsComponent.class));
 		springs = engine.getEntitiesFor(Family.getFor(SpringComponent.class, BoundsComponent.class, TransformComponent.class));
@@ -74,12 +74,12 @@ public class CollisionSystem extends EntitySystem {
 		BobSystem bobSystem = engine.getSystem(BobSystem.class);
 		PlatformSystem platformSystem = engine.getSystem(PlatformSystem.class);
 		
-		for (int i = 0; i < bobs.size(); ++i) {
-			Entity bob = bobs.get(i);
+		for (int i = 0; i < player.size(); ++i) {
+			Entity bob = player.get(i);
 			
 			StateComponent bobState = sm.get(bob);
 			
-			if (bobState.get() == BobComponent.STATE_HIT) {
+			if (bobState.get() == PlayerComponent.STATE_HIT) {
 				continue;
 			}
 			
