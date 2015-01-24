@@ -80,9 +80,11 @@ public class GameScreen extends ScreenAdapter {
 
 		engine.getSystem(BackgroundSystem.class).setCamera(game.camera);
 
-		pauseBounds = new Rectangle(320 - 64, 480 - 64, 64, 64);
-		resumeBounds = new Rectangle(160 - 96, 240, 192, 36);
-		quitBounds = new Rectangle(160 - 96, 240 - 36, 192, 36);
+		pauseBounds = new Rectangle(8f, PowerfulPandaApp.DEFAULT_HEIGHT - 40f, 64f, 32f);
+		resumeBounds = new Rectangle(80f, PowerfulPandaApp.DEFAULT_HEIGHT - 40f, 64f, 32f);
+		quitBounds = new Rectangle(152f, PowerfulPandaApp.DEFAULT_HEIGHT - 40f, 64f, 32f);
+
+		pauseSystems();
 	}
 
 	public void update(float deltaTime) {
