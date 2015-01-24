@@ -22,10 +22,9 @@ public class PlayerComponent extends Component {
 	public static final int STATE_WALK = 0;
 	public static final int STATE_COLLIDE = 1;
 	public static final int STATE_HIT = 2;
-	public static final float JUMP_VELOCITY = 11;
 	public static final float MOVE_VELOCITY = 200;
-	public static final float WIDTH = 0.8f;
-	public static final float HEIGHT = 0.8f;
+	public static final float WIDTH = 0.5f;
+	public static final float HEIGHT = 0.5f;
 	
 	public float heightSoFar = 0.0f;
 }

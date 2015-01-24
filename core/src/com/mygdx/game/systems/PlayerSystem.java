@@ -101,8 +101,9 @@ public class PlayerSystem extends IteratingSystem {
 		}
 		
 		t.scale.x = mov.velocity.x < 0.0f ? Math.abs(t.scale.x) * -1.0f : Math.abs(t.scale.x);
-		
-		bob.heightSoFar = Math.max(t.pos.y, bob.heightSoFar);
+		t.scale.y = mov.velocity.y < 0.0f ? Math.abs(t.scale.y) * -1.0f : Math.abs(t.scale.y);
+
+//		bob.heightSoFar = Math.max(t.pos.y, bob.heightSoFar);
 		
 		if (bob.heightSoFar - 7.5f > t.pos.y) {
 			world.state = World.WORLD_STATE_GAME_OVER;
@@ -125,7 +126,7 @@ public class PlayerSystem extends IteratingSystem {
 		StateComponent state = sm.get(entity);
 		MovementComponent mov = mm.get(entity);
 		
-		mov.velocity.y = PlayerComponent.JUMP_VELOCITY;
+//		mov.velocity.y = PlayerComponent.JUMP_VELOCITY;
 		//state.set(PlayerComponent.STATE_JUMP);
 	}
 
@@ -135,7 +136,7 @@ public class PlayerSystem extends IteratingSystem {
 		StateComponent state = sm.get(entity);
 		MovementComponent mov = mm.get(entity);
 		
-		mov.velocity.y = PlayerComponent.JUMP_VELOCITY * 1.5f;
+//		mov.velocity.y = PlayerComponent.JUMP_VELOCITY * 1.5f;
 		//state.set(PlayerComponent.STATE_JUMP);
 	}
 }
