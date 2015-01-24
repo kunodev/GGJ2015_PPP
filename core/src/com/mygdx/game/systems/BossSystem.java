@@ -47,7 +47,7 @@ public class BossSystem extends IteratingSystem {
         BossComponent boss = bm.get(entity);
 
         if (state.get() == BossComponent.STATE_MOVE) {
-
+            mov.velocity.set(BossComponent.MOVE_VELOCITY);
         }
 
         if (state.get() == BossComponent.STATE_SHOOT) {

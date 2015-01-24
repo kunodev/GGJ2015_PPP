@@ -82,7 +82,6 @@ public class RenderingSystem extends IteratingSystem {
 			TransformComponent t = transformM.get(entity);
 
 			if(tex == null) {
-				System.out.println("Dummy");
 				game.shapeRenderer.setProjectionMatrix(game.camera.combined);
 				game.shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
 				game.shapeRenderer.setColor(dum.color);
@@ -90,7 +89,6 @@ public class RenderingSystem extends IteratingSystem {
 				game.shapeRenderer.end();
 			} else {
 				if (tex.region != null) {
-					System.out.println("Texture");
 					float width = tex.region.getRegionWidth();
 					float height = tex.region.getRegionHeight();
 					float originX = width * 0.5f;
