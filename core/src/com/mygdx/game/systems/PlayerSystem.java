@@ -20,6 +20,7 @@ import com.badlogic.ashley.core.ComponentMapper;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.systems.IteratingSystem;
+import com.mygdx.game.PowerfulPandaApp;
 import com.mygdx.game.World;
 import com.mygdx.game.components.MovementComponent;
 import com.mygdx.game.components.PlayerComponent;
@@ -30,6 +31,7 @@ public class PlayerSystem extends IteratingSystem {
 	private static final Family family = Family.getFor(PlayerComponent.class, StateComponent.class, TransformComponent.class, MovementComponent.class);
 	
 	private float accelX = 0.0f;
+	private float accelY = 0.0f;
 	private World world;
 	
 	private ComponentMapper<PlayerComponent> bm;
@@ -50,6 +52,10 @@ public class PlayerSystem extends IteratingSystem {
 	
 	public void setAccelX(float accelX) {
 		this.accelX = accelX;
+	}
+
+	public void setAccelY(float accelY) {
+		this.accelY = accelY;
 	}
 	
 	@Override
@@ -87,10 +93,10 @@ public class PlayerSystem extends IteratingSystem {
 		}
 
 		if (t.pos.x < 0) {
-			t.pos.x = World.WORLD_WIDTH;
+			t.pos.x = PowerfulPandaApp.DEFAULT_WIDTH;
 		}
 		
-		if (t.pos.x > World.WORLD_WIDTH) {
+		if (t.pos.x > PowerfulPandaApp.DEFAULT_WIDTH) {
 			t.pos.x = 0;
 		}
 		

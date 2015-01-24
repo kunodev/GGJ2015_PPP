@@ -20,7 +20,6 @@ import com.badlogic.ashley.core.ComponentMapper;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.systems.IteratingSystem;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.MathUtils;
@@ -30,7 +29,6 @@ import com.mygdx.game.components.DummyComponent;
 import com.mygdx.game.components.TextureComponent;
 import com.mygdx.game.components.TransformComponent;
 
-import javax.xml.crypto.dsig.Transform;
 import java.util.Comparator;
 
 public class RenderingSystem extends IteratingSystem {
@@ -102,7 +100,7 @@ public class RenderingSystem extends IteratingSystem {
 						width, height,
 						t.scale.x * PIXELS_TO_METRES, t.scale.y * PIXELS_TO_METRES,
 						MathUtils.radiansToDegrees * t.rotation);
-			} else if (tex.region == null && dum != null) {
+			} else if (dum != null) {
 					game.shapeRenderer.setProjectionMatrix(game.camera.combined);
 					game.shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
 					game.shapeRenderer.setColor(dum.color);

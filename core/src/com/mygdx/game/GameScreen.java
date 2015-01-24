@@ -136,21 +136,24 @@ public class GameScreen extends ScreenAdapter {
 		// should work also with
 		// Gdx.input.isPeripheralAvailable(Peripheral.Accelerometer)
 		float accelX = 0.0f;
+		float accelY = 0.0f;
 
-		if (appType == ApplicationType.Android || appType == ApplicationType.iOS) {
-			accelX = Gdx.input.getAccelerometerX();
-		} else {
 			if (Gdx.input.isKeyPressed(Keys.DPAD_LEFT))
 				accelX = 5f;
 			if (Gdx.input.isKeyPressed(Keys.DPAD_RIGHT))
 				accelX = -5f;
-		}
+			if (Gdx.input.isKeyPressed(Keys.DPAD_DOWN))
+				accelY = -5f;
+			if (Gdx.input.isKeyPressed(Keys.DPAD_UP))
+				accelY = 5f;
 
 		engine.getSystem(PlayerSystem.class).setAccelX(accelX);
+		engine.getSystem(PlayerSystem.class).setAccelY(accelY);
 
 		// if (world.state == World.WORLD_STATE_NEXT_LEVEL) {
 		// game.setScreen(new WinScreen(game));
 		// }
+
 		if (world.state == World.WORLD_STATE_GAME_OVER) {
 			state = GAME_OVER;
 			pauseSystems();
