@@ -75,32 +75,39 @@ public class RenderingSystem extends IteratingSystem {
 		game.camera.update();
 		game.batcher.setProjectionMatrix(game.camera.combined);
 		game.batcher.begin();
-		
+
 		for (Entity entity : renderQueue) {
 			TextureComponent tex = textureM.get(entity);
 			DummyComponent dum = dummyM.get(entity);
 			TransformComponent t = transformM.get(entity);
 
-			if(tex == null) {
-				game.shapeRenderer.setProjectionMatrix(game.camera.combined);
-				game.shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
-				game.shapeRenderer.setColor(dum.color);
-				game.shapeRenderer.rect(t.pos.x, t.pos.y, dum.width * 32, dum.height * 32);
-				game.shapeRenderer.end();
-			} else {
-				if (tex.region != null) {
-					float width = tex.region.getRegionWidth();
-					float height = tex.region.getRegionHeight();
-					float originX = width * 0.5f;
-					float originY = height * 0.5f;
-
-					game.batcher.draw(tex.region,
-							t.pos.x - originX, t.pos.y - originY,
-							originX, originY,
-							width, height,
-							t.scale.x * PIXELS_TO_METRES, t.scale.y * PIXELS_TO_METRES,
-							MathUtils.radiansToDegrees * t.rotation);
+			if (tex == null) {
+				if (dum != null) {
+					game.shapeRenderer.setProjectionMatrix(game.camera.combined);
+					game.shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
+					game.shapeRenderer.setColor(dum.color);
+					game.shapeRenderer.rect(t.pos.x, t.pos.y, dum.width * 32, dum.height * 32);
+					game.shapeRenderer.end();
 				}
+			} else if (tex.region != null){
+
+				float width = tex.region.getRegionWidth();
+				float height = tex.region.getRegionHeight();
+				float originX = width * 0.5f;
+				float originY = height * 0.5f;
+
+				game.batcher.draw(tex.region,
+						t.pos.x - originX, t.pos.y - originY,
+						originX, originY,
+						width, height,
+						t.scale.x * PIXELS_TO_METRES, t.scale.y * PIXELS_TO_METRES,
+						MathUtils.radiansToDegrees * t.rotation);
+			} else if (tex.region == null && dum != null) {
+					game.shapeRenderer.setProjectionMatrix(game.camera.combined);
+					game.shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
+					game.shapeRenderer.setColor(dum.color);
+					game.shapeRenderer.rect(t.pos.x, t.pos.y, dum.width * 32, dum.height * 32);
+					game.shapeRenderer.end();
 			}
 		}
 		

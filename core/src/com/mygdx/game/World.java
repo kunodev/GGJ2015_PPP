@@ -64,6 +64,11 @@ public class World {
 		TransformComponent position = new TransformComponent();
 		StateComponent state = new StateComponent();
 		TextureComponent texture = new TextureComponent();
+		DummyComponent dummy = new DummyComponent();
+
+		dummy.color = Color.GREEN;
+		dummy.width = bob.WIDTH;
+		dummy.height = bob.HEIGHT;
 
 		//animation.animations.put(PlayerComponent.STATE_WALK, );
 		
@@ -81,7 +86,9 @@ public class World {
 		entity.add(position);
 		entity.add(state);
 		entity.add(texture);
-		
+		entity.add(dummy);
+
+
 		engine.addEntity(entity);
 		
 		return entity;

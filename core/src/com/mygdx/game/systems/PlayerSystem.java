@@ -27,10 +27,7 @@ import com.mygdx.game.components.StateComponent;
 import com.mygdx.game.components.TransformComponent;
 
 public class PlayerSystem extends IteratingSystem {
-	private static final Family family = Family.getFor(PlayerComponent.class,
-			StateComponent.class,
-			TransformComponent.class,
-			MovementComponent.class);
+	private static final Family family = Family.getFor(PlayerComponent.class, StateComponent.class, TransformComponent.class, MovementComponent.class);
 	
 	private float accelX = 0.0f;
 	private World world;
