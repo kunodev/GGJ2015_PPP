@@ -143,6 +143,10 @@ public class World {
 		return walkList;
 	}
 
+	public TextureRegion[] doTextureMagic(Texture t, int xParts) {
+		return cast(extractListOfRegions(t, xParts));
+	}
+
 	private Entity createBoss() {
 		final Entity entity = new Entity();
 
