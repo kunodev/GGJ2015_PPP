@@ -73,8 +73,7 @@ public class CollisionSystem extends IteratingSystem {
 			if (thisEntityRect.overlaps(collidableRect)) {
 				PlayerComponent pc = players.get(entity);
 				HealthComponent hc = enemies.get(collidable);
-				if(pc != null && hc != null){
-					//TODO: check for headBut state
+				if(pc != null && hc != null && entity.getComponent(StateComponent.class).get() == PlayerComponent.STATE_HEADBUTT){
 					hc.health = Math.max(0, hc.health - 10);
 					if(hc.attackListener != null){
 						hc.attackListener.attack(collidable, hc.health);
