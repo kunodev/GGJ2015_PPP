@@ -20,19 +20,18 @@ import com.badlogic.ashley.core.ComponentMapper;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.systems.IteratingSystem;
+import com.mygdx.game.PowerfulPandaApp;
 import com.mygdx.game.World;
-import com.mygdx.game.components.PlayerComponent;
 import com.mygdx.game.components.MovementComponent;
+import com.mygdx.game.components.PlayerComponent;
 import com.mygdx.game.components.StateComponent;
 import com.mygdx.game.components.TransformComponent;
 
 public class PlayerSystem extends IteratingSystem {
-	private static final Family family = Family.getFor(PlayerComponent.class,
-			StateComponent.class,
-			TransformComponent.class,
-			MovementComponent.class);
+	private static final Family family = Family.getFor(PlayerComponent.class, StateComponent.class, TransformComponent.class, MovementComponent.class);
 	
 	private float accelX = 0.0f;
+	private float accelY = 0.0f;
 	private World world;
 	
 	private ComponentMapper<PlayerComponent> bm;
@@ -54,11 +53,15 @@ public class PlayerSystem extends IteratingSystem {
 	public void setAccelX(float accelX) {
 		this.accelX = accelX;
 	}
+
+	public void setAccelY(float accelY) {
+		this.accelY = accelY;
+	}
 	
 	@Override
 	public void update(float deltaTime) {
 		super.update(deltaTime);
-		
+		accelY = 0.0f;
 		accelX = 0.0f;
 	}
 	
@@ -76,30 +79,35 @@ public class PlayerSystem extends IteratingSystem {
 		if (state.get() != PlayerComponent.STATE_HIT) {
 			mov.velocity.x = -accelX / 10.0f * PlayerComponent.MOVE_VELOCITY;
 		}
+
+		if (state.get() != PlayerComponent.STATE_HIT) {
+			mov.velocity.y = -accelY / 10.0f * PlayerComponent.MOVE_VELOCITY;
+		}
 		
 		if (mov.velocity.y > 0 && state.get() != PlayerComponent.STATE_HIT) {
-			if (state.get() != PlayerComponent.STATE_JUMP) {
-				state.set(PlayerComponent.STATE_JUMP);
-			}
+			//if (state.get() != PlayerComponent.STATE_JUMP) {
+				//state.set(PlayerComponent.STATE_JUMP);
+			//}
 		}
 
 		if (mov.velocity.y < 0 && state.get() != PlayerComponent.STATE_HIT) {
-			if (state.get() != PlayerComponent.STATE_FALL) {
-				state.set(PlayerComponent.STATE_FALL);
-			}
+			//if (state.get() != PlayerComponent.STATE_FALL) {
+			//	state.set(PlayerComponent.STATE_FALL);
+			//}
 		}
 
 		if (t.pos.x < 0) {
-			t.pos.x = World.WORLD_WIDTH;
+			t.pos.x = PowerfulPandaApp.DEFAULT_WIDTH;
 		}
 		
-		if (t.pos.x > World.WORLD_WIDTH) {
+		if (t.pos.x > PowerfulPandaApp.DEFAULT_WIDTH) {
 			t.pos.x = 0;
 		}
 		
 		t.scale.x = mov.velocity.x < 0.0f ? Math.abs(t.scale.x) * -1.0f : Math.abs(t.scale.x);
-		
-		bob.heightSoFar = Math.max(t.pos.y, bob.heightSoFar);
+		t.scale.y = mov.velocity.y < 0.0f ? Math.abs(t.scale.y) * -1.0f : Math.abs(t.scale.y);
+
+//		bob.heightSoFar = Math.max(t.pos.y, bob.heightSoFar);
 		
 		if (bob.heightSoFar - 7.5f > t.pos.y) {
 			world.state = World.WORLD_STATE_GAME_OVER;
@@ -122,8 +130,8 @@ public class PlayerSystem extends IteratingSystem {
 		StateComponent state = sm.get(entity);
 		MovementComponent mov = mm.get(entity);
 		
-		mov.velocity.y = PlayerComponent.JUMP_VELOCITY;
-		state.set(PlayerComponent.STATE_JUMP);
+//		mov.velocity.y = PlayerComponent.JUMP_VELOCITY;
+		//state.set(PlayerComponent.STATE_JUMP);
 	}
 
 	public void hitSpring (Entity entity) {
@@ -132,7 +140,7 @@ public class PlayerSystem extends IteratingSystem {
 		StateComponent state = sm.get(entity);
 		MovementComponent mov = mm.get(entity);
 		
-		mov.velocity.y = PlayerComponent.JUMP_VELOCITY * 1.5f;
-		state.set(PlayerComponent.STATE_JUMP);
+//		mov.velocity.y = PlayerComponent.JUMP_VELOCITY * 1.5f;
+		//state.set(PlayerComponent.STATE_JUMP);
 	}
 }

@@ -18,6 +18,9 @@ package com.mygdx.game;
 
 import com.badlogic.ashley.core.Engine;
 import com.badlogic.ashley.core.Entity;
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.mygdx.game.components.*;
 import com.mygdx.game.systems.RenderingSystem;
@@ -34,16 +37,21 @@ public class World {
 
 	public final Random rand;
 	public int state;
-	
+
+	PowerfulPandaApp game;
 	private Engine engine;
 
-	public World (Engine engine) {
-		this.engine = engine;
+	public Entity bob;
+
+	public World (PowerfulPandaApp game) {
+		this.game = game;
+		engine = game.engine;
 		this.rand = new Random();
 	}
 	
 	public void create() {
-		Entity bob = createBob();
+		bob = createBob();
+		Entity boss = createBoss();
 		createCamera(bob);
 		createBackground();
 
@@ -53,59 +61,80 @@ public class World {
 	private Entity createBob() {
 		Entity entity = new Entity();
 		
-		AnimationComponent animation = new AnimationComponent();
+		//AnimationComponent animation = new AnimationComponent();
 		PlayerComponent bob = new PlayerComponent();
 		BoundsComponent bounds = new BoundsComponent();
 		MovementComponent movement = new MovementComponent();
 		TransformComponent position = new TransformComponent();
 		StateComponent state = new StateComponent();
 		TextureComponent texture = new TextureComponent();
-		
-		//animation.animations.put(PlayerComponent.STATE_FALL, Assets.bobFall);
-		//animation.animations.put(PlayerComponent.STATE_HIT, Assets.bobHit);
-		//animation.animations.put(PlayerComponent.STATE_JUMP, Assets.bobJump);
-		
+		DummyComponent dummy = new DummyComponent();
+
+		dummy.color = Color.GREEN;
+		dummy.width = bob.WIDTH;
+		dummy.height = bob.HEIGHT;
+
+		//animation.animations.put(PlayerComponent.STATE_WALK, );
+		Texture tex = game.assetManager.get("f.png");
+		TextureRegion texReg = new TextureRegion(tex);
+		texture.region = texReg;
+
 		bounds.bounds.width = PlayerComponent.WIDTH;
 		bounds.bounds.height = PlayerComponent.HEIGHT;
 		
 		position.pos.set(5.0f, 1.0f, 0.0f);
 		
-		state.set(PlayerComponent.STATE_JUMP);
+		state.set(PlayerComponent.STATE_WALK);
 		
-		entity.add(animation);
+		//entity.add(animation);
 		entity.add(bob);
 		entity.add(bounds);
 		entity.add(movement);
 		entity.add(position);
 		entity.add(state);
 		entity.add(texture);
-		
+		entity.add(dummy);
+
+
 		engine.addEntity(entity);
 		
 		return entity;
 	}
-	
-	private void createPlatform(int type, float x, float y) {
+
+	private Entity createBoss() {
 		Entity entity = new Entity();
-		
+
 		AnimationComponent animation = new AnimationComponent();
+		BossComponent boss = new BossComponent();
 		BoundsComponent bounds = new BoundsComponent();
 		MovementComponent movement = new MovementComponent();
 		TransformComponent position = new TransformComponent();
 		StateComponent state = new StateComponent();
 		TextureComponent texture = new TextureComponent();
+		DummyComponent dummy = new DummyComponent();
 
-		
-		position.pos.set(x, y, 1.0f);
-		
+		bounds.bounds.width = BossComponent.WIDTH;
+		bounds.bounds.height = BossComponent.HEIGHT;
+
+		position.pos.set(500.0f, 200.0f, 0.0f);
+
+		state.set(BossComponent.STATE_MOVE);
+
+		dummy.color = Color.RED;
+		dummy.width = boss.WIDTH;
+		dummy.height = boss.HEIGHT;
+
 		entity.add(animation);
+		entity.add(boss);
 		entity.add(bounds);
 		entity.add(movement);
 		entity.add(position);
 		entity.add(state);
-		entity.add(texture);
-		
+		entity.add(dummy);
+
 		engine.addEntity(entity);
+
+		return entity;
 	}
 	
 	private void createCamera(Entity target) {

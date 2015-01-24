@@ -88,6 +88,7 @@ public class MainMenuScreen extends ScreenAdapter {
 
 		game.batcher.enableBlending();
 		game.batcher.begin();
+
 		Vector2 center = new Vector2();
 		playBounds.getCenter(center);
 		font.draw(game.batcher, "PLAY", center.x, center.y);

@@ -31,8 +31,8 @@ public class MovementSystem extends IteratingSystem {
 	private ComponentMapper<MovementComponent> mm;
 	
 	public MovementSystem() {
-		super(Family.getFor(TransformComponent.class, MovementComponent.class));
-		
+		super(Family.all(TransformComponent.class, MovementComponent.class).get());
+
 		tm = ComponentMapper.getFor(TransformComponent.class);
 		mm = ComponentMapper.getFor(MovementComponent.class);
 	}
@@ -40,7 +40,7 @@ public class MovementSystem extends IteratingSystem {
 	@Override
 	public void processEntity(Entity entity, float deltaTime) {
 		TransformComponent pos = tm.get(entity);
-		MovementComponent mov = mm.get(entity);;
+		MovementComponent mov = mm.get(entity);
 		
 		tmp.set(mov.accel).scl(deltaTime);
 		mov.velocity.add(tmp);
