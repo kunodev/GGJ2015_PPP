@@ -21,6 +21,7 @@ import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.math.Vector2;
 import com.mygdx.game.components.*;
 import com.mygdx.game.systems.RenderingSystem;
+import com.badlogic.gdx.graphics.Color;
 
 import java.util.Random;
 
@@ -44,6 +45,7 @@ public class World {
 	
 	public void create() {
 		Entity bob = createBob();
+		Entity boss = createBoss();
 		createCamera(bob);
 		createBackground();
 
@@ -84,28 +86,41 @@ public class World {
 		
 		return entity;
 	}
-	
-	private void createPlatform(int type, float x, float y) {
+
+	private Entity createBoss() {
 		Entity entity = new Entity();
-		
+
 		AnimationComponent animation = new AnimationComponent();
+		BossComponent boss = new BossComponent();
 		BoundsComponent bounds = new BoundsComponent();
 		MovementComponent movement = new MovementComponent();
 		TransformComponent position = new TransformComponent();
 		StateComponent state = new StateComponent();
 		TextureComponent texture = new TextureComponent();
+		DummyComponent dummy = new DummyComponent();
 
-		
-		position.pos.set(x, y, 1.0f);
-		
+		bounds.bounds.width = BossComponent.WIDTH;
+		bounds.bounds.height = BossComponent.HEIGHT;
+
+		position.pos.set(10.0f, 2.0f, 0.0f);
+
+		state.set(BossComponent.STATE_MOVE);
+
+		dummy.color = Color.RED;
+		dummy.width = boss.WIDTH;
+		dummy.height = boss.HEIGHT;
+
 		entity.add(animation);
+		entity.add(boss);
 		entity.add(bounds);
 		entity.add(movement);
 		entity.add(position);
 		entity.add(state);
-		entity.add(texture);
-		
+		entity.add(dummy);
+
 		engine.addEntity(entity);
+
+		return entity;
 	}
 	
 	private void createCamera(Entity target) {

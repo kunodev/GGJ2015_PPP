@@ -20,13 +20,17 @@ import com.badlogic.ashley.core.ComponentMapper;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.systems.IteratingSystem;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.utils.Array;
 import com.mygdx.game.PowerfulPandaApp;
+import com.mygdx.game.components.DummyComponent;
 import com.mygdx.game.components.TextureComponent;
 import com.mygdx.game.components.TransformComponent;
 
+import javax.xml.crypto.dsig.Transform;
 import java.util.Comparator;
 
 public class RenderingSystem extends IteratingSystem {
@@ -35,14 +39,16 @@ public class RenderingSystem extends IteratingSystem {
 	private Array<Entity> renderQueue;
 	private Comparator<Entity> comparator;
 
+	private ComponentMapper<DummyComponent> dummyM;
 	private ComponentMapper<TextureComponent> textureM;
 	private ComponentMapper<TransformComponent> transformM;
 
 	private PowerfulPandaApp game;
 
 	public RenderingSystem(PowerfulPandaApp game) {
-		super(Family.getFor(TransformComponent.class, TextureComponent.class));
-		
+		super(Family.all(TransformComponent.class).one(TextureComponent.class, DummyComponent.class).get());
+
+		dummyM = ComponentMapper.getFor(DummyComponent.class);
 		textureM = ComponentMapper.getFor(TextureComponent.class);
 		transformM = ComponentMapper.getFor(TransformComponent.class);
 		
@@ -72,24 +78,32 @@ public class RenderingSystem extends IteratingSystem {
 		
 		for (Entity entity : renderQueue) {
 			TextureComponent tex = textureM.get(entity);
-			
-			if (tex.region == null) {
-				continue;
-			}
-			
+			DummyComponent dum = dummyM.get(entity);
 			TransformComponent t = transformM.get(entity);
-		
-			float width = tex.region.getRegionWidth();
-			float height = tex.region.getRegionHeight();
-			float originX = width * 0.5f;
-			float originY = height * 0.5f;
-			
-			game.batcher.draw(tex.region,
-					t.pos.x - originX, t.pos.y - originY,
-					originX, originY,
-					width, height,
-					t.scale.x * PIXELS_TO_METRES, t.scale.y * PIXELS_TO_METRES,
-					MathUtils.radiansToDegrees * t.rotation);
+
+			if(tex == null) {
+				System.out.println("Dummy");
+				game.shapeRenderer.setProjectionMatrix(game.camera.combined);
+				game.shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
+				game.shapeRenderer.setColor(dum.color);
+				game.shapeRenderer.rect(t.pos.x, t.pos.y, dum.width * 32, dum.height * 32);
+				game.shapeRenderer.end();
+			} else {
+				if (tex.region != null) {
+					System.out.println("Texture");
+					float width = tex.region.getRegionWidth();
+					float height = tex.region.getRegionHeight();
+					float originX = width * 0.5f;
+					float originY = height * 0.5f;
+
+					game.batcher.draw(tex.region,
+							t.pos.x - originX, t.pos.y - originY,
+							originX, originY,
+							width, height,
+							t.scale.x * PIXELS_TO_METRES, t.scale.y * PIXELS_TO_METRES,
+							MathUtils.radiansToDegrees * t.rotation);
+				}
+			}
 		}
 		
 		game.batcher.end();
