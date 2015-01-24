@@ -24,6 +24,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
@@ -39,6 +40,8 @@ import com.mygdx.game.systems.MovementSystem;
 import com.mygdx.game.systems.PlayerSystem;
 import com.mygdx.game.systems.RenderingSystem;
 import com.mygdx.game.systems.StateSystem;
+
+import de.panda.tiled.MapRenderer;
 
 public class GameScreen extends ScreenAdapter {
 	static final int GAME_READY = 0;
@@ -61,6 +64,7 @@ public class GameScreen extends ScreenAdapter {
 	private int state;
 
 	BitmapFont font;
+	private MapRenderer renderer;
 
 	public GameScreen(PowerfulPandaApp game) {
 		this.game = game;
@@ -300,6 +304,7 @@ public class GameScreen extends ScreenAdapter {
 
 	@Override
 	public void render(float delta) {
+		renderer.render();
 		update(delta);
 		drawUI();
 	}
@@ -316,10 +321,15 @@ public class GameScreen extends ScreenAdapter {
 	public void show() {
 		game.assetManager.load("f.png", Texture.class);
 		game.assetManager.load("Stuff/boss_attack_kugel.png", Texture.class);
+
+		game.assetManager.load("stage_test.tmx", TiledMap.class);
 		game.assetManager.finishLoading();
 		font = new BitmapFont();
 
 		world.create();
+
+		renderer = new MapRenderer("stage_test.tmx", game.camera, game.assetManager);
+		renderer.loadComponentsFromMap(engine);
 	}
 
 	@Override

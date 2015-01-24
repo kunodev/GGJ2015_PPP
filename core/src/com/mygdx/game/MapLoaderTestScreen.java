@@ -18,7 +18,6 @@ package com.mygdx.game;
 
 import com.badlogic.ashley.core.Engine;
 import com.badlogic.gdx.ScreenAdapter;
-import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.mygdx.game.systems.AnimationSystem;
 import com.mygdx.game.systems.BackgroundSystem;
 import com.mygdx.game.systems.BossSystem;
@@ -77,11 +76,6 @@ public class MapLoaderTestScreen extends ScreenAdapter {
 	@Override
 	public void show() {
 		// use in own test-screen
-		game.assetManager.load("stage_test.tmx", TiledMap.class);
-		game.assetManager.finishLoading();
-
-		renderer = new MapRenderer("stage_test.tmx", game.camera, game.assetManager);
-		renderer.loadComponentsFromMap(engine);
 	}
 
 	@Override
