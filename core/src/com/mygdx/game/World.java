@@ -19,6 +19,8 @@ package com.mygdx.game;
 import com.badlogic.ashley.core.Engine;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.mygdx.game.components.*;
 import com.mygdx.game.systems.RenderingSystem;
@@ -59,7 +61,7 @@ public class World {
 	private Entity createBob() {
 		Entity entity = new Entity();
 		
-		AnimationComponent animation = new AnimationComponent();
+		//AnimationComponent animation = new AnimationComponent();
 		PlayerComponent bob = new PlayerComponent();
 		BoundsComponent bounds = new BoundsComponent();
 		MovementComponent movement = new MovementComponent();
@@ -73,7 +75,10 @@ public class World {
 		dummy.height = bob.HEIGHT;
 
 		//animation.animations.put(PlayerComponent.STATE_WALK, );
-		
+		Texture tex = game.assetManager.get("f.png");
+		TextureRegion texReg = new TextureRegion(tex);
+		texture.region = texReg;
+
 		bounds.bounds.width = PlayerComponent.WIDTH;
 		bounds.bounds.height = PlayerComponent.HEIGHT;
 		
@@ -81,7 +86,7 @@ public class World {
 		
 		state.set(PlayerComponent.STATE_WALK);
 		
-		entity.add(animation);
+		//entity.add(animation);
 		entity.add(bob);
 		entity.add(bounds);
 		entity.add(movement);
