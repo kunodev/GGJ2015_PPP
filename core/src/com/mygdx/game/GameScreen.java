@@ -30,18 +30,7 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.mygdx.game.components.TransformComponent;
-import com.mygdx.game.systems.AnimationSystem;
-import com.mygdx.game.systems.BackgroundSystem;
-import com.mygdx.game.systems.BossSystem;
-import com.mygdx.game.systems.BoundsSystem;
-import com.mygdx.game.systems.BulletSystem;
-import com.mygdx.game.systems.CameraSystem;
-import com.mygdx.game.systems.CollisionSystem;
-import com.mygdx.game.systems.MovementSystem;
-import com.mygdx.game.systems.PlayerSystem;
-import com.mygdx.game.systems.RenderingSystem;
-import com.mygdx.game.systems.StateSystem;
-
+import com.mygdx.game.systems.*;
 import de.panda.tiled.MapRenderer;
 
 public class GameScreen extends ScreenAdapter {
@@ -214,7 +203,6 @@ public class GameScreen extends ScreenAdapter {
 		game.batcher.setProjectionMatrix(game.camera.combined);
 
 		game.batcher.begin();
-		game.batcher.draw(game.assetManager.get("f.png", Texture.class), 128.0f, 128.0f);
 		switch (state) {
 		case GAME_READY:
 			presentReady();

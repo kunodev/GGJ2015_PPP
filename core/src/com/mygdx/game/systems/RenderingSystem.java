@@ -31,7 +31,6 @@ import com.mygdx.game.components.TransformComponent;
 import java.util.Comparator;
 
 public class RenderingSystem extends IteratingSystem {
-	static final float PIXELS_TO_METRES = 1.0f / 32.0f;
 
 	private Array<Entity> renderQueue;
 	private Comparator<Entity> comparator;
@@ -80,7 +79,7 @@ public class RenderingSystem extends IteratingSystem {
 					game.shapeRenderer.setProjectionMatrix(game.camera.combined);
 					game.shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
 					game.shapeRenderer.setColor(dum.color);
-					game.shapeRenderer.rect(t.pos.x, t.pos.y, dum.width * 32, dum.height * 32);
+					game.shapeRenderer.rect(t.pos.x, t.pos.y, dum.width, dum.height);
 					game.shapeRenderer.end();
 				}
 			} else if (tex.region != null){
@@ -102,7 +101,7 @@ public class RenderingSystem extends IteratingSystem {
 					game.shapeRenderer.setProjectionMatrix(game.camera.combined);
 					game.shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
 					game.shapeRenderer.setColor(dum.color);
-					game.shapeRenderer.rect(t.pos.x, t.pos.y, dum.width * 32, dum.height * 32);
+					game.shapeRenderer.rect(t.pos.x, t.pos.y, dum.width, dum.height);
 					game.shapeRenderer.end();
 			}
 		}

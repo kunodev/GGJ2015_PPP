@@ -6,7 +6,6 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.assets.loaders.resolvers.InternalFileHandleResolver;
-import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
@@ -31,6 +30,7 @@ public class PowerfulPandaApp extends Game {
 		batcher = new SpriteBatch();
 		camera = new OrthographicCamera(DEFAULT_WIDTH, DEFAULT_HEIGHT);
 
+		Gdx.graphics.setVSync(true);
 		Gdx.graphics.setDisplayMode(1920, 1080, true);
 
 		// debugging settings
@@ -40,13 +40,5 @@ public class PowerfulPandaApp extends Game {
 		engine = new Engine();
 
 		setScreen(new MainMenuScreen(this));
-	}
-
-	@Override
-	public void render() {
-		GL20 gl = Gdx.gl;
-		gl.glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
-		gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-		super.render();
 	}
 }

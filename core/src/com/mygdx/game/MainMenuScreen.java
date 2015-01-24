@@ -126,8 +126,6 @@ public class MainMenuScreen extends ScreenAdapter {
 		backgroundStateTime += delta;
 		update();
 		draw();
-
-		//backgroundStateTime = backgroundStateTime % 1.0f;
 	}
 
 	@Override
