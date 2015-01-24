@@ -151,6 +151,17 @@ public class GameScreen extends ScreenAdapter {
 
 		Vector3 v3 = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0f).sub(world.bob.getComponent(TransformComponent.class).pos);
 
+		System.out.println(Gdx.input.getY());
+		System.out.println(world.bob.getComponent(TransformComponent.class).pos.y);
+
+//		double a;
+//		a = Math.atan2
+//				(
+//					(world.bob.getComponent(TransformComponent.class).pos.y - Gdx.input.getY())
+//					/
+//					(world.bob.getComponent(TransformComponent.class).pos.x - Gdx.input.getX())
+//				);
+
 		world.bob.getComponent(TransformComponent.class).rotation = new Vector2(v3.x, v3.y).angle();
 		engine.getSystem(PlayerSystem.class).setAccelX(accelX);
 		engine.getSystem(PlayerSystem.class).setAccelY(accelY);

@@ -22,6 +22,7 @@ import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.systems.IteratingSystem;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.utils.Array;
 import com.mygdx.game.PowerfulPandaApp;
 import com.mygdx.game.components.DummyComponent;
@@ -84,18 +85,18 @@ public class RenderingSystem extends IteratingSystem {
 				}
 			} else if (tex.region != null){
 
-				float width = tex.region.getRegionWidth();
-				float height = tex.region.getRegionHeight();
-				float originX = width * 0.5f;
-				float originY = height * 0.5f;
+				float width = tex.region.getRegionWidth()* 100f;
+				float height = tex.region.getRegionHeight()* 100f;
+				float originX = 1f;
+				float originY = 1f;
 
 				game.batcher.draw(
 						tex.region,
-						t.pos.x, t.pos.y);
-						/*originX, originY,
+						t.pos.x, t.pos.y,
+						originX, originY,
 						width, height,
-						t.scale.x * PIXELS_TO_METRES, t.scale.y * PIXELS_TO_METRES,
-						MathUtils.radiansToDegrees * t.rotation);*/
+						t.scale.x * 32, t.scale.y * 32,
+						MathUtils.radiansToDegrees * t.rotation);
 
 			} else if (dum != null) {
 					game.shapeRenderer.setProjectionMatrix(game.camera.combined);
