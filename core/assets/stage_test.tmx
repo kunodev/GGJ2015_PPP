@@ -31,13 +31,37 @@
  </tileset>
  <tileset firstgid="10" name="Walls" tilewidth="64" tileheight="64">
   <tile id="0">
-   <image width="64" height="64" source="Stuff/Mauer.png"/>
+   <image width="64" height="64" source="Walls/Mauer.png"/>
   </tile>
   <tile id="1">
-   <image width="64" height="64" source="Stuff/Maueranfang.png"/>
+   <image width="64" height="64" source="Walls/Maueranfang.png"/>
   </tile>
   <tile id="2">
-   <image width="64" height="64" source="Stuff/Mauerende.png"/>
+   <image width="64" height="64" source="Walls/Mauerecke (2).png"/>
+  </tile>
+  <tile id="3">
+   <image width="64" height="64" source="Walls/Mauerecke.png"/>
+  </tile>
+  <tile id="4">
+   <image width="64" height="64" source="Walls/Mauerende.png"/>
+  </tile>
+  <tile id="5">
+   <image width="64" height="64" source="Walls/Mauerseitlich.png"/>
+  </tile>
+  <tile id="6">
+   <image width="64" height="64" source="Walls/Mauerseitlich_anfang.png"/>
+  </tile>
+  <tile id="7">
+   <image width="64" height="64" source="Walls/Mauerseitlich_ende.png"/>
+  </tile>
+  <tile id="8">
+   <image width="64" height="64" source="Walls/Wandseitlich.png"/>
+  </tile>
+  <tile id="9">
+   <image width="64" height="64" source="Walls/Wandseitlich_anfang.png"/>
+  </tile>
+  <tile id="10">
+   <image width="64" height="64" source="Walls/Wandseitlich_ende.png"/>
   </tile>
  </tileset>
  <layer name="Kachelebene 1" width="90" height="90">
@@ -47,7 +71,7 @@
  </layer>
  <layer name="Walls" width="90" height="90">
   <data encoding="base64" compression="zlib">
-   eJzt2iEOgDAQAEF0//9gLEGRQLdAZpIzVZdVJ7pt8F9j9QIfd7Wfzvfo3NCvoTMAAMzh1m7o3NC5oXND54bODZ0BAAAAAAAAAAAAgJX8aW7o3NAZAAAA3mcc5vzOc3QGAAAAAAAAAJhrB4RaAPs=
+   eJzt0DEKACAQA8HUovj/32ptL4I3A9uHJAAAAAAAAAAAAAAAAAAAAAAAAAAAwI/a6wFF9N084o4R/wIAAAAAAAAAAFDPAt0jAG8=
   </data>
  </layer>
 </map>
