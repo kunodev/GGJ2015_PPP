@@ -21,6 +21,7 @@ import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.systems.IteratingSystem;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input.Buttons;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
@@ -42,6 +43,8 @@ public class PlayerSystem extends IteratingSystem {
 	private ComponentMapper<StateComponent> sm;
 	private ComponentMapper<TransformComponent> tm;
 	private ComponentMapper<MovementComponent> mm;
+
+	private float headButtCooldown = 0;
 
 	public PlayerSystem(World world) {
 		super(family);
@@ -65,31 +68,47 @@ public class PlayerSystem extends IteratingSystem {
 		StateComponent state = sm.get(entity);
 		MovementComponent mov = mm.get(entity);
 		PlayerComponent bob = bm.get(entity);
-		if (Gdx.input.isKeyPressed(Keys.A)) {
-			accelX = -200f;
-		} else if (Gdx.input.isKeyPressed(Keys.D)) {
-			accelX = 200f;
+		if (state.get() != PlayerComponent.STATE_HEADBUTT) {
+			if (Gdx.input.isKeyPressed(Keys.A)) {
+				accelX = -200f;
+			} else if (Gdx.input.isKeyPressed(Keys.D)) {
+				accelX = 200f;
+			} else {
+				accelX = 0;
+			}
+			if (Gdx.input.isKeyPressed(Keys.S)) {
+				accelY = -200f;
+			} else if (Gdx.input.isKeyPressed(Keys.W)) {
+				accelY = 200f;
+			} else {
+				accelY = 0;
+			}
+			if (accelY == 0 && accelX == 0) {
+				state.set(PlayerComponent.STATE_IDLE);
+			} else {
+				state.set(PlayerComponent.STATE_WALKING);
+			}
+			if (Gdx.input.isButtonPressed(Buttons.LEFT)) {
+				state.set(PlayerComponent.STATE_HEADBUTT);
+			}
+
+			Vector2 playerPos = BossSystem.getDeepCopyCentralPos(entity);
+			Vector3 mousePos = world.game.camera.unproject(new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0));
+			Vector2 mousePos2 = new Vector2(mousePos.x, mousePos.y);
+			t.rotation = mousePos2.sub(playerPos).angle();
 		} else {
-			accelX = 0;
-		}
-		if (Gdx.input.isKeyPressed(Keys.S)) {
-			accelY = -200f;
-		} else if (Gdx.input.isKeyPressed(Keys.W)) {
-			accelY = 200f;
-		} else {
-			accelY = 0;
-		}
-		if (accelY == 0 && accelX == 0) {
-			state.set(PlayerComponent.STATE_IDLE);
-		} else {
-			state.set(PlayerComponent.STATE_WALKING);
+			// t.rotation needs to be locked
+			Vector2 newVelocity = new Vector2(300, 0).rotate(t.rotation);
+			this.accelX = newVelocity.x;
+			this.accelY = newVelocity.y;
+			headButtCooldown += deltaTime;
+			if (headButtCooldown >= PlayerComponent.ATTACK_DURATION) {
+				headButtCooldown = 0;
+				state.set(PlayerComponent.STATE_IDLE);
+			}
+
 		}
 
-		Vector2 playerPos = BossSystem.getDeepCopyCentralPos(entity);
-
-		Vector3 mousePos = world.game.camera.unproject(new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0));
-		Vector2 mousePos2 = new Vector2(mousePos.x, mousePos.y);
-		t.rotation = mousePos2.sub(playerPos).angle();
 		mov.velocity.set(accelX, accelY);
 	}
 }

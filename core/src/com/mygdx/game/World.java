@@ -99,12 +99,12 @@ public class World {
 		animComp.animations.put(PlayerComponent.STATE_IDLE, new Animation(5, cast(walkList)));
 		animComp.animations.get(PlayerComponent.STATE_IDLE).setPlayMode(PlayMode.NORMAL);
 		animComp.animations.put(PlayerComponent.STATE_WALKING, new Animation(0.3f, cast(walkList)));
-		animComp.animations.get(PlayerComponent.STATE_WALKING).setPlayMode(PlayMode.LOOP_PINGPONG);
+		animComp.animations.get(PlayerComponent.STATE_WALKING).setPlayMode(PlayMode.LOOP);
 
 		Texture attack = game.assetManager.get("Living/headbut_attack_animscheet.png");
 		List<TextureRegion> attckList = extractListOfRegions(attack, 2);
-		animComp.animations.put(PlayerComponent.STATE_ATTACKING, new Animation(PlayerComponent.ATTACK_DURATION, cast(attckList)));
-		animComp.animations.get(PlayerComponent.STATE_ATTACKING).setPlayMode(PlayMode.LOOP_PINGPONG);
+		animComp.animations.put(PlayerComponent.STATE_HEADBUTT, new Animation(PlayerComponent.ATTACK_DURATION, cast(attckList)));
+		animComp.animations.get(PlayerComponent.STATE_HEADBUTT).setPlayMode(PlayMode.NORMAL);
 
 		bounds.bounds.width = PlayerComponent.WIDTH;
 		bounds.bounds.height = PlayerComponent.HEIGHT;

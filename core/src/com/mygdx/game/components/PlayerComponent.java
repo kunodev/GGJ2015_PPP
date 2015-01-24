@@ -20,14 +20,14 @@ import com.badlogic.ashley.core.Component;
 
 public class PlayerComponent extends Component {
 	public static final int STATE_WALKING = 0;
-	public static final int STATE_ATTACKING = 1;
+	public static final int STATE_HEADBUTT = 1;
 	public static final int STATE_HIT = 2;
 	public static final int STATE_IDLE = 3;
 	public static final float JUMP_VELOCITY = 11;
 	public static final float MOVE_VELOCITY = 2000;
 	public static final float WIDTH = 1f;
 	public static final float HEIGHT = 1f;
-	public static final float ATTACK_DURATION = 2f;
+	public static final float ATTACK_DURATION = 1f;
 
 	public float heightSoFar = 0.0f;
 }
