@@ -71,7 +71,7 @@ public class CollisionSystem extends EntitySystem {
 	
 	@Override
 	public void update(float deltaTime) {
-		BobSystem bobSystem = engine.getSystem(BobSystem.class);
+		PlayerSystem playerSystem = engine.getSystem(PlayerSystem.class);
 		PlatformSystem platformSystem = engine.getSystem(PlatformSystem.class);
 		
 		for (int i = 0; i < player.size(); ++i) {
@@ -98,7 +98,7 @@ public class CollisionSystem extends EntitySystem {
 						BoundsComponent platBounds = bm.get(platform);
 						
 						if (bobBounds.bounds.overlaps(platBounds.bounds)) {
-							bobSystem.hitPlatform(bob);
+							playerSystem.hitPlatform(bob);
 							listener.jump();
 							if (rand.nextFloat() > 0.5f) {
 								platformSystem.pulverize(platform);
@@ -117,7 +117,7 @@ public class CollisionSystem extends EntitySystem {
 					
 					if (bobPos.pos.y > springPos.pos.y) {
 						if (bobBounds.bounds.overlaps(springBounds.bounds)) {
-							bobSystem.hitSpring(bob);
+							playerSystem.hitSpring(bob);
 							listener.highJump();
 						}
 					} 
@@ -130,7 +130,7 @@ public class CollisionSystem extends EntitySystem {
 				BoundsComponent squirrelBounds = bm.get(squirrel);
 				
 				if (squirrelBounds.bounds.overlaps(bobBounds.bounds)) {
-					bobSystem.hitSquirrel(bob);
+					playerSystem.hitSquirrel(bob);
 					listener.hit();
 				}
 			}

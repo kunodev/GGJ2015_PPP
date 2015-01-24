@@ -82,7 +82,7 @@ public class GameScreen extends ScreenAdapter {
 
 		world = new World(engine);
 
-		engine.addSystem(new BobSystem(world));
+		engine.addSystem(new PlayerSystem(world));
 		engine.addSystem(new SquirrelSystem());
 		engine.addSystem(new PlatformSystem());
 		engine.addSystem(new CameraSystem());
@@ -167,7 +167,7 @@ public class GameScreen extends ScreenAdapter {
 				accelX = -5f;
 		}
 
-		engine.getSystem(BobSystem.class).setAccelX(accelX);
+		engine.getSystem(PlayerSystem.class).setAccelX(accelX);
 
 		if (world.score != lastScore) {
 			lastScore = world.score;
@@ -276,7 +276,7 @@ public class GameScreen extends ScreenAdapter {
 	}
 
 	private void pauseSystems() {
-		engine.getSystem(BobSystem.class).setProcessing(false);
+		engine.getSystem(PlayerSystem.class).setProcessing(false);
 		engine.getSystem(SquirrelSystem.class).setProcessing(false);
 		engine.getSystem(PlatformSystem.class).setProcessing(false);
 		engine.getSystem(GravitySystem.class).setProcessing(false);
@@ -288,7 +288,7 @@ public class GameScreen extends ScreenAdapter {
 	}
 
 	private void resumeSystems() {
-		engine.getSystem(BobSystem.class).setProcessing(true);
+		engine.getSystem(PlayerSystem.class).setProcessing(true);
 		engine.getSystem(SquirrelSystem.class).setProcessing(true);
 		engine.getSystem(PlatformSystem.class).setProcessing(true);
 		engine.getSystem(GravitySystem.class).setProcessing(true);

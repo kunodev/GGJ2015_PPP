@@ -26,7 +26,7 @@ import com.mygdx.game.components.MovementComponent;
 import com.mygdx.game.components.StateComponent;
 import com.mygdx.game.components.TransformComponent;
 
-public class BobSystem extends IteratingSystem {
+public class PlayerSystem extends IteratingSystem {
 	private static final Family family = Family.getFor(PlayerComponent.class,
 			StateComponent.class,
 			TransformComponent.class,
@@ -40,7 +40,7 @@ public class BobSystem extends IteratingSystem {
 	private ComponentMapper<TransformComponent> tm;
 	private ComponentMapper<MovementComponent> mm;
 	
-	public BobSystem(World world) {
+	public PlayerSystem(World world) {
 		super(family);
 		
 		this.world = world;
