@@ -87,23 +87,18 @@ public class World {
 		TransformComponent position = new TransformComponent();
 		StateComponent state = new StateComponent();
 		TextureComponent texture = new TextureComponent();
-		DummyComponent dummy = new DummyComponent();
 		CollisionComponent col = new CollisionComponent();
 		AnimationComponent animComp = new AnimationComponent();
 
 		// TODO Real playercollisionsListener
 		col.listener = new WallCollisionListener();
 
-		dummy.color = Color.GREEN;
-		dummy.width = bob.WIDTH;
-		dummy.height = bob.HEIGHT;
-
 		// animation.animations.put(PlayerComponent.STATE_WALK, );
 		Texture walk = game.assetManager.get("Living/headbut_walk_animscheet.png");
 		List<TextureRegion> walkList = extractListOfRegions(walk, 4);
 		animComp.animations.put(PlayerComponent.STATE_IDLE, new Animation(5, cast(walkList)));
 		animComp.animations.get(PlayerComponent.STATE_IDLE).setPlayMode(PlayMode.NORMAL);
-		animComp.animations.put(PlayerComponent.STATE_WALKING, new Animation(5, cast(walkList)));
+		animComp.animations.put(PlayerComponent.STATE_WALKING, new Animation(0.3f, cast(walkList)));
 		animComp.animations.get(PlayerComponent.STATE_WALKING).setPlayMode(PlayMode.LOOP_PINGPONG);
 
 		Texture attack = game.assetManager.get("Living/headbut_attack_animscheet.png");
@@ -125,7 +120,6 @@ public class World {
 		entity.add(position);
 		entity.add(state);
 		entity.add(texture);
-		entity.add(dummy);
 		entity.add(col);
 		entity.add(animComp);
 		engine.addEntity(entity);

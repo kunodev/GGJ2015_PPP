@@ -19,7 +19,6 @@ package com.mygdx.game;
 import com.badlogic.ashley.core.Engine;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
@@ -27,9 +26,7 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.math.Rectangle;
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
-import com.mygdx.game.components.TransformComponent;
 import com.mygdx.game.systems.AnimationSystem;
 import com.mygdx.game.systems.BackgroundSystem;
 import com.mygdx.game.systems.BossSystem;
@@ -148,24 +145,6 @@ public class GameScreen extends ScreenAdapter {
 			}
 		}
 
-		float accelX = 0.0f;
-		float accelY = 0.0f;
-
-		if (Gdx.input.isKeyPressed(Keys.A))
-			accelX = 5f;
-		if (Gdx.input.isKeyPressed(Keys.D))
-			accelX = -5f;
-		if (Gdx.input.isKeyPressed(Keys.S))
-			accelY = 5f;
-		if (Gdx.input.isKeyPressed(Keys.W))
-			accelY = -5f;
-
-		Vector3 v3 = new Vector3(game.camera.unproject(new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0)).x, game.camera.unproject(new Vector3(
-				Gdx.input.getX(), Gdx.input.getY(), 0)).y, 0f).sub(world.bob.getComponent(TransformComponent.class).pos);
-
-		world.bob.getComponent(TransformComponent.class).rotation = new Vector2(v3.x, v3.y).angle();
-		engine.getSystem(PlayerSystem.class).setAccelX(accelX);
-		engine.getSystem(PlayerSystem.class).setAccelY(accelY);
 		// if (world.state == World.WORLD_STATE_NEXT_LEVEL) {
 		// game.setScreen(new WinScreen(game));
 		// }

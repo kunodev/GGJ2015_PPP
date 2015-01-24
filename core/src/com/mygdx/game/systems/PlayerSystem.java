@@ -31,8 +31,8 @@ import com.mygdx.game.components.StateComponent;
 import com.mygdx.game.components.TransformComponent;
 
 public class PlayerSystem extends IteratingSystem {
-	private static final Family family = Family
-			.getFor(PlayerComponent.class, StateComponent.class, TransformComponent.class, MovementComponent.class);
+	private static final Family family = Family.all(PlayerComponent.class, StateComponent.class, TransformComponent.class, MovementComponent.class)
+			.get();
 
 	private float accelX = 0.0f;
 	private float accelY = 0.0f;
@@ -54,19 +54,9 @@ public class PlayerSystem extends IteratingSystem {
 		mm = ComponentMapper.getFor(MovementComponent.class);
 	}
 
-	public void setAccelX(float accelX) {
-		this.accelX = accelX;
-	}
-
-	public void setAccelY(float accelY) {
-		this.accelY = accelY;
-	}
-
 	@Override
 	public void update(float deltaTime) {
 		super.update(deltaTime);
-		accelY = 0.0f;
-		accelX = 0.0f;
 	}
 
 	@Override
@@ -75,22 +65,31 @@ public class PlayerSystem extends IteratingSystem {
 		StateComponent state = sm.get(entity);
 		MovementComponent mov = mm.get(entity);
 		PlayerComponent bob = bm.get(entity);
-		if (Gdx.input.isKeyPressed(Keys.A))
-			accelX = 5f;
-		if (Gdx.input.isKeyPressed(Keys.D))
-			accelX = -5f;
-		if (Gdx.input.isKeyPressed(Keys.S))
-			accelY = 5f;
-		if (Gdx.input.isKeyPressed(Keys.W))
-			accelY = -5f;
+		if (Gdx.input.isKeyPressed(Keys.A)) {
+			accelX = -200f;
+		} else if (Gdx.input.isKeyPressed(Keys.D)) {
+			accelX = 200f;
+		} else {
+			accelX = 0;
+		}
+		if (Gdx.input.isKeyPressed(Keys.S)) {
+			accelY = -200f;
+		} else if (Gdx.input.isKeyPressed(Keys.W)) {
+			accelY = 200f;
+		} else {
+			accelY = 0;
+		}
+		if (accelY == 0 && accelX == 0) {
+			state.set(PlayerComponent.STATE_IDLE);
+		} else {
+			state.set(PlayerComponent.STATE_WALKING);
+		}
 
-		Vector3 v3 = new Vector3(world.game.camera.unproject(new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0)).x,
-				world.game.camera.unproject(new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0)).y, 0f).sub(world.bob
-				.getComponent(TransformComponent.class).pos);
+		Vector2 playerPos = BossSystem.getDeepCopyCentralPos(entity);
 
-		world.bob.getComponent(TransformComponent.class).rotation = new Vector2(v3.x, v3.y).angle();
-		world.game.engine.getSystem(PlayerSystem.class).setAccelX(accelX);
-		world.game.engine.getSystem(PlayerSystem.class).setAccelY(accelY);
-
+		Vector3 mousePos = world.game.camera.unproject(new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0));
+		Vector2 mousePos2 = new Vector2(mousePos.x, mousePos.y);
+		t.rotation = mousePos2.sub(playerPos).angle();
+		mov.velocity.set(accelX, accelY);
 	}
 }
