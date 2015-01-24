@@ -1,5 +1,12 @@
 package de.panda.tiled;
 
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Set;
+
+import org.reflections.Reflections;
+
 import com.badlogic.ashley.core.Component;
 import com.badlogic.ashley.core.Engine;
 import com.badlogic.ashley.core.Entity;
@@ -14,13 +21,8 @@ import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer.Cell;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.mygdx.game.components.BoundsComponent;
+import com.mygdx.game.components.TransformComponent;
 import com.mygdx.game.components.WallComponent;
-import org.reflections.Reflections;
-
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
-import java.util.Set;
 
 public class MapRenderer {
 
@@ -80,20 +82,25 @@ public class MapRenderer {
 					RectangleMapObject robj = (RectangleMapObject) obj;
 					Entity e = new Entity();
 					Iterator<String> keys = robj.getProperties().getKeys();
-					
-					while(keys.hasNext()){
+
+					while (keys.hasNext()) {
 						String prop = keys.next();
-						if (prop.equals("wall") ) {							
+						if (prop.equals("wall")) {
 							WallComponent wallComp = new WallComponent();
 							BoundsComponent boundsComp = new BoundsComponent(robj.getRectangle());
-							
+							TransformComponent trans = new TransformComponent();
+							trans.pos.x = robj.getRectangle().x;
+							trans.pos.y = robj.getRectangle().y;
+
 							e.add(wallComp);
 							e.add(boundsComp);
-							//System.out.println("wall" + robj.getRectangle().toString());
+							e.add(trans);
+							// System.out.println("wall" +
+							// robj.getRectangle().toString());
 						}
-						
+
 					}
-					
+
 					createComponent(components, e, keys);
 					engine.addEntity(e);
 				}

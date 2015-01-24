@@ -28,7 +28,17 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.mygdx.game.components.TransformComponent;
-import com.mygdx.game.systems.*;
+import com.mygdx.game.systems.AnimationSystem;
+import com.mygdx.game.systems.BackgroundSystem;
+import com.mygdx.game.systems.BossSystem;
+import com.mygdx.game.systems.BoundsSystem;
+import com.mygdx.game.systems.BulletSystem;
+import com.mygdx.game.systems.CameraSystem;
+import com.mygdx.game.systems.CollisionSystem;
+import com.mygdx.game.systems.MovementSystem;
+import com.mygdx.game.systems.PlayerSystem;
+import com.mygdx.game.systems.RenderingSystem;
+import com.mygdx.game.systems.StateSystem;
 
 public class GameScreen extends ScreenAdapter {
 	static final int GAME_READY = 0;
@@ -61,7 +71,7 @@ public class GameScreen extends ScreenAdapter {
 		collisionListener = new CollisionSystem.CollisionListener() {
 			@Override
 			public void hit() {
-				//Assets.playSound(Assets.hitSound);
+				// Assets.playSound(Assets.hitSound);
 			}
 		};
 
@@ -77,7 +87,7 @@ public class GameScreen extends ScreenAdapter {
 		engine.addSystem(new BoundsSystem());
 		engine.addSystem(new StateSystem());
 		engine.addSystem(new AnimationSystem());
-		engine.addSystem(new CollisionSystem(world, collisionListener));
+		engine.addSystem(new CollisionSystem(world));
 		engine.addSystem(new RenderingSystem(game));
 
 		engine.getSystem(BackgroundSystem.class).setCamera(game.camera);
@@ -126,7 +136,7 @@ public class GameScreen extends ScreenAdapter {
 			game.camera.unproject(touchPoint.set(Gdx.input.getX(), Gdx.input.getY(), 0));
 
 			if (pauseBounds.contains(touchPoint.x, touchPoint.y)) {
-				//Assets.playSound(Assets.clickSound);
+				// Assets.playSound(Assets.clickSound);
 				state = GAME_PAUSED;
 				pauseSystems();
 				return;
@@ -136,14 +146,14 @@ public class GameScreen extends ScreenAdapter {
 		float accelX = 0.0f;
 		float accelY = 0.0f;
 
-			if (Gdx.input.isKeyPressed(Keys.A))
-				accelX = 5f;
-			if (Gdx.input.isKeyPressed(Keys.D))
-				accelX = -5f;
-			if (Gdx.input.isKeyPressed(Keys.S))
-				accelY = 5f;
-			if (Gdx.input.isKeyPressed(Keys.W))
-				accelY = -5f;
+		if (Gdx.input.isKeyPressed(Keys.A))
+			accelX = 5f;
+		if (Gdx.input.isKeyPressed(Keys.D))
+			accelX = -5f;
+		if (Gdx.input.isKeyPressed(Keys.S))
+			accelY = 5f;
+		if (Gdx.input.isKeyPressed(Keys.W))
+			accelY = -5f;
 
 		Vector3 v3 = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0f).sub(world.bob.getComponent(TransformComponent.class).pos);
 
@@ -166,14 +176,14 @@ public class GameScreen extends ScreenAdapter {
 			game.camera.unproject(touchPoint.set(Gdx.input.getX(), Gdx.input.getY(), 0));
 
 			if (resumeBounds.contains(touchPoint.x, touchPoint.y)) {
-				//Assets.playSound(Assets.clickSound);
+				// Assets.playSound(Assets.clickSound);
 				state = GAME_RUNNING;
 				resumeSystems();
 				return;
 			}
 
 			if (quitBounds.contains(touchPoint.x, touchPoint.y)) {
-				//Assets.playSound(Assets.clickSound);
+				// Assets.playSound(Assets.clickSound);
 				game.setScreen(new MainMenuScreen(game));
 				return;
 			}
@@ -199,7 +209,7 @@ public class GameScreen extends ScreenAdapter {
 		game.batcher.setProjectionMatrix(game.camera.combined);
 
 		game.batcher.begin();
-		game.batcher.draw(game.assetManager.get("f.png", Texture.class),128.0f, 128.0f);
+		game.batcher.draw(game.assetManager.get("f.png", Texture.class), 128.0f, 128.0f);
 		switch (state) {
 		case GAME_READY:
 			presentReady();
@@ -224,7 +234,7 @@ public class GameScreen extends ScreenAdapter {
 
 		game.batcher.end();
 
-		if(game.shapeRenderer != null){
+		if (game.shapeRenderer != null) {
 			game.shapeRenderer.setProjectionMatrix(game.camera.combined);
 
 			game.shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
@@ -236,32 +246,38 @@ public class GameScreen extends ScreenAdapter {
 	}
 
 	private void presentReady() {
-		//game.batcher.draw(Assets.ready, 160 - 192 / 2, 240 - 32 / 2, 192, 32);
+		// game.batcher.draw(Assets.ready, 160 - 192 / 2, 240 - 32 / 2, 192,
+		// 32);
 	}
 
 	private void presentRunning() {
-		//game.batcher.draw(Assets.pause, 320 - 64, 480 - 64, 64, 64);
-		//Assets.font.draw(game.batcher, scoreString, 16, 480 - 20);
+		// game.batcher.draw(Assets.pause, 320 - 64, 480 - 64, 64, 64);
+		// Assets.font.draw(game.batcher, scoreString, 16, 480 - 20);
 	}
 
 	private void presentPaused() {
-		//game.batcher.draw(Assets.pauseMenu, 160 - 192 / 2, 240 - 96 / 2, 192, 96);
-		//Assets.font.draw(game.batcher, scoreString, 16, 480 - 20);
+		// game.batcher.draw(Assets.pauseMenu, 160 - 192 / 2, 240 - 96 / 2, 192,
+		// 96);
+		// Assets.font.draw(game.batcher, scoreString, 16, 480 - 20);
 	}
 
 	private void presentLevelEnd() {
 		String topText = "the princess is ...";
 		String bottomText = "in another castle!";
-		//float topWidth = Assets.font.getBounds(topText).width;
-		//float bottomWidth = Assets.font.getBounds(bottomText).width;
-		//Assets.font.draw(game.batcher, topText, 160 - topWidth / 2, 480 - 40);
-		//Assets.font.draw(game.batcher, bottomText, 160 - bottomWidth / 2, 40);
+		// float topWidth = Assets.font.getBounds(topText).width;
+		// float bottomWidth = Assets.font.getBounds(bottomText).width;
+		// Assets.font.draw(game.batcher, topText, 160 - topWidth / 2, 480 -
+		// 40);
+		// Assets.font.draw(game.batcher, bottomText, 160 - bottomWidth / 2,
+		// 40);
 	}
 
 	private void presentGameOver() {
-		//game.batcher.draw(Assets.gameOver, 160 - 160 / 2, 240 - 96 / 2, 160, 96);
-		//float scoreWidth = Assets.font.getBounds(scoreString).width;
-		//Assets.font.draw(game.batcher, scoreString, 160 - scoreWidth / 2, 480 - 20);
+		// game.batcher.draw(Assets.gameOver, 160 - 160 / 2, 240 - 96 / 2, 160,
+		// 96);
+		// float scoreWidth = Assets.font.getBounds(scoreString).width;
+		// Assets.font.draw(game.batcher, scoreString, 160 - scoreWidth / 2, 480
+		// - 20);
 	}
 
 	private void pauseSystems() {

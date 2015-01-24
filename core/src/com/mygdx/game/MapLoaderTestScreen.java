@@ -19,6 +19,18 @@ package com.mygdx.game;
 import com.badlogic.ashley.core.Engine;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.maps.tiled.TiledMap;
+import com.mygdx.game.systems.AnimationSystem;
+import com.mygdx.game.systems.BackgroundSystem;
+import com.mygdx.game.systems.BossSystem;
+import com.mygdx.game.systems.BoundsSystem;
+import com.mygdx.game.systems.BulletSystem;
+import com.mygdx.game.systems.CameraSystem;
+import com.mygdx.game.systems.CollisionSystem;
+import com.mygdx.game.systems.MovementSystem;
+import com.mygdx.game.systems.PlayerSystem;
+import com.mygdx.game.systems.RenderingSystem;
+import com.mygdx.game.systems.StateSystem;
+
 import de.panda.tiled.MapRenderer;
 
 public class MapLoaderTestScreen extends ScreenAdapter {
@@ -33,11 +45,26 @@ public class MapLoaderTestScreen extends ScreenAdapter {
 	Engine engine;
 	MapRenderer renderer;
 
+	World world;
 	private int state;
 
 	public MapLoaderTestScreen(PowerfulPandaApp game) {
 		this.game = game;
-		engine = new Engine();
+		engine = game.engine;
+		world = new World(game);
+
+		engine.addSystem(new PlayerSystem(world));
+		engine.addSystem(new BossSystem(world));
+		engine.addSystem(new BulletSystem(world));
+		engine.addSystem(new CameraSystem());
+		engine.addSystem(new BackgroundSystem());
+		engine.addSystem(new MovementSystem());
+		engine.addSystem(new BoundsSystem());
+		engine.addSystem(new StateSystem());
+		engine.addSystem(new AnimationSystem());
+		engine.addSystem(new CollisionSystem(world));
+		engine.addSystem(new RenderingSystem(game));
+
 	}
 
 	public void update(float deltaTime) {
@@ -45,46 +72,6 @@ public class MapLoaderTestScreen extends ScreenAdapter {
 			deltaTime = 0.1f;
 
 		engine.update(deltaTime);
-	}
-
-	private void updateReady() {
-
-	}
-
-	private void updateRunning(float deltaTime) {
-	}
-
-	private void updatePaused() {
-	}
-
-	private void updateLevelEnd() {
-	}
-
-	private void updateGameOver() {
-	}
-
-	public void drawUI() {
-	}
-
-	private void presentReady() {
-	}
-
-	private void presentRunning() {
-	}
-
-	private void presentPaused() {
-	}
-
-	private void presentLevelEnd() {
-	}
-
-	private void presentGameOver() {
-	}
-
-	private void pauseSystems() {
-	}
-
-	private void resumeSystems() {
 	}
 
 	@Override

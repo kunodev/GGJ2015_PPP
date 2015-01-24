@@ -44,11 +44,10 @@ public class CollisionSystem extends IteratingSystem {
 
 	private Engine engine;
 	private World world;
-	private CollisionListener listener;
 	public ImmutableArray<Entity> collidables;
 	private static final Family colliderFamily = Family.all(TransformComponent.class).one(WallComponent.class, CollisionComponent.class).get();
 
-	public CollisionSystem(World world, CollisionListener listener) {
+	public CollisionSystem(World world) {
 		super(colliderFamily);
 		this.world = world;
 
@@ -83,24 +82,24 @@ public class CollisionSystem extends IteratingSystem {
 
 	private Rectangle buildRectangle(Entity entity) {
 		Rectangle result = new Rectangle(0, 0, 0, 0);
-		CollisionComponent collisionComp = entity.getComponent(CollisionComponent.class);
+		CollisionComponent collisionComp = cm.get(entity);
 		float width = collisionComp.width;
 		if (width > 0) {
 			result.setWidth(width);
 			result.setHeight(collisionComp.height);
 		} else {
-			TextureComponent texComp = entity.getComponent(TextureComponent.class);
+			TextureComponent texComp = texm.get(entity);
 			if (texComp != null) {
 				result.setWidth(texComp.region.getRegionWidth());
 				result.setHeight(texComp.region.getRegionHeight());
 			}
-			DummyComponent dummyComp = entity.getComponent(DummyComponent.class);
+			DummyComponent dummyComp = dm.get(entity);
 			if (dummyComp != null) {
 				result.setWidth(dummyComp.width);
 				result.setHeight(dummyComp.height);
 			}
 		}
-		Vector3 pos2 = entity.getComponent(TransformComponent.class).pos;
+		Vector3 pos2 = tm.get(entity).pos;
 		Vector2 pos = new Vector2(pos2.x, pos2.y);
 		result.setCenter(pos);
 		return result;
