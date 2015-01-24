@@ -26,15 +26,16 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Rectangle;
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 
 public class MainMenuScreen extends ScreenAdapter {
-	private final static float Y_START = PowerfulPandaApp.DEFAULT_HEIGHT / 5;
+	private final static float Y_START = PowerfulPandaApp.DEFAULT_HEIGHT / 4;
 	private final static float Y_GAP = PowerfulPandaApp.DEFAULT_HEIGHT / 20;
-	private final static float X_GAP = PowerfulPandaApp.DEFAULT_WIDTH / 10;
-	private final static float BUTTON_WIDTH = PowerfulPandaApp.DEFAULT_WIDTH / 3;
-	private final static float BUTTON_HEIGHT = PowerfulPandaApp.DEFAULT_HEIGHT / 8;
+	private final static float X_GAP = PowerfulPandaApp.DEFAULT_WIDTH / 12;
+	private final static float BUTTON_WIDTH = PowerfulPandaApp.DEFAULT_WIDTH / 5;
+	private final static float BUTTON_HEIGHT = PowerfulPandaApp.DEFAULT_HEIGHT / 10;
+	private final static float X_TEXT_OFF = 4.0f;
+	private final static float Y_TEXT_OFF = -4.0f;
 
 	PowerfulPandaApp game;
 	Rectangle playBounds;
@@ -104,19 +105,11 @@ public class MainMenuScreen extends ScreenAdapter {
 
 
 		game.batcher.begin();
+		font.setScale(BUTTON_HEIGHT / 15f);
 
-		float xOffset = 250f;
-		float yOffset = 40f;
-		font.setScale(6f);
-		Vector2 center = new Vector2();
-		playBounds.getCenter(center);
-		font.draw(game.batcher, "PLAY", center.x-xOffset, center.y+yOffset);
-
-		creditsBounds.getCenter(center);
-		font.draw(game.batcher, "Credits", center.x-xOffset, center.y+yOffset);
-
-		exitBounds.getCenter(center);
-		font.draw(game.batcher, "EXIT", center.x-xOffset, center.y+yOffset);
+		font.draw(game.batcher, "PLAY", playBounds.x + X_TEXT_OFF, playBounds.y + BUTTON_HEIGHT + Y_TEXT_OFF);
+		font.draw(game.batcher, "Credits", creditsBounds.x + X_TEXT_OFF, creditsBounds.y + BUTTON_HEIGHT + Y_TEXT_OFF);
+		font.draw(game.batcher, "EXIT", exitBounds.x + X_TEXT_OFF, exitBounds.y + BUTTON_HEIGHT + Y_TEXT_OFF);
 
 		game.batcher.end();
 	}
