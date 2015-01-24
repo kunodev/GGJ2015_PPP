@@ -31,7 +31,6 @@ public class PowerfulPandaApp extends Game {
 		batcher = new SpriteBatch();
 		camera = new OrthographicCamera(DEFAULT_WIDTH, DEFAULT_HEIGHT);
 
-		Gdx.graphics.setVSync(true);
 		Gdx.graphics.setDisplayMode(1920, 1080, true);
 
 		// debugging settings
