@@ -166,7 +166,6 @@ public class GameScreen extends ScreenAdapter {
 		world.bob.getComponent(TransformComponent.class).rotation = new Vector2(v3.x, v3.y).angle();
 		engine.getSystem(PlayerSystem.class).setAccelX(accelX);
 		engine.getSystem(PlayerSystem.class).setAccelY(accelY);
-
 		// if (world.state == World.WORLD_STATE_NEXT_LEVEL) {
 		// game.setScreen(new WinScreen(game));
 		// }

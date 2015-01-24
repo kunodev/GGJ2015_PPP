@@ -14,8 +14,8 @@ import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 
 public class PowerfulPandaApp extends Game {
-	public static float DEFAULT_WIDTH = 1920;
-	public static float DEFAULT_HEIGHT = 1080;
+	public static float DEFAULT_WIDTH = 960;
+	public static float DEFAULT_HEIGHT = 540;
 
 	public AssetManager assetManager;
 	public SpriteBatch batcher;
@@ -31,7 +31,7 @@ public class PowerfulPandaApp extends Game {
 		batcher = new SpriteBatch();
 		camera = new OrthographicCamera(DEFAULT_WIDTH, DEFAULT_HEIGHT);
 
-		Gdx.graphics.setDisplayMode(1920, 1080, true);
+		Gdx.graphics.setDisplayMode((int)DEFAULT_WIDTH, (int)DEFAULT_HEIGHT, false);
 
 		// debugging settings
 		Gdx.app.setLogLevel(Application.LOG_DEBUG);
