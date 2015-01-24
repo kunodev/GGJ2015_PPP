@@ -25,53 +25,147 @@
   <tile id="7">
    <image width="64" height="64" source="Background/Kueche_klein.png"/>
   </tile>
-  <tile id="8">
-   <image width="64" height="64" source="Background/Teppich.png"/>
-  </tile>
  </tileset>
- <tileset firstgid="10" name="Walls" tilewidth="64" tileheight="64">
+ <tileset firstgid="9" name="Walls" tilewidth="64" tileheight="64">
   <tile id="0">
    <image width="64" height="64" source="Walls/Mauer.png"/>
   </tile>
   <tile id="1">
-   <image width="64" height="64" source="Walls/Maueranfang.png"/>
+   <image width="64" height="64" source="Walls/Mauer_links.png"/>
   </tile>
   <tile id="2">
-   <image width="64" height="64" source="Walls/Mauerecke (2).png"/>
+   <image width="64" height="64" source="Walls/Mauer_rechts.png"/>
   </tile>
   <tile id="3">
-   <image width="64" height="64" source="Walls/Mauerecke.png"/>
+   <image width="64" height="64" source="Walls/Maueranfang.png"/>
   </tile>
   <tile id="4">
-   <image width="64" height="64" source="Walls/Mauerende.png"/>
+   <image width="64" height="64" source="Walls/Mauerecke_oben_links.png"/>
   </tile>
   <tile id="5">
-   <image width="64" height="64" source="Walls/Mauerseitlich.png"/>
+   <image width="64" height="64" source="Walls/Mauerecke_oben_links_klein.png"/>
   </tile>
   <tile id="6">
-   <image width="64" height="64" source="Walls/Mauerseitlich_anfang.png"/>
+   <image width="64" height="64" source="Walls/Mauerecke_oben_rechts_klein.png"/>
   </tile>
   <tile id="7">
-   <image width="64" height="64" source="Walls/Mauerseitlich_ende.png"/>
+   <image width="64" height="64" source="Walls/Mauerecke_oben_rechts4.png"/>
   </tile>
   <tile id="8">
-   <image width="64" height="64" source="Walls/Wandseitlich.png"/>
+   <image width="64" height="64" source="Walls/Mauerecke_unten_links.png"/>
   </tile>
   <tile id="9">
-   <image width="64" height="64" source="Walls/Wandseitlich_anfang.png"/>
+   <image width="64" height="64" source="Walls/Mauerecke_unten_links_klein.png"/>
   </tile>
   <tile id="10">
+   <image width="64" height="64" source="Walls/Mauerecke_unten_rechts.png"/>
+  </tile>
+  <tile id="11">
+   <image width="64" height="64" source="Walls/Mauerecke_unten_rechts_klein.png"/>
+  </tile>
+  <tile id="12">
+   <image width="64" height="64" source="Walls/Mauerecke_unten_rechts2.png"/>
+  </tile>
+  <tile id="13">
+   <image width="64" height="64" source="Walls/Mauerende.png"/>
+  </tile>
+  <tile id="14">
+   <image width="64" height="64" source="Walls/Mauerseitlich.png"/>
+  </tile>
+  <tile id="15">
+   <image width="64" height="64" source="Walls/Mauerseitlich_anfang.png"/>
+  </tile>
+  <tile id="16">
+   <image width="64" height="64" source="Walls/Mauerseitlich_ende.png"/>
+  </tile>
+  <tile id="17">
+   <image width="64" height="64" source="Walls/Mauerseitlich_oben.png"/>
+  </tile>
+  <tile id="18">
+   <image width="64" height="64" source="Walls/Mauerseitlich_unten.png"/>
+  </tile>
+  <tile id="19">
+   <image width="64" height="64" source="Walls/Wand_links.png"/>
+  </tile>
+  <tile id="20">
+   <image width="64" height="64" source="Walls/Wand_rechts.png"/>
+  </tile>
+  <tile id="21">
+   <image width="64" height="64" source="Walls/Wand_rechts_horizontal.png"/>
+  </tile>
+  <tile id="22">
+   <image width="64" height="64" source="Walls/Wand_rechts_horizontal_unten.png"/>
+  </tile>
+  <tile id="23">
+   <image width="64" height="64" source="Walls/Wandanfang.png"/>
+  </tile>
+  <tile id="24">
+   <image width="64" height="64" source="Walls/Wandanfang_rechts.png"/>
+  </tile>
+  <tile id="25">
+   <image width="64" height="64" source="Walls/Wandanfang_rechts_horizontal.png"/>
+  </tile>
+  <tile id="26">
+   <image width="64" height="64" source="Walls/Wandanfang_rechts_horizontal_unten.png"/>
+  </tile>
+  <tile id="27">
+   <image width="64" height="64" source="Walls/Wandecke_oben_links.png"/>
+  </tile>
+  <tile id="28">
+   <image width="64" height="64" source="Walls/Wandecke_oben_rechts.png"/>
+  </tile>
+  <tile id="29">
+   <image width="64" height="64" source="Walls/Wandecke_unten_links.png"/>
+  </tile>
+  <tile id="30">
+   <image width="64" height="64" source="Walls/Wandecke_unten_rechts.png"/>
+  </tile>
+  <tile id="31">
+   <image width="64" height="64" source="Walls/Wandende_links.png"/>
+  </tile>
+  <tile id="32">
+   <image width="64" height="64" source="Walls/Wandende_links_horizontal.png"/>
+  </tile>
+  <tile id="33">
+   <image width="64" height="64" source="Walls/Wandende_links_horizontal_unten.png"/>
+  </tile>
+  <tile id="34">
+   <image width="64" height="64" source="Walls/Wandende_rechts.png"/>
+  </tile>
+  <tile id="35">
+   <image width="64" height="64" source="Walls/Wandseitlich.png"/>
+  </tile>
+  <tile id="36">
+   <image width="64" height="64" source="Walls/Wandseitlich_anfang.png"/>
+  </tile>
+  <tile id="37">
    <image width="64" height="64" source="Walls/Wandseitlich_ende.png"/>
   </tile>
  </tileset>
- <layer name="Kachelebene 1" width="90" height="90">
+ <tileset firstgid="47" name="Stuff" tilewidth="64" tileheight="64">
+  <tile id="0">
+   <image width="64" height="64" source="Stuff/Abwaesche.png"/>
+  </tile>
+  <tile id="1">
+   <image width="64" height="64" source="Stuff/Herd.png"/>
+  </tile>
+  <tile id="2">
+   <image width="64" height="64" source="Background/Teppich.png"/>
+  </tile>
+ </tileset>
+ <layer name="BackGround" width="90" height="90">
   <data encoding="base64" compression="zlib">
-   eJztwzENAAAMBKGb3r/k2ugACaumqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq6rsHRy692Q==
+   eJzt1iEOwCAQRcHFEO5/YlSTGhJqCgsjxiF+nthQI6ICAAAAAAAAAAAAAAAAAAAAAFsoG2y4Vflg9dbMnoZt4P1u9dbMdNb5JLO3V2edM9D5387+dToDAAAAAAAAAAAAAJyiA0cSvPk=
   </data>
  </layer>
  <layer name="Walls" width="90" height="90">
   <data encoding="base64" compression="zlib">
-   eJzt0DEKACAQA8HUovj/32ptL4I3A9uHJAAAAAAAAAAAAAAAAAAAAAAAAAAAwI/a6wFF9N084o4R/wIAAAAAAAAAAFDPAt0jAG8=
+   eJzt1skKwjAUBdBsnQcUQbfOrvz/nzOgxVKwFdFXLOfApaQJ5XHpIikBAAAAAAAAAAAAAAAAAAAAAHTTKGdVk2nl/Dhn3ZBJxOB/ptewP6ysB298s//hLF2m5xh6jvGq5+vjqefv8D/H0HOMWXre4Qrle92ycn6esymlUH63+NWwAMDf2uacarJrb7ROuTTsH0Om6D49x9BzDD3H2OecS0mV9aGluQAAAAAAAACAuxsfpQg3
+  </data>
+ </layer>
+ <layer name="Stuff" width="90" height="90">
+  <data encoding="base64" compression="zlib">
+   eJztzrENACAMA0FvRNh/OSgYIAUSFHeSuy+cAAAAAAAAAAAAAAAAAAAAAADAPWOvGl2dFoB/zdcHAAAAAAAAAAAAAAAAyAJYbQDw
   </data>
  </layer>
 </map>
