@@ -53,7 +53,7 @@ public class World {
 	
 	public void create() {
 		bob = createBob();
-		boss = createBoss();
+		//boss = createBoss();
 		createCamera(bob);
 		createBackground();
 
@@ -77,11 +77,11 @@ public class World {
 		dummy.height = bob.HEIGHT;
 
 		//animation.animations.put(PlayerComponent.STATE_WALK, );
-//		Texture tex = game.assetManager.get("f.png");
-//		TextureRegion texReg = new TextureRegion(tex);
+		Texture tex = game.assetManager.get("f.png");
+		TextureRegion texReg = new TextureRegion(tex);
+		texture.region = texReg;
 
 		bounds.bounds.width = PlayerComponent.WIDTH;
-		//		texture.region = texReg;
 		bounds.bounds.height = PlayerComponent.HEIGHT;
 		
 		position.pos.set(5.0f, 1.0f, 0.0f);
@@ -106,8 +106,8 @@ public class World {
 	private Entity createBoss() {
 		Entity entity = new Entity();
 
-		AnimationComponent animation = new AnimationComponent();
-		BossComponent boss = new BossComponent();
+		//AnimationComponent animation = new AnimationComponent();
+		//BossComponent boss = new BossComponent();
 		BoundsComponent bounds = new BoundsComponent();
 		MovementComponent movement = new MovementComponent();
 		TransformComponent position = new TransformComponent();
@@ -118,16 +118,16 @@ public class World {
 		bounds.bounds.width = BossComponent.WIDTH;
 		bounds.bounds.height = BossComponent.HEIGHT;
 
-		position.pos.set(500.0f, 200.0f, 0.0f);
+		position.pos.set(500.0f, 200.0f, 1.0f);
 
 		state.set(BossComponent.STATE_MOVE);
 
 		dummy.color = Color.RED;
-		dummy.width = boss.WIDTH;
-		dummy.height = boss.HEIGHT;
+		dummy.width = 4f;//boss.WIDTH;
+		dummy.height = 4f;//boss.HEIGHT;
 
-		entity.add(animation);
-		entity.add(boss);
+		//entity.add(animation);
+		//entity.add(boss);
 		entity.add(bounds);
 		entity.add(movement);
 		entity.add(position);

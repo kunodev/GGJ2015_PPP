@@ -199,7 +199,6 @@ public class GameScreen extends ScreenAdapter {
 		game.batcher.setProjectionMatrix(game.camera.combined);
 
 		game.batcher.begin();
-		game.batcher.draw(game.assetManager.get("f.png", Texture.class),128.0f, 128.0f);
 		switch (state) {
 		case GAME_READY:
 			presentReady();
