@@ -16,6 +16,7 @@ import com.mygdx.game.components.TextureComponent;
 import com.mygdx.game.components.TransformComponent;
 
 public class BossSystem extends IteratingSystem {
+	@SuppressWarnings("unchecked")
 	private static final Family family = Family.all(BossComponent.class, StateComponent.class, TransformComponent.class, MovementComponent.class)
 			.get();
 
