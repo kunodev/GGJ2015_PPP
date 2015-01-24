@@ -21,6 +21,10 @@ import com.badlogic.gdx.Application.ApplicationType;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.ScreenAdapter;
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
 import com.mygdx.game.systems.*;
@@ -45,6 +49,8 @@ public class GameScreen extends ScreenAdapter {
 
 	private int state;
 
+	BitmapFont font;
+
 	public GameScreen(PowerfulPandaApp game) {
 		this.game = game;
 		state = GAME_READY;
@@ -58,8 +64,8 @@ public class GameScreen extends ScreenAdapter {
 			}
 		};
 
-		engine = new Engine();
-		world = new World(engine);
+		engine = game.engine;
+		world = new World(game);
 
 		engine.addSystem(new PlayerSystem(world));
 		engine.addSystem(new BossSystem(world));
@@ -73,8 +79,6 @@ public class GameScreen extends ScreenAdapter {
 		engine.addSystem(new RenderingSystem(game));
 
 		engine.getSystem(BackgroundSystem.class).setCamera(game.camera);
-
-		world.create();
 
 		pauseBounds = new Rectangle(320 - 64, 480 - 64, 64, 64);
 		resumeBounds = new Rectangle(160 - 96, 240, 192, 36);
@@ -175,7 +179,7 @@ public class GameScreen extends ScreenAdapter {
 	private void updateLevelEnd() {
 		if (Gdx.input.justTouched()) {
 			engine.removeAllEntities();
-			world = new World(engine);
+			world = new World(game);
 			state = GAME_READY;
 		}
 	}
@@ -189,6 +193,7 @@ public class GameScreen extends ScreenAdapter {
 	public void drawUI() {
 		game.camera.update();
 		game.batcher.setProjectionMatrix(game.camera.combined);
+
 		game.batcher.begin();
 		switch (state) {
 		case GAME_READY:
@@ -207,7 +212,22 @@ public class GameScreen extends ScreenAdapter {
 			presentGameOver();
 			break;
 		}
+		font.setColor(Color.GREEN);
+		font.draw(game.batcher, "QUIT", quitBounds.x, quitBounds.y + quitBounds.height);
+		font.draw(game.batcher, "PAUSE", pauseBounds.x, pauseBounds.y + pauseBounds.height);
+		font.draw(game.batcher, "RESUME", resumeBounds.x, resumeBounds.y + resumeBounds.height);
+
 		game.batcher.end();
+
+		if(game.shapeRenderer != null){
+			game.shapeRenderer.setProjectionMatrix(game.camera.combined);
+
+			game.shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
+			game.shapeRenderer.rect(quitBounds.x, quitBounds.y, quitBounds.width, quitBounds.height);
+			game.shapeRenderer.rect(pauseBounds.x, pauseBounds.y, pauseBounds.width, pauseBounds.height);
+			game.shapeRenderer.rect(resumeBounds.x, resumeBounds.y, resumeBounds.width, resumeBounds.height);
+			game.shapeRenderer.end();
+		}
 	}
 
 	private void presentReady() {
@@ -269,5 +289,20 @@ public class GameScreen extends ScreenAdapter {
 			state = GAME_PAUSED;
 			pauseSystems();
 		}
+	}
+
+	@Override
+	public void show() {
+		game.assetManager.load("f.png", Texture.class);
+		game.assetManager.finishLoading();
+		font = new BitmapFont();
+
+		world.create();
+	}
+
+	@Override
+	public void hide() {
+		game.assetManager.clear();
+		font.dispose();
 	}
 }
