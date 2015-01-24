@@ -26,7 +26,10 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
+import com.mygdx.game.components.PlayerComponent;
+import com.mygdx.game.components.TransformComponent;
 import com.mygdx.game.systems.*;
 
 public class GameScreen extends ScreenAdapter {
@@ -135,15 +138,25 @@ public class GameScreen extends ScreenAdapter {
 		float accelX = 0.0f;
 		float accelY = 0.0f;
 
-			if (Gdx.input.isKeyPressed(Keys.DPAD_LEFT))
+			if (Gdx.input.isKeyPressed(Keys.A))
 				accelX = 5f;
-			if (Gdx.input.isKeyPressed(Keys.DPAD_RIGHT))
+			if (Gdx.input.isKeyPressed(Keys.D))
 				accelX = -5f;
-			if (Gdx.input.isKeyPressed(Keys.DPAD_DOWN))
+			if (Gdx.input.isKeyPressed(Keys.S))
 				accelY = 5f;
-			if (Gdx.input.isKeyPressed(Keys.DPAD_UP))
+			if (Gdx.input.isKeyPressed(Keys.W))
 				accelY = -5f;
 
+
+		Vector3 vc = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0f);
+		Vector3 pos = world.bob.getComponent(TransformComponent.class).pos;
+
+		Vector3 vector3 = vc.sub(pos);
+
+		Vector2 vector2 = new Vector2(vector3.x, vector3.y);
+
+
+		world.bob.getComponent(TransformComponent.class).rotation = vector2.angle();
 		engine.getSystem(PlayerSystem.class).setAccelX(accelX);
 		engine.getSystem(PlayerSystem.class).setAccelY(accelY);
 

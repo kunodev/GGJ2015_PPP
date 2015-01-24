@@ -109,9 +109,9 @@ public class PlayerSystem extends IteratingSystem {
 
 //		bob.heightSoFar = Math.max(t.pos.y, bob.heightSoFar);
 		
-		if (bob.heightSoFar - 7.5f > t.pos.y) {
-			world.state = World.WORLD_STATE_GAME_OVER;
-		}
+//		if (bob.heightSoFar - 7.5f > t.pos.y) {
+//			world.state = World.WORLD_STATE_GAME_OVER;
+//		}
 	}
 	
 	public void hitSquirrel (Entity entity) {

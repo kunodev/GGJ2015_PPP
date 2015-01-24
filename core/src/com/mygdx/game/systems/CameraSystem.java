@@ -20,6 +20,7 @@ import com.badlogic.ashley.core.ComponentMapper;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.systems.IteratingSystem;
+import com.badlogic.gdx.Gdx;
 import com.mygdx.game.PowerfulPandaApp;
 import com.mygdx.game.components.CameraComponent;
 import com.mygdx.game.components.TransformComponent;
@@ -67,10 +68,5 @@ public class CameraSystem extends IteratingSystem {
 			cam.camera.position.y = target.pos.y - (cameraTargetOffsetY - 1);
 		}
 
-
-//		cam.camera.position.y = target.pos.y;
-//		cam.camera.position.x = target.pos.x;
-
-//		cam.camera.position.y = Math.max(cam.camera.position.y, target.pos.y);
 	}
 }

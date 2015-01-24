@@ -84,7 +84,7 @@ public class RenderingSystem extends IteratingSystem {
 					game.shapeRenderer.setProjectionMatrix(game.camera.combined);
 					game.shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
 					game.shapeRenderer.setColor(dum.color);
-					game.shapeRenderer.rect(t.pos.x, t.pos.y, dum.width * 32, dum.height * 32);
+					game.shapeRenderer.rect(t.pos.x, t.pos.y, 0f, 0f, dum.width * 32, dum.height * 32, 1f, 1f, t.rotation);
 					game.shapeRenderer.end();
 				}
 			} else if (tex.region != null){
@@ -104,7 +104,7 @@ public class RenderingSystem extends IteratingSystem {
 					game.shapeRenderer.setProjectionMatrix(game.camera.combined);
 					game.shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
 					game.shapeRenderer.setColor(dum.color);
-					game.shapeRenderer.rect(t.pos.x, t.pos.y, dum.width * 32, dum.height * 32);
+					game.shapeRenderer.rect(t.pos.x, t.pos.y, 0f, 0f, dum.width * 32, dum.height * 32, 1f, 1f, t.rotation);
 					game.shapeRenderer.end();
 			}
 		}
