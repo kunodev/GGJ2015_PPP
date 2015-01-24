@@ -14,8 +14,8 @@ import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 
 public class PowerfulPandaApp extends Game {
-	public static float DEFAULT_WIDTH = 1280;
-	public static float DEFAULT_HEIGHT = 720;
+	public static float DEFAULT_WIDTH = 960;
+	public static float DEFAULT_HEIGHT = 540;
 
 	public AssetManager assetManager;
 	public SpriteBatch batcher;
