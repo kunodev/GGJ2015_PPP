@@ -16,12 +16,16 @@
 
 package com.mygdx.game;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 import com.badlogic.ashley.core.Engine;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.Animation.PlayMode;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
@@ -52,7 +56,7 @@ public class World {
 	public final Random rand;
 	public int state;
 
-	PowerfulPandaApp game;
+	public PowerfulPandaApp game;
 	private Engine engine;
 
 	public Entity bob;
@@ -85,6 +89,7 @@ public class World {
 		TextureComponent texture = new TextureComponent();
 		DummyComponent dummy = new DummyComponent();
 		CollisionComponent col = new CollisionComponent();
+		AnimationComponent animComp = new AnimationComponent();
 
 		// TODO Real playercollisionsListener
 		col.listener = new WallCollisionListener();
@@ -94,16 +99,27 @@ public class World {
 		dummy.height = bob.HEIGHT;
 
 		// animation.animations.put(PlayerComponent.STATE_WALK, );
-		Texture tex = game.assetManager.get("f.png");
-		TextureRegion texReg = new TextureRegion(tex);
-		texture.region = texReg;
+		Texture walk = game.assetManager.get("Living/headbut_walk_animscheet.png");
+		List<TextureRegion> walkList = extractListOfRegions(walk, 4);
+		animComp.animations.put(PlayerComponent.STATE_IDLE, new Animation(5, (TextureRegion[]) walkList.toArray()));
+		animComp.animations.get(PlayerComponent.STATE_IDLE).setPlayMode(PlayMode.NORMAL);
+		animComp.animations.put(PlayerComponent.STATE_WALKING, new Animation(5, (TextureRegion[]) walkList.toArray()));
+		animComp.animations.get(PlayerComponent.STATE_WALKING).setPlayMode(PlayMode.LOOP_PINGPONG);
+
+		Texture attack = game.assetManager.get("Living/headbug_attack_animscheet.png");
+		List<TextureRegion> attckList = extractListOfRegions(attack, 2);
+		animComp.animations.put(PlayerComponent.STATE_ATTACKING,
+				new Animation(PlayerComponent.ATTACK_DURATION, (TextureRegion[]) attckList.toArray()));
+		animComp.animations.get(PlayerComponent.STATE_ATTACKING).setPlayMode(PlayMode.LOOP_PINGPONG);
 
 		bounds.bounds.width = PlayerComponent.WIDTH;
 		bounds.bounds.height = PlayerComponent.HEIGHT;
 
 		position.pos.set(5.0f, 1.0f, 0.0f);
 
-		state.set(PlayerComponent.STATE_WALK);
+		animComp.animations = null;
+
+		state.set(PlayerComponent.STATE_WALKING);
 
 		// entity.add(animation);
 		entity.add(bob);
@@ -117,6 +133,17 @@ public class World {
 		engine.addEntity(entity);
 
 		return entity;
+	}
+
+	private List<TextureRegion> extractListOfRegions(Texture walk, int xParts) {
+		List<TextureRegion> walkList = new ArrayList<TextureRegion>();
+		int heightOfOne = walk.getHeight();
+		int widthOfOne = walk.getWidth() / xParts;
+		for (int i = 0; i < xParts; i++) {
+			TextureRegion nextOne = new TextureRegion(walk, widthOfOne * i, 0, widthOfOne, heightOfOne);
+			walkList.add(nextOne);
+		}
+		return walkList;
 	}
 
 	private Entity createBoss() {

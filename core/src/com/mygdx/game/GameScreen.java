@@ -323,6 +323,8 @@ public class GameScreen extends ScreenAdapter {
 		game.assetManager.load("f.png", Texture.class);
 		game.assetManager.load("Stuff/boss_attack_kugel.png", Texture.class);
 		game.assetManager.load("Living/boss_sprite.png", Texture.class);
+		game.assetManager.load("Living/headbut_attack_animscheet.png", Texture.class);
+		game.assetManager.load("Living/headbut_walk_animscheet.png", Texture.class);
 		game.assetManager.load("stage_test.tmx", TiledMap.class);
 		game.assetManager.finishLoading();
 		font = new BitmapFont();
