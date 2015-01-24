@@ -29,11 +29,8 @@ public class CollisionSystem extends EntitySystem {
 	private ComponentMapper<StateComponent> sm;
 	private ComponentMapper<TransformComponent> tm;
 	
-	public static interface CollisionListener {		
-		public void jump();
-		public void highJump();
+	public static interface CollisionListener {
 		public void hit();
-		public void coin();
 	}
 
 	private Engine engine;
@@ -41,11 +38,6 @@ public class CollisionSystem extends EntitySystem {
 	private CollisionListener listener;
 	private Random rand = new Random();
 	private ImmutableArray<Entity> player;
-	private ImmutableArray<Entity> coins;
-	private ImmutableArray<Entity> squirrels;
-	private ImmutableArray<Entity> springs;
-	private ImmutableArray<Entity> castles;
-	private ImmutableArray<Entity> platforms;
 	
 	public CollisionSystem(World world, CollisionListener listener) {
 		this.world = world;
@@ -62,17 +54,11 @@ public class CollisionSystem extends EntitySystem {
 		this.engine = engine;
 		
 		player = engine.getEntitiesFor(Family.getFor(PlayerComponent.class, BoundsComponent.class, TransformComponent.class, StateComponent.class));
-		coins = engine.getEntitiesFor(Family.getFor(CoinComponent.class, BoundsComponent.class));
-		squirrels = engine.getEntitiesFor(Family.getFor(SquirrelComponent.class, BoundsComponent.class));
-		springs = engine.getEntitiesFor(Family.getFor(SpringComponent.class, BoundsComponent.class, TransformComponent.class));
-		castles = engine.getEntitiesFor(Family.getFor(CastleComponent.class, BoundsComponent.class));
-		platforms = engine.getEntitiesFor(Family.getFor(PlatformComponent.class, BoundsComponent.class, TransformComponent.class));
 	}
 	
 	@Override
 	public void update(float deltaTime) {
 		PlayerSystem playerSystem = engine.getSystem(PlayerSystem.class);
-		PlatformSystem platformSystem = engine.getSystem(PlatformSystem.class);
 		
 		for (int i = 0; i < player.size(); ++i) {
 			Entity bob = player.get(i);
@@ -88,73 +74,6 @@ public class CollisionSystem extends EntitySystem {
 			
 			if (bobMov.velocity.y < 0.0f) {
 				TransformComponent bobPos = tm.get(bob);
-				
-				for (int j = 0; j < platforms.size(); ++j) {
-					Entity platform = platforms.get(j);
-					
-					TransformComponent platPos = tm.get(platform);
-					
-					if (bobPos.pos.y > platPos.pos.y) {
-						BoundsComponent platBounds = bm.get(platform);
-						
-						if (bobBounds.bounds.overlaps(platBounds.bounds)) {
-							playerSystem.hitPlatform(bob);
-							listener.jump();
-							if (rand.nextFloat() > 0.5f) {
-								platformSystem.pulverize(platform);
-							}
-							
-							break;
-						}
-					}
-				}
-				
-				for (int j = 0; j < springs.size(); ++j) {
-					Entity spring = springs.get(j);
-					
-					TransformComponent springPos = tm.get(spring);
-					BoundsComponent springBounds = bm.get(spring);
-					
-					if (bobPos.pos.y > springPos.pos.y) {
-						if (bobBounds.bounds.overlaps(springBounds.bounds)) {
-							playerSystem.hitSpring(bob);
-							listener.highJump();
-						}
-					} 
-				}
-			};
-
-			for (int j = 0; j < squirrels.size(); ++j) {
-				Entity squirrel = squirrels.get(j);
-				
-				BoundsComponent squirrelBounds = bm.get(squirrel);
-				
-				if (squirrelBounds.bounds.overlaps(bobBounds.bounds)) {
-					playerSystem.hitSquirrel(bob);
-					listener.hit();
-				}
-			}
-			
-			for (int j = 0; j < coins.size(); ++j) {
-				Entity coin = coins.get(j);
-				
-				BoundsComponent coinBounds = bm.get(coin);
-				
-				if (coinBounds.bounds.overlaps(bobBounds.bounds)) {
-					engine.removeEntity(coin);
-					listener.coin();
-					world.score += CoinComponent.SCORE;
-				}
-			}
-			
-			for (int j = 0; j < castles.size(); ++j) {
-				Entity castle = castles.get(j);
-				
-				BoundsComponent castleBounds = bm.get(castle);
-				
-				if (castleBounds.bounds.overlaps(bobBounds.bounds)) {
-					world.state = World.WORLD_STATE_NEXT_LEVEL;
-				}
 			}
 		}
 	}
