@@ -30,11 +30,11 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 
 public class MainMenuScreen extends ScreenAdapter {
-	private final static float Y_START = 288f;
-	private final static float Y_GAP = 32f;
-	private final static float X_GAP = 150f;
-	private final static float BUTTON_WIDTH = 600f;
-	private final static float BUTTON_HEIGHT = 128f;
+	private final static float Y_START = PowerfulPandaApp.DEFAULT_HEIGHT / 5;
+	private final static float Y_GAP = PowerfulPandaApp.DEFAULT_HEIGHT / 20;
+	private final static float X_GAP = PowerfulPandaApp.DEFAULT_WIDTH / 10;
+	private final static float BUTTON_WIDTH = PowerfulPandaApp.DEFAULT_WIDTH / 3;
+	private final static float BUTTON_HEIGHT = PowerfulPandaApp.DEFAULT_HEIGHT / 8;
 
 	PowerfulPandaApp game;
 	Rectangle playBounds;
@@ -87,7 +87,7 @@ public class MainMenuScreen extends ScreenAdapter {
 
 		game.batcher.disableBlending();
 		game.batcher.begin();
-		game.batcher.draw(background.getKeyFrame(backgroundStateTime),0f, 0f);
+		game.batcher.draw(background.getKeyFrame(backgroundStateTime),0f, 0f, PowerfulPandaApp.DEFAULT_WIDTH, PowerfulPandaApp.DEFAULT_HEIGHT);
 		game.batcher.end();
 
 		game.batcher.enableBlending();
