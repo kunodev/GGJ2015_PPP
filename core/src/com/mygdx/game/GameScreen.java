@@ -21,7 +21,6 @@ import com.badlogic.gdx.Application.ApplicationType;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.ScreenAdapter;
-import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
 import com.mygdx.game.systems.*;
@@ -35,7 +34,6 @@ public class GameScreen extends ScreenAdapter {
 
 	PowerfulPandaApp game;
 
-	OrthographicCamera guiCam;
 	Vector3 touchPoint;
 	World world;
 	CollisionSystem.CollisionListener collisionListener;
@@ -71,9 +69,9 @@ public class GameScreen extends ScreenAdapter {
 		engine.addSystem(new StateSystem());
 		engine.addSystem(new AnimationSystem());
 		engine.addSystem(new CollisionSystem(world, collisionListener));
-		engine.addSystem(new RenderingSystem(game.batcher));
+		engine.addSystem(new RenderingSystem(game));
 
-		engine.getSystem(BackgroundSystem.class).setCamera(engine.getSystem(RenderingSystem.class).getCamera());
+		engine.getSystem(BackgroundSystem.class).setCamera(game.camera);
 
 		world.create();
 
@@ -118,7 +116,7 @@ public class GameScreen extends ScreenAdapter {
 
 	private void updateRunning(float deltaTime) {
 		if (Gdx.input.justTouched()) {
-			guiCam.unproject(touchPoint.set(Gdx.input.getX(), Gdx.input.getY(), 0));
+			game.camera.unproject(touchPoint.set(Gdx.input.getX(), Gdx.input.getY(), 0));
 
 			if (pauseBounds.contains(touchPoint.x, touchPoint.y)) {
 				//Assets.playSound(Assets.clickSound);
@@ -156,7 +154,7 @@ public class GameScreen extends ScreenAdapter {
 
 	private void updatePaused() {
 		if (Gdx.input.justTouched()) {
-			guiCam.unproject(touchPoint.set(Gdx.input.getX(), Gdx.input.getY(), 0));
+			game.camera.unproject(touchPoint.set(Gdx.input.getX(), Gdx.input.getY(), 0));
 
 			if (resumeBounds.contains(touchPoint.x, touchPoint.y)) {
 				//Assets.playSound(Assets.clickSound);
@@ -188,8 +186,8 @@ public class GameScreen extends ScreenAdapter {
 	}
 
 	public void drawUI() {
-		guiCam.update();
-		game.batcher.setProjectionMatrix(guiCam.combined);
+		game.camera.update();
+		game.batcher.setProjectionMatrix(game.camera.combined);
 		game.batcher.begin();
 		switch (state) {
 		case GAME_READY:

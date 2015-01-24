@@ -21,28 +21,26 @@ import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.systems.IteratingSystem;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.utils.Array;
+import com.mygdx.game.PowerfulPandaApp;
 import com.mygdx.game.components.TextureComponent;
 import com.mygdx.game.components.TransformComponent;
 
 import java.util.Comparator;
 
 public class RenderingSystem extends IteratingSystem {
-	static final float FRUSTUM_WIDTH = 10;
-	static final float FRUSTUM_HEIGHT = 15;
 	static final float PIXELS_TO_METRES = 1.0f / 32.0f;
-	
-	private SpriteBatch batch;
+
 	private Array<Entity> renderQueue;
 	private Comparator<Entity> comparator;
-	private OrthographicCamera cam;
-	
+
 	private ComponentMapper<TextureComponent> textureM;
 	private ComponentMapper<TransformComponent> transformM;
-	
-	public RenderingSystem(SpriteBatch batch) {
+
+	private PowerfulPandaApp game;
+
+	public RenderingSystem(PowerfulPandaApp game) {
 		super(Family.getFor(TransformComponent.class, TextureComponent.class));
 		
 		textureM = ComponentMapper.getFor(TextureComponent.class);
@@ -57,11 +55,9 @@ public class RenderingSystem extends IteratingSystem {
 										transformM.get(entityA).pos.z);
 			}
 		};
-		
-		this.batch = batch;
-		
-		cam = new OrthographicCamera(FRUSTUM_WIDTH, FRUSTUM_HEIGHT);
-		cam.position.set(FRUSTUM_WIDTH / 2, FRUSTUM_HEIGHT / 2, 0);
+
+
+		this.game = game;
 	}
 
 	@Override
@@ -70,9 +66,9 @@ public class RenderingSystem extends IteratingSystem {
 		
 		renderQueue.sort(comparator);
 		
-		cam.update();
-		batch.setProjectionMatrix(cam.combined);
-		batch.begin();
+		game.camera.update();
+		game.batcher.setProjectionMatrix(game.camera.combined);
+		game.batcher.begin();
 		
 		for (Entity entity : renderQueue) {
 			TextureComponent tex = textureM.get(entity);
@@ -88,15 +84,15 @@ public class RenderingSystem extends IteratingSystem {
 			float originX = width * 0.5f;
 			float originY = height * 0.5f;
 			
-			batch.draw(tex.region,
-					   t.pos.x - originX, t.pos.y - originY,
-					   originX, originY,
-					   width, height,
-					   t.scale.x * PIXELS_TO_METRES, t.scale.y * PIXELS_TO_METRES,
-					   MathUtils.radiansToDegrees * t.rotation);
+			game.batcher.draw(tex.region,
+					t.pos.x - originX, t.pos.y - originY,
+					originX, originY,
+					width, height,
+					t.scale.x * PIXELS_TO_METRES, t.scale.y * PIXELS_TO_METRES,
+					MathUtils.radiansToDegrees * t.rotation);
 		}
 		
-		batch.end();
+		game.batcher.end();
 		renderQueue.clear();
 	}
 	
@@ -106,6 +102,6 @@ public class RenderingSystem extends IteratingSystem {
 	}
 	
 	public OrthographicCamera getCamera() {
-		return cam;
+		return game.camera;
 	}
 }
