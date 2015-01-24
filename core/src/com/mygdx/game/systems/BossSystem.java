@@ -4,17 +4,15 @@ import com.badlogic.ashley.core.ComponentMapper;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.systems.IteratingSystem;
+import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.Vector3;
 import com.mygdx.game.World;
-import com.mygdx.game.components.MovementComponent;
-import com.mygdx.game.components.BossComponent;
-import com.mygdx.game.components.StateComponent;
-import com.mygdx.game.components.TransformComponent;
+import com.mygdx.game.components.*;
 
 public class BossSystem extends IteratingSystem {
-    private static final Family family = Family.getFor(BossComponent.class,
-            StateComponent.class,
+    private static final Family family = Family.all(BossComponent.class, StateComponent.class,
             TransformComponent.class,
-            MovementComponent.class);
+            MovementComponent.class).get();
 
     private World world;
 
@@ -22,6 +20,8 @@ public class BossSystem extends IteratingSystem {
     private ComponentMapper<StateComponent> sm;
     private ComponentMapper<TransformComponent> tm;
     private ComponentMapper<MovementComponent> mm;
+    private ComponentMapper<PlayerComponent> pm;
+
 
     public BossSystem(World world) {
         super(family);
@@ -45,10 +45,12 @@ public class BossSystem extends IteratingSystem {
         StateComponent state = sm.get(entity);
         MovementComponent mov = mm.get(entity);
         BossComponent boss = bm.get(entity);
+        Entity player = world.bob;
+        TransformComponent playerPos = tm.get(player);
 
         if (state.get() == BossComponent.STATE_MOVE) {
-            mov.accel.set(BossComponent.MOVE_VELOCITY);
-            mov.velocity.set(BossComponent.MOVE_VELOCITY);
+            Vector3 targetVec = playerPos.pos.cpy().sub(t.pos).nor().scl(BossComponent.MOVE_VELOCITY);
+            mov.velocity.set(targetVec.x, targetVec.y);
         }
 
         if (state.get() == BossComponent.STATE_SHOOT) {

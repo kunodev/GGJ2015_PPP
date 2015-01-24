@@ -39,6 +39,8 @@ public class World {
 	PowerfulPandaApp game;
 	private Engine engine;
 
+	public Entity bob;
+
 	public World (PowerfulPandaApp game) {
 		this.game = game;
 		engine = game.engine;
@@ -46,7 +48,7 @@ public class World {
 	}
 	
 	public void create() {
-		Entity bob = createBob();
+		bob = createBob();
 		Entity boss = createBoss();
 		createCamera(bob);
 		createBackground();
@@ -109,7 +111,7 @@ public class World {
 		bounds.bounds.width = BossComponent.WIDTH;
 		bounds.bounds.height = BossComponent.HEIGHT;
 
-		position.pos.set(10.0f, 2.0f, 0.0f);
+		position.pos.set(500.0f, 200.0f, 0.0f);
 
 		state.set(BossComponent.STATE_MOVE);
 

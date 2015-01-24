@@ -83,8 +83,6 @@ public class GameScreen extends ScreenAdapter {
 		pauseBounds = new Rectangle(320 - 64, 480 - 64, 64, 64);
 		resumeBounds = new Rectangle(160 - 96, 240, 192, 36);
 		quitBounds = new Rectangle(160 - 96, 240 - 36, 192, 36);
-
-		pauseSystems();
 	}
 
 	public void update(float deltaTime) {
