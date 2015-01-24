@@ -4,6 +4,7 @@ import com.badlogic.ashley.core.ComponentMapper;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.systems.IteratingSystem;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.mygdx.game.World;
@@ -15,6 +16,8 @@ public class BossSystem extends IteratingSystem {
             MovementComponent.class).get();
 
     private World world;
+
+    private Float time = 0.0f;
 
     private ComponentMapper<BossComponent> bm;
     private ComponentMapper<StateComponent> sm;
@@ -41,6 +44,8 @@ public class BossSystem extends IteratingSystem {
 
     @Override
     public void processEntity(Entity entity, float deltaTime) {
+        this.time = this.time + deltaTime;
+
         TransformComponent t = tm.get(entity);
         StateComponent state = sm.get(entity);
         MovementComponent mov = mm.get(entity);
@@ -51,10 +56,32 @@ public class BossSystem extends IteratingSystem {
         if (state.get() == BossComponent.STATE_MOVE) {
             Vector3 targetVec = playerPos.pos.cpy().sub(t.pos).nor().scl(BossComponent.MOVE_VELOCITY);
             mov.velocity.set(targetVec.x, targetVec.y);
+            if(this.time >= 3.0f) {
+                this.time -= 3.0f;
+                state.set(BossComponent.STATE_WAIT);
+            }
+        }
+
+        if (state.get() == BossComponent.STATE_WAIT) {
+            mov.velocity.set(0, 0);
+
+            if(this.time >= 1.5f) {
+                this.time -= 1.5f;
+                state.set(BossComponent.STATE_SHOOT);
+            }
         }
 
         if (state.get() == BossComponent.STATE_SHOOT) {
+            System.out.println("peng");
+            world.createBullet();
+            state.set(BossComponent.STATE_SHOOTED);
+        }
 
+        if (state.get() == BossComponent.STATE_SHOOTED) {
+            if(this.time >= 1.0f) {
+                this.time -= 1.0f;
+                state.set(BossComponent.STATE_MOVE);
+            }
         }
     }
 }

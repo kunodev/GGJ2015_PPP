@@ -4,6 +4,7 @@ import com.badlogic.ashley.core.ComponentMapper;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.systems.IteratingSystem;
+import com.badlogic.gdx.math.Vector3;
 import com.mygdx.game.World;
 import com.mygdx.game.components.*;
 
@@ -51,21 +52,11 @@ public class BulletSystem extends IteratingSystem {
         BulletComponent bullet = bm.get(entity);
 
         if (state.get() == BulletComponent.STATE_MOVE) {
-
+            mov.velocity.set(bullet.targetVec.x, bullet.targetVec.y);
         }
 
         if (state.get() == BulletComponent.STATE_HIT) {
 
         }
-
-        if (t.pos.x < 0) {
-            t.pos.x = World.WORLD_WIDTH;
-        }
-
-        if (t.pos.x > World.WORLD_WIDTH) {
-            t.pos.x = 0;
-        }
-
-        t.scale.x = mov.velocity.x < 0.0f ? Math.abs(t.scale.x) * -1.0f : Math.abs(t.scale.x);
     }
 }

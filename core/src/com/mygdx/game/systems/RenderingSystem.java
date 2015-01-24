@@ -82,7 +82,7 @@ public class RenderingSystem extends IteratingSystem {
 			if (tex == null) {
 				if (dum != null) {
 					game.shapeRenderer.setProjectionMatrix(game.camera.combined);
-					game.shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
+					game.shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
 					game.shapeRenderer.setColor(dum.color);
 					game.shapeRenderer.rect(t.pos.x, t.pos.y, dum.width * 32, dum.height * 32);
 					game.shapeRenderer.end();

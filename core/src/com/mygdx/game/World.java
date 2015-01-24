@@ -22,6 +22,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.Vector3;
 import com.mygdx.game.components.*;
 import com.mygdx.game.systems.RenderingSystem;
 
@@ -42,6 +43,7 @@ public class World {
 	private Engine engine;
 
 	public Entity bob;
+	public Entity boss;
 
 	public World (PowerfulPandaApp game) {
 		this.game = game;
@@ -51,7 +53,7 @@ public class World {
 	
 	public void create() {
 		bob = createBob();
-		Entity boss = createBoss();
+		boss = createBoss();
 		createCamera(bob);
 		createBackground();
 
@@ -127,6 +129,45 @@ public class World {
 		entity.add(animation);
 		entity.add(boss);
 		entity.add(bounds);
+		entity.add(movement);
+		entity.add(position);
+		entity.add(state);
+		entity.add(dummy);
+
+		engine.addEntity(entity);
+
+		return entity;
+	}
+
+	public Entity createBullet() {
+		Entity entity = new Entity();
+
+		AnimationComponent animation = new AnimationComponent();
+		BulletComponent bullet = new BulletComponent();
+		MovementComponent movement = new MovementComponent();
+		TransformComponent position = new TransformComponent();
+		StateComponent state = new StateComponent();
+		TextureComponent texture = new TextureComponent();
+		DummyComponent dummy = new DummyComponent();
+
+		//bounds.bounds.width = BulletComponent.WIDTH;
+		//bounds.bounds.height = BulletComponent.HEIGHT;
+
+		Vector3 playerPos = this.bob.getComponent(TransformComponent.class).pos;
+		Vector3 bossPos = this.boss.getComponent(TransformComponent.class).pos;
+
+		position.pos.set(bossPos);
+		bullet.targetVec = playerPos.cpy().sub(bossPos).nor().scl(BulletComponent.MOVE_VELOCITY);
+
+		state.set(BulletComponent.STATE_MOVE);
+
+		dummy.color = Color.BLUE;
+		dummy.width = bullet.WIDTH;
+		dummy.height = bullet.HEIGHT;
+
+		entity.add(animation);
+		entity.add(bullet);
+		//entity.add(bounds);
 		entity.add(movement);
 		entity.add(position);
 		entity.add(state);
