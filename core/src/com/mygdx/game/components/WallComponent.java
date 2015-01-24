@@ -1,7 +1,11 @@
 package com.mygdx.game.components;
 
-import com.badlogic.ashley.core.Component;
+import com.mygdx.game.systems.WallCollisionListener;
 
-public class WallComponent extends Component {
+public class WallComponent extends CollisionComponent {
+
+	public WallComponent() {
+		this.listener = new WallCollisionListener();
+	}
 
 }
