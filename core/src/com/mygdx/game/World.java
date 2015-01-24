@@ -154,10 +154,16 @@ public class World {
 		TransformComponent position = new TransformComponent();
 		StateComponent state = new StateComponent();
 		TextureComponent texture = new TextureComponent();
+		AnimationComponent anim = new AnimationComponent();
 
 		Texture text = game.assetManager.get("Living/boss_sprite.png");
-		texture.region = new TextureRegion(text);
+		anim.animations.put(BossComponent.STATE_ACTIONED, new Animation(Float.MAX_VALUE, new TextureRegion(text)));
+		anim.animations.put(BossComponent.STATE_JUMP, new Animation(Float.MAX_VALUE, new TextureRegion(text)));
+		anim.animations.put(BossComponent.STATE_MOVE, new Animation(Float.MAX_VALUE, new TextureRegion(text)));
+		anim.animations.put(BossComponent.STATE_SHOOT, new Animation(Float.MAX_VALUE, new TextureRegion(text)));
 
+		Texture tex = game.assetManager.get("Living/headbut_boss_attack_animsheet.png");
+		anim.animations.put(BossComponent.STATE_WAIT, new Animation(BossComponent.WAIT_DURATION, cast(extractListOfRegions(tex, 4))));
 		bounds.bounds.width = BossComponent.WIDTH;
 		bounds.bounds.height = BossComponent.HEIGHT;
 
@@ -172,6 +178,7 @@ public class World {
 		entity.add(position);
 		entity.add(state);
 		entity.add(texture);
+		entity.add(anim);
 
 		engine.addEntity(entity);
 

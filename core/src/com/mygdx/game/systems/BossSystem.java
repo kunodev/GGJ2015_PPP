@@ -10,7 +10,13 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.IntMap.Entries;
 import com.mygdx.game.World;
-import com.mygdx.game.components.*;
+import com.mygdx.game.components.AnimationComponent;
+import com.mygdx.game.components.BossComponent;
+import com.mygdx.game.components.MovementComponent;
+import com.mygdx.game.components.PlayerComponent;
+import com.mygdx.game.components.StateComponent;
+import com.mygdx.game.components.TextureComponent;
+import com.mygdx.game.components.TransformComponent;
 
 public class BossSystem extends IteratingSystem {
 	@SuppressWarnings("unchecked")
@@ -57,8 +63,8 @@ public class BossSystem extends IteratingSystem {
 		t.rotation = angle + 180f;
 		if (state.get() == BossComponent.STATE_MOVE) {
 			mov.velocity.set(targetVec.x, targetVec.y);
-			if (this.time >= 3.0f) {
-				this.time -= 3.0f;
+			if (this.time >= BossComponent.MOVEMENT_DURATION) {
+				this.time -= BossComponent.MOVEMENT_DURATION;
 				state.set(BossComponent.STATE_WAIT);
 			}
 		}
@@ -66,11 +72,11 @@ public class BossSystem extends IteratingSystem {
 		if (state.get() == BossComponent.STATE_WAIT) {
 			mov.velocity.set(0, 0);
 
-			if (this.time >= 1.5f) {
-				this.time -= 1.5f;
+			if (this.time >= BossComponent.WAIT_DURATION) {
+				this.time -= BossComponent.WAIT_DURATION;
 
 				double rand = Math.random();
-				if(rand >= 0.4) {
+				if (rand >= 0.4) {
 					state.set(BossComponent.STATE_SHOOT);
 				} else {
 					state.set(BossComponent.STATE_JUMP);
@@ -85,18 +91,26 @@ public class BossSystem extends IteratingSystem {
 
 		if (state.get() == BossComponent.STATE_JUMP) {
 			float distance = 10.0f;
-			int xPlus = (int)Math.round(Math.random());
-			int yPlus = (int)Math.round(Math.random());
-			float xRand = (float)Math.random() * 10;
-			float yRand = (float)Math.random() * 10;
-			if(xPlus == 1) { t.pos.x += distance * xRand; } else { t.pos.x -= distance * xRand; }
-			if(yPlus == 1) { t.pos.y += distance * yRand; } else { t.pos.y -= distance * yRand; }
+			int xPlus = (int) Math.round(Math.random());
+			int yPlus = (int) Math.round(Math.random());
+			float xRand = (float) Math.random() * 10;
+			float yRand = (float) Math.random() * 10;
+			if (xPlus == 1) {
+				t.pos.x += distance * xRand;
+			} else {
+				t.pos.x -= distance * xRand;
+			}
+			if (yPlus == 1) {
+				t.pos.y += distance * yRand;
+			} else {
+				t.pos.y -= distance * yRand;
+			}
 			state.set(BossComponent.STATE_ACTIONED);
 		}
 
 		if (state.get() == BossComponent.STATE_ACTIONED) {
-			if (this.time >= 1.0f) {
-				this.time -= 1.0f;
+			if (this.time >= BossComponent.COOLDOWN) {
+				this.time -= BossComponent.COOLDOWN;
 				state.set(BossComponent.STATE_MOVE);
 			}
 		}

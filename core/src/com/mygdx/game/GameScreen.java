@@ -304,6 +304,9 @@ public class GameScreen extends ScreenAdapter {
 		game.assetManager.load("Living/headbut_attack_animscheet.png", Texture.class);
 		game.assetManager.load("Living/headbut_walk_animscheet.png", Texture.class);
 		game.assetManager.load("stage_test.tmx", TiledMap.class);
+		game.assetManager.load("Living/headbut_boss_attack_animsheet.png", Texture.class);
+		game.assetManager.load("Living/buthead_gegner1_animsheet.png", Texture.class);
+		game.assetManager.load("Living/buthead_ratte_gegner_animsheet.png", Texture.class);
 		game.assetManager.finishLoading();
 		font = new BitmapFont();
 
