@@ -14,7 +14,6 @@ public class BulletSystem extends IteratingSystem {
             TransformComponent.class,
             MovementComponent.class);
 
-    private float accelX = 0.0f;
     private World world;
 
     private ComponentMapper<BulletComponent> bm;
@@ -33,15 +32,9 @@ public class BulletSystem extends IteratingSystem {
         mm = ComponentMapper.getFor(MovementComponent.class);
     }
 
-    public void setAccelX(float accelX) {
-        this.accelX = accelX;
-    }
-
     @Override
     public void update(float deltaTime) {
         super.update(deltaTime);
-
-        accelX = 0.0f;
     }
 
     @Override

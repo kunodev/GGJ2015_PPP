@@ -28,15 +28,16 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 
 public class MainMenuScreen extends ScreenAdapter {
+	private final static float Y_START = 288f;
 	private final static float Y_GAP = 32f;
-	private final static float X_GAP = 8f;
-	private final static float BUTTON_WIDTH = PowerfulPandaApp.DEFAULT_WIDTH - X_GAP * 2;
+	private final static float X_GAP = 150f;
+	private final static float BUTTON_WIDTH = 600f;
 	private final static float BUTTON_HEIGHT = 128f;
 
 	PowerfulPandaApp game;
 	Rectangle playBounds;
 	Rectangle creditsBounds;
-	Rectangle tiledBounds;
+	Rectangle exitBounds;
 	BitmapFont font;
 
 	Vector3 touchPoint;
@@ -46,9 +47,9 @@ public class MainMenuScreen extends ScreenAdapter {
 		this.game = game;
 		game.camera.position.set(PowerfulPandaApp.DEFAULT_WIDTH / 2, PowerfulPandaApp.DEFAULT_HEIGHT / 2, 0);
 
-		creditsBounds = new Rectangle(X_GAP, Y_GAP, BUTTON_WIDTH, BUTTON_HEIGHT);
-		tiledBounds = new Rectangle(X_GAP, 2 * Y_GAP + BUTTON_HEIGHT, BUTTON_WIDTH, BUTTON_HEIGHT);
-		playBounds = new Rectangle(X_GAP, 3 * Y_GAP + 2 * BUTTON_HEIGHT, BUTTON_WIDTH, BUTTON_HEIGHT);
+		exitBounds = new Rectangle(X_GAP, Y_START + Y_GAP, BUTTON_WIDTH, BUTTON_HEIGHT);
+		creditsBounds = new Rectangle(X_GAP, Y_START +  2 * Y_GAP + BUTTON_HEIGHT, BUTTON_WIDTH, BUTTON_HEIGHT);
+		playBounds = new Rectangle(X_GAP, Y_START +  3 * Y_GAP + 2 * BUTTON_HEIGHT, BUTTON_WIDTH, BUTTON_HEIGHT);
 
 		touchPoint = new Vector3();
 	}
@@ -62,12 +63,12 @@ public class MainMenuScreen extends ScreenAdapter {
 				game.setScreen(new GameScreen(game));
 				return;
 			}
-			if (tiledBounds.contains(touchPoint.x, touchPoint.y)) {
-				game.setScreen(new MapLoaderTestScreen(game));
+			if (exitBounds.contains(touchPoint.x, touchPoint.y)) {
+				System.exit(0);
 				return;
 			}
 			if(creditsBounds.contains(touchPoint.x, touchPoint.y)){
-				game.setScreen(new CreditsScreen(game));
+				game.setScreen(new MapLoaderTestScreen(game));
 				return;
 			}
 
@@ -87,29 +88,34 @@ public class MainMenuScreen extends ScreenAdapter {
 		game.batcher.end();
 
 		game.batcher.enableBlending();
-		game.batcher.begin();
-
-		Vector2 center = new Vector2();
-		playBounds.getCenter(center);
-		font.draw(game.batcher, "PLAY", center.x, center.y);
-
-		creditsBounds.getCenter(center);
-		font.draw(game.batcher, "Credits", center.x, center.y);
-
-		tiledBounds.getCenter(center);
-		font.draw(game.batcher, "TileMapTest", center.x, center.y);
-
-		game.batcher.end();
 
 		if (game.shapeRenderer != null) {
 			game.shapeRenderer.setProjectionMatrix(game.camera.combined);
-			game.shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
-			game.shapeRenderer.setColor(Color.GREEN);
+			game.shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
+			game.shapeRenderer.setColor(Color.NAVY);
 			game.shapeRenderer.rect(playBounds.x, playBounds.y, playBounds.width, playBounds.height);
 			game.shapeRenderer.rect(creditsBounds.x, creditsBounds.y, creditsBounds.width, creditsBounds.height);
-			game.shapeRenderer.rect(tiledBounds.x, tiledBounds.y, tiledBounds.width, tiledBounds.height);
+			game.shapeRenderer.rect(exitBounds.x, exitBounds.y, exitBounds.width, exitBounds.height);
 			game.shapeRenderer.end();
 		}
+
+
+		game.batcher.begin();
+
+		float xOffset = 250f;
+		float yOffset = 40f;
+		font.setScale(6f);
+		Vector2 center = new Vector2();
+		playBounds.getCenter(center);
+		font.draw(game.batcher, "PLAY", center.x-xOffset, center.y+yOffset);
+
+		creditsBounds.getCenter(center);
+		font.draw(game.batcher, "Credits", center.x-xOffset, center.y+yOffset);
+
+		exitBounds.getCenter(center);
+		font.draw(game.batcher, "EXIT", center.x-xOffset, center.y+yOffset);
+
+		game.batcher.end();
 	}
 
 	@Override
@@ -125,10 +131,10 @@ public class MainMenuScreen extends ScreenAdapter {
 
 	@Override
 	public void show() {
-		game.assetManager.load("Background/mainMenu.jpg", Texture.class);
+		game.assetManager.load("Background/menu_1.jpg", Texture.class);
 		game.assetManager.finishLoading();
 		font = new BitmapFont();
-		background = game.assetManager.get("Background/mainMenu.jpg");
+		background = game.assetManager.get("Background/menu_1.jpg");
 	}
 
 	@Override

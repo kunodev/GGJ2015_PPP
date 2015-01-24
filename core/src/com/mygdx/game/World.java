@@ -79,9 +79,9 @@ public class World {
 		//animation.animations.put(PlayerComponent.STATE_WALK, );
 //		Texture tex = game.assetManager.get("f.png");
 //		TextureRegion texReg = new TextureRegion(tex);
-//		texture.region = texReg;
 
 		bounds.bounds.width = PlayerComponent.WIDTH;
+		//		texture.region = texReg;
 		bounds.bounds.height = PlayerComponent.HEIGHT;
 		
 		position.pos.set(5.0f, 1.0f, 0.0f);
@@ -164,6 +164,10 @@ public class World {
 		dummy.color = Color.BLUE;
 		dummy.width = bullet.WIDTH;
 		dummy.height = bullet.HEIGHT;
+
+		Texture tex = game.assetManager.get("Stuff/boss_attack_kugel.png");
+		TextureRegion texReg = new TextureRegion(tex);
+		texture.region = texReg;
 
 		entity.add(animation);
 		entity.add(bullet);

@@ -22,6 +22,7 @@ import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.systems.IteratingSystem;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.utils.Array;
 import com.mygdx.game.PowerfulPandaApp;
 import com.mygdx.game.components.DummyComponent;
@@ -44,13 +45,13 @@ public class RenderingSystem extends IteratingSystem {
 
 	public RenderingSystem(PowerfulPandaApp game) {
 		super(Family.all(TransformComponent.class).one(TextureComponent.class, DummyComponent.class).get());
-		this.game = game;
 
 		dummyM = ComponentMapper.getFor(DummyComponent.class);
 		textureM = ComponentMapper.getFor(TextureComponent.class);
 		transformM = ComponentMapper.getFor(TransformComponent.class);
-
+		
 		renderQueue = new Array<Entity>();
+		
 		comparator = new Comparator<Entity>() {
 			@Override
 			public int compare(Entity entityA, Entity entityB) {
@@ -58,6 +59,9 @@ public class RenderingSystem extends IteratingSystem {
 										transformM.get(entityA).pos.z);
 			}
 		};
+
+
+		this.game = game;
 	}
 
 	@Override
@@ -80,7 +84,7 @@ public class RenderingSystem extends IteratingSystem {
 					game.shapeRenderer.setProjectionMatrix(game.camera.combined);
 					game.shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
 					game.shapeRenderer.setColor(dum.color);
-					game.shapeRenderer.rect(t.pos.x, t.pos.y, 0f, 0f, dum.width * 32, dum.height * 32, 1f, 1f, t.rotation);
+					game.shapeRenderer.rect(t.pos.x, t.pos.y, dum.width * 32, dum.height * 32);
 					game.shapeRenderer.end();
 				}
 			} else if (tex.region != null){
@@ -90,19 +94,17 @@ public class RenderingSystem extends IteratingSystem {
 				float originX = width * 0.5f;
 				float originY = height * 0.5f;
 
-				game.batcher.draw(
-						tex.region,
-						t.pos.x, t.pos.y);/*,
+				game.batcher.draw(tex.region,
+						t.pos.x - originX, t.pos.y - originY,
 						originX, originY,
 						width, height,
 						t.scale.x * PIXELS_TO_METRES, t.scale.y * PIXELS_TO_METRES,
-						MathUtils.radiansToDegrees * t.rotation);*/
-
+						MathUtils.radiansToDegrees * t.rotation);
 			} else if (dum != null) {
 					game.shapeRenderer.setProjectionMatrix(game.camera.combined);
 					game.shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
 					game.shapeRenderer.setColor(dum.color);
-					game.shapeRenderer.rect(t.pos.x, t.pos.y, 0f, 0f, dum.width * 32, dum.height * 32, 1f, 1f, t.rotation);
+					game.shapeRenderer.rect(t.pos.x, t.pos.y, dum.width * 32, dum.height * 32);
 					game.shapeRenderer.end();
 			}
 		}

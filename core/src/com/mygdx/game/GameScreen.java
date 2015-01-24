@@ -299,6 +299,7 @@ public class GameScreen extends ScreenAdapter {
 	@Override
 	public void show() {
 		game.assetManager.load("f.png", Texture.class);
+		game.assetManager.load("Stuff/boss_attack_kugel.png", Texture.class);
 		game.assetManager.finishLoading();
 		font = new BitmapFont();
 
