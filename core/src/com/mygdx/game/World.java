@@ -16,10 +16,6 @@
 
 package com.mygdx.game;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
-
 import com.badlogic.ashley.core.Engine;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.graphics.Color;
@@ -29,21 +25,13 @@ import com.badlogic.gdx.graphics.g2d.Animation.PlayMode;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
-import com.mygdx.game.components.AnimationComponent;
-import com.mygdx.game.components.BackgroundComponent;
-import com.mygdx.game.components.BossComponent;
-import com.mygdx.game.components.BoundsComponent;
-import com.mygdx.game.components.BulletComponent;
-import com.mygdx.game.components.CameraComponent;
-import com.mygdx.game.components.CollisionComponent;
-import com.mygdx.game.components.DummyComponent;
-import com.mygdx.game.components.MovementComponent;
-import com.mygdx.game.components.PlayerComponent;
-import com.mygdx.game.components.StateComponent;
-import com.mygdx.game.components.TextureComponent;
-import com.mygdx.game.components.TransformComponent;
+import com.mygdx.game.components.*;
 import com.mygdx.game.systems.RenderingSystem;
 import com.mygdx.game.systems.WallCollisionListener;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 
 public class World {
 	public static final float WORLD_WIDTH = 10;
@@ -145,7 +133,7 @@ public class World {
 	}
 
 	private Entity createBoss() {
-		Entity entity = new Entity();
+		final Entity entity = new Entity();
 
 		// AnimationComponent animation = new AnimationComponent();
 		BossComponent boss = new BossComponent();
@@ -154,6 +142,18 @@ public class World {
 		TransformComponent position = new TransformComponent();
 		StateComponent state = new StateComponent();
 		TextureComponent texture = new TextureComponent();
+		HealthComponent health = new HealthComponent();
+		health.attackListener = new HealthComponent.AttackListener() {
+			@Override
+			public void attack(Entity enemy, int healthLeft) {
+				if (healthLeft == 0) {
+					System.out.println("DEINE MUDDA");
+					game.engine.removeEntity(entity);
+				} else {
+					System.out.println("ATTACK");
+				}
+			}
+		};
 
 		Texture text = game.assetManager.get("Living/boss_sprite.png");
 		texture.region = new TextureRegion(text);
@@ -172,6 +172,7 @@ public class World {
 		entity.add(position);
 		entity.add(state);
 		entity.add(texture);
+		entity.add(health);
 
 		engine.addEntity(entity);
 
@@ -248,4 +249,5 @@ public class World {
 
 		engine.addEntity(entity);
 	}
+
 }
