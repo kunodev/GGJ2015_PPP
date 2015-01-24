@@ -37,6 +37,7 @@ import com.mygdx.game.components.BulletComponent;
 import com.mygdx.game.components.CameraComponent;
 import com.mygdx.game.components.CollisionComponent;
 import com.mygdx.game.components.DummyComponent;
+import com.mygdx.game.components.HealthComponent;
 import com.mygdx.game.components.MovementComponent;
 import com.mygdx.game.components.PlayerComponent;
 import com.mygdx.game.components.StateComponent;
@@ -145,7 +146,7 @@ public class World {
 	}
 
 	private Entity createBoss() {
-		Entity entity = new Entity();
+		final Entity entity = new Entity();
 
 		// AnimationComponent animation = new AnimationComponent();
 		BossComponent boss = new BossComponent();
@@ -155,6 +156,18 @@ public class World {
 		StateComponent state = new StateComponent();
 		TextureComponent texture = new TextureComponent();
 		AnimationComponent anim = new AnimationComponent();
+		HealthComponent health = new HealthComponent();
+		health.attackListener = new HealthComponent.AttackListener() {
+			@Override
+			public void attack(Entity enemy, int healthLeft) {
+				if (healthLeft == 0) {
+					System.out.println("DEINE MUDDA");
+					game.engine.removeEntity(entity);
+				} else {
+					System.out.println("ATTACK");
+				}
+			}
+		};
 
 		Texture text = game.assetManager.get("Living/boss_sprite.png");
 		anim.animations.put(BossComponent.STATE_ACTIONED, new Animation(Float.MAX_VALUE, new TextureRegion(text)));
@@ -179,6 +192,7 @@ public class World {
 		entity.add(state);
 		entity.add(texture);
 		entity.add(anim);
+		entity.add(health);
 
 		engine.addEntity(entity);
 
@@ -255,4 +269,5 @@ public class World {
 
 		engine.addEntity(entity);
 	}
+
 }

@@ -25,17 +25,15 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.mygdx.game.World;
-import com.mygdx.game.components.CollisionComponent;
-import com.mygdx.game.components.DummyComponent;
-import com.mygdx.game.components.TextureComponent;
-import com.mygdx.game.components.TransformComponent;
-import com.mygdx.game.components.WallComponent;
+import com.mygdx.game.components.*;
 
 public class CollisionSystem extends IteratingSystem {
 	private ComponentMapper<TransformComponent> tm;
 	private ComponentMapper<CollisionComponent> cm;
 	private ComponentMapper<TextureComponent> texm;
 	private ComponentMapper<DummyComponent> dm;
+	private ComponentMapper<HealthComponent> enemies;
+	private ComponentMapper<PlayerComponent> players;
 
 	public static interface CollisionListener {
 		public void hit(Entity thisEntity, Entity otherEntity);
@@ -43,7 +41,7 @@ public class CollisionSystem extends IteratingSystem {
 
 	private World world;
 	public ImmutableArray<Entity> collidables;
-	private static final Family colliderFamily = Family.all(TransformComponent.class).one(WallComponent.class, CollisionComponent.class).get();
+	private static final Family colliderFamily = Family.all(TransformComponent.class).one(WallComponent.class, CollisionComponent.class, HealthComponent.class).get();
 
 	public CollisionSystem(World world) {
 		super(colliderFamily);
@@ -53,6 +51,8 @@ public class CollisionSystem extends IteratingSystem {
 		cm = ComponentMapper.getFor(CollisionComponent.class);
 		texm = ComponentMapper.getFor(TextureComponent.class);
 		dm = ComponentMapper.getFor(DummyComponent.class);
+		enemies = ComponentMapper.getFor(HealthComponent.class);
+		players = ComponentMapper.getFor(PlayerComponent.class);
 	}
 
 	@Override
@@ -63,12 +63,24 @@ public class CollisionSystem extends IteratingSystem {
 
 	@Override
 	public void processEntity(Entity entity, float deltaTime) {
-
 		Rectangle thisEntityRect = buildRectangle(entity);
 		for (Entity collidable : collidables) {
+			if(collidable.getId() == entity.getId() || players.has(collidable)){
+				continue;
+			}
+
 			Rectangle collidableRect = buildRectangle(collidable);
 			if (thisEntityRect.overlaps(collidableRect)) {
-				getCollisionComponent(entity).listener.hit(entity, collidable);
+				PlayerComponent pc = players.get(entity);
+				HealthComponent hc = enemies.get(collidable);
+				if(pc != null && hc != null && entity.getComponent(StateComponent.class).get() == PlayerComponent.STATE_HEADBUTT){
+					hc.health = Math.max(0, hc.health - 10);
+					if(hc.attackListener != null){
+						hc.attackListener.attack(collidable, hc.health);
+					}
+				}else {
+					getCollisionComponent(entity).listener.hit(entity, collidable);
+				}
 			}
 		}
 	}
@@ -76,9 +88,9 @@ public class CollisionSystem extends IteratingSystem {
 	private Rectangle buildRectangle(Entity entity) {
 		Rectangle result = new Rectangle(0, 0, 0, 0);
 		CollisionComponent collisionComp = getCollisionComponent(entity);
-		float width = collisionComp.width;
-		if (width > 0) {
-			result.setWidth(width);
+
+		if (collisionComp != null && collisionComp.width > 0) {
+			result.setWidth(collisionComp.width);
 			result.setHeight(collisionComp.height);
 		} else {
 			TextureComponent texComp = texm.get(entity);
