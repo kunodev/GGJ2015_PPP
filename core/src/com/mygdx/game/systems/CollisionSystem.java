@@ -16,12 +16,21 @@
 
 package com.mygdx.game.systems;
 
-import com.badlogic.ashley.core.*;
+import java.util.Random;
+
+import com.badlogic.ashley.core.ComponentMapper;
+import com.badlogic.ashley.core.Engine;
+import com.badlogic.ashley.core.Entity;
+import com.badlogic.ashley.core.EntitySystem;
+import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.utils.ImmutableArray;
 import com.mygdx.game.World;
-import com.mygdx.game.components.*;
-
-import java.util.Random;
+import com.mygdx.game.components.BoundsComponent;
+import com.mygdx.game.components.MovementComponent;
+import com.mygdx.game.components.PlayerComponent;
+import com.mygdx.game.components.StateComponent;
+import com.mygdx.game.components.TransformComponent;
+import com.mygdx.game.components.WallComponent;
 
 public class CollisionSystem extends EntitySystem {
 	private ComponentMapper<BoundsComponent> bm;
@@ -38,6 +47,7 @@ public class CollisionSystem extends EntitySystem {
 	private CollisionListener listener;
 	private Random rand = new Random();
 	private ImmutableArray<Entity> player;
+	private ImmutableArray<Entity> walls;
 	
 	public CollisionSystem(World world, CollisionListener listener) {
 		this.world = world;
@@ -54,6 +64,7 @@ public class CollisionSystem extends EntitySystem {
 		this.engine = engine;
 		
 		player = engine.getEntitiesFor(Family.getFor(PlayerComponent.class, BoundsComponent.class, TransformComponent.class, StateComponent.class));
+		walls = engine.getEntitiesFor(Family.getFor(WallComponent.class, BoundsComponent.class));
 	}
 	
 	@Override
