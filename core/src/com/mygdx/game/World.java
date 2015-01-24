@@ -176,7 +176,7 @@ public class World {
 		anim.animations.put(BossComponent.STATE_SHOOT, new Animation(Float.MAX_VALUE, new TextureRegion(text)));
 
 		Texture tex = game.assetManager.get("Living/headbut_boss_attack_animsheet.png");
-		anim.animations.put(BossComponent.STATE_WAIT, new Animation(BossComponent.WAIT_DURATION, cast(extractListOfRegions(tex, 4))));
+		anim.animations.put(BossComponent.STATE_WAIT, new Animation(BossComponent.WAIT_DURATION / 2, cast(extractListOfRegions(tex, 4))));
 		bounds.bounds.width = BossComponent.WIDTH;
 		bounds.bounds.height = BossComponent.HEIGHT;
 
