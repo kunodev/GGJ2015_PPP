@@ -21,7 +21,9 @@ import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
@@ -41,7 +43,8 @@ public class MainMenuScreen extends ScreenAdapter {
 	BitmapFont font;
 
 	Vector3 touchPoint;
-	Texture background;
+	Animation background;
+	float backgroundStateTime = 0.0f;
 
 	public MainMenuScreen(PowerfulPandaApp game) {
 		this.game = game;
@@ -84,7 +87,7 @@ public class MainMenuScreen extends ScreenAdapter {
 
 		game.batcher.disableBlending();
 		game.batcher.begin();
-		game.batcher.draw(background, 0f, 0f);
+		game.batcher.draw(background.getKeyFrame(backgroundStateTime),0f, 0f);
 		game.batcher.end();
 
 		game.batcher.enableBlending();
@@ -120,8 +123,11 @@ public class MainMenuScreen extends ScreenAdapter {
 
 	@Override
 	public void render(float delta) {
+		backgroundStateTime += delta;
 		update();
 		draw();
+
+		//backgroundStateTime = backgroundStateTime % 1.0f;
 	}
 
 	@Override
@@ -132,9 +138,19 @@ public class MainMenuScreen extends ScreenAdapter {
 	@Override
 	public void show() {
 		game.assetManager.load("Background/menu_1.jpg", Texture.class);
+		game.assetManager.load("Background/menu_2.jpg", Texture.class);
+		game.assetManager.load("Background/menu_3.jpg", Texture.class);
 		game.assetManager.finishLoading();
+
 		font = new BitmapFont();
-		background = game.assetManager.get("Background/menu_1.jpg");
+
+		background = new Animation(0.25f,
+				new TextureRegion(game.assetManager.get("Background/menu_1.jpg", Texture.class)),
+				new TextureRegion(game.assetManager.get("Background/menu_2.jpg", Texture.class)),
+				new TextureRegion(game.assetManager.get("Background/menu_3.jpg", Texture.class))
+		);
+
+		background.setPlayMode(Animation.PlayMode.LOOP_PINGPONG);
 	}
 
 	@Override
