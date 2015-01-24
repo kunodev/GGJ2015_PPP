@@ -19,7 +19,6 @@ package com.mygdx.game;
 import com.badlogic.ashley.core.Engine;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.maps.tiled.TiledMap;
-
 import de.panda.tiled.MapRenderer;
 
 public class MapLoaderTestScreen extends ScreenAdapter {
@@ -38,15 +37,7 @@ public class MapLoaderTestScreen extends ScreenAdapter {
 
 	public MapLoaderTestScreen(PowerfulPandaApp game) {
 		this.game = game;
-
-		// use in own test-screen
-		game.assetManager.load("stage_test.tmx", TiledMap.class);
-		game.assetManager.finishLoading();
-		renderer = new MapRenderer("stage_test.tmx", game.camera, game.assetManager);
-		renderer.loadComponentsFromMap(new Engine());
 		engine = new Engine();
-
-		pauseSystems();
 	}
 
 	public void update(float deltaTime) {
@@ -94,6 +85,21 @@ public class MapLoaderTestScreen extends ScreenAdapter {
 	}
 
 	private void resumeSystems() {
+	}
+
+	@Override
+	public void show() {
+		// use in own test-screen
+		game.assetManager.load("stage_test.tmx", TiledMap.class);
+		game.assetManager.finishLoading();
+
+		renderer = new MapRenderer("stage_test.tmx", game.camera, game.assetManager);
+		renderer.loadComponentsFromMap(engine);
+	}
+
+	@Override
+	public void hide() {
+		game.assetManager.clear();
 	}
 
 	@Override
