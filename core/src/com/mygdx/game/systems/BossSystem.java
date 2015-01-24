@@ -47,21 +47,12 @@ public class BossSystem extends IteratingSystem {
         BossComponent boss = bm.get(entity);
 
         if (state.get() == BossComponent.STATE_MOVE) {
+            mov.accel.set(BossComponent.MOVE_VELOCITY);
             mov.velocity.set(BossComponent.MOVE_VELOCITY);
         }
 
         if (state.get() == BossComponent.STATE_SHOOT) {
 
         }
-
-        if (t.pos.x < 0) {
-            t.pos.x = World.WORLD_WIDTH;
-        }
-
-        if (t.pos.x > World.WORLD_WIDTH) {
-            t.pos.x = 0;
-        }
-
-        t.scale.x = mov.velocity.x < 0.0f ? Math.abs(t.scale.x) * -1.0f : Math.abs(t.scale.x);
     }
 }
