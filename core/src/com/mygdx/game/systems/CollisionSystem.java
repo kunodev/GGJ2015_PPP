@@ -38,7 +38,7 @@ public class CollisionSystem extends IteratingSystem {
 	private ComponentMapper<DummyComponent> dm;
 
 	public static interface CollisionListener {
-		public void hit();
+		public void hit(Entity thisEntity, Entity otherEntity);
 	}
 
 	private World world;
@@ -68,8 +68,7 @@ public class CollisionSystem extends IteratingSystem {
 		for (Entity collidable : collidables) {
 			Rectangle collidableRect = buildRectangle(collidable);
 			if (thisEntityRect.overlaps(collidableRect)) {
-				// TODO: more info?
-				getCollisionComponent(entity).listener.hit();
+				getCollisionComponent(entity).listener.hit(entity, collidable);
 			}
 		}
 	}

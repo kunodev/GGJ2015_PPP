@@ -17,6 +17,7 @@
 package com.mygdx.game;
 
 import com.badlogic.ashley.core.Engine;
+import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.ScreenAdapter;
@@ -74,7 +75,7 @@ public class GameScreen extends ScreenAdapter {
 		touchPoint = new Vector3();
 		collisionListener = new CollisionSystem.CollisionListener() {
 			@Override
-			public void hit() {
+			public void hit(Entity a, Entity b) {
 				// Assets.playSound(Assets.hitSound);
 			}
 		};
