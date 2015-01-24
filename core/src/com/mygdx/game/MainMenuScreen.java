@@ -67,7 +67,7 @@ public class MainMenuScreen extends ScreenAdapter {
 				return;
 			}
 			if(creditsBounds.contains(touchPoint.x, touchPoint.y)){
-				//game.setScreen(new CreditsScreen(game));
+				game.setScreen(new CreditsScreen(game));
 				return;
 			}
 
