@@ -42,8 +42,6 @@ public class GameScreen extends ScreenAdapter {
 	Rectangle pauseBounds;
 	Rectangle resumeBounds;
 	Rectangle quitBounds;
-	int lastScore;
-	String scoreString;
 
 	Engine engine;
 
@@ -51,43 +49,23 @@ public class GameScreen extends ScreenAdapter {
 
 	public GameScreen(PowerfulPandaApp game) {
 		this.game = game;
-
 		state = GAME_READY;
-		guiCam = new OrthographicCamera(320, 480);
-		guiCam.position.set(320 / 2, 480 / 2, 0);
+		game.camera.position.set(PowerfulPandaApp.DEFAULT_WIDTH / 2, PowerfulPandaApp.DEFAULT_HEIGHT / 2, 0);
+
 		touchPoint = new Vector3();
 		collisionListener = new CollisionSystem.CollisionListener() {
-			@Override
-			public void jump() {
-				//Assets.playSound(Assets.jumpSound);
-			}
-
-			@Override
-			public void highJump() {
-				//Assets.playSound(Assets.highJumpSound);
-			}
-
 			@Override
 			public void hit() {
 				//Assets.playSound(Assets.hitSound);
 			}
-
-			@Override
-			public void coin() {
-				//Assets.playSound(Assets.coinSound);
-			}
 		};
 
 		engine = new Engine();
-
 		world = new World(engine);
 
 		engine.addSystem(new PlayerSystem(world));
-		engine.addSystem(new SquirrelSystem());
-		engine.addSystem(new PlatformSystem());
 		engine.addSystem(new CameraSystem());
 		engine.addSystem(new BackgroundSystem());
-		engine.addSystem(new GravitySystem());
 		engine.addSystem(new MovementSystem());
 		engine.addSystem(new BoundsSystem());
 		engine.addSystem(new StateSystem());
@@ -102,8 +80,6 @@ public class GameScreen extends ScreenAdapter {
 		pauseBounds = new Rectangle(320 - 64, 480 - 64, 64, 64);
 		resumeBounds = new Rectangle(160 - 96, 240, 192, 36);
 		quitBounds = new Rectangle(160 - 96, 240 - 36, 192, 36);
-		lastScore = 0;
-		scoreString = "SCORE: 0";
 
 		pauseSystems();
 	}
@@ -169,22 +145,12 @@ public class GameScreen extends ScreenAdapter {
 
 		engine.getSystem(PlayerSystem.class).setAccelX(accelX);
 
-		if (world.score != lastScore) {
-			lastScore = world.score;
-			scoreString = "SCORE: " + lastScore;
-		}
 		// if (world.state == World.WORLD_STATE_NEXT_LEVEL) {
 		// game.setScreen(new WinScreen(game));
 		// }
 		if (world.state == World.WORLD_STATE_GAME_OVER) {
 			state = GAME_OVER;
-			if (lastScore >= Settings.highscores[4])
-				scoreString = "NEW HIGHSCORE: " + lastScore;
-			else
-				scoreString = "SCORE: " + lastScore;
 			pauseSystems();
-			Settings.addScore(lastScore);
-			Settings.save();
 		}
 	}
 
@@ -211,7 +177,6 @@ public class GameScreen extends ScreenAdapter {
 		if (Gdx.input.justTouched()) {
 			engine.removeAllEntities();
 			world = new World(engine);
-			world.score = lastScore;
 			state = GAME_READY;
 		}
 	}
@@ -277,9 +242,6 @@ public class GameScreen extends ScreenAdapter {
 
 	private void pauseSystems() {
 		engine.getSystem(PlayerSystem.class).setProcessing(false);
-		engine.getSystem(SquirrelSystem.class).setProcessing(false);
-		engine.getSystem(PlatformSystem.class).setProcessing(false);
-		engine.getSystem(GravitySystem.class).setProcessing(false);
 		engine.getSystem(MovementSystem.class).setProcessing(false);
 		engine.getSystem(BoundsSystem.class).setProcessing(false);
 		engine.getSystem(StateSystem.class).setProcessing(false);
@@ -289,9 +251,6 @@ public class GameScreen extends ScreenAdapter {
 
 	private void resumeSystems() {
 		engine.getSystem(PlayerSystem.class).setProcessing(true);
-		engine.getSystem(SquirrelSystem.class).setProcessing(true);
-		engine.getSystem(PlatformSystem.class).setProcessing(true);
-		engine.getSystem(GravitySystem.class).setProcessing(true);
 		engine.getSystem(MovementSystem.class).setProcessing(true);
 		engine.getSystem(BoundsSystem.class).setProcessing(true);
 		engine.getSystem(StateSystem.class).setProcessing(true);
