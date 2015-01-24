@@ -21,8 +21,8 @@ import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.systems.IteratingSystem;
 import com.mygdx.game.World;
-import com.mygdx.game.components.PlayerComponent;
 import com.mygdx.game.components.MovementComponent;
+import com.mygdx.game.components.PlayerComponent;
 import com.mygdx.game.components.StateComponent;
 import com.mygdx.game.components.TransformComponent;
 
@@ -78,15 +78,15 @@ public class PlayerSystem extends IteratingSystem {
 		}
 		
 		if (mov.velocity.y > 0 && state.get() != PlayerComponent.STATE_HIT) {
-			if (state.get() != PlayerComponent.STATE_JUMP) {
-				state.set(PlayerComponent.STATE_JUMP);
-			}
+			//if (state.get() != PlayerComponent.STATE_JUMP) {
+				//state.set(PlayerComponent.STATE_JUMP);
+			//}
 		}
 
 		if (mov.velocity.y < 0 && state.get() != PlayerComponent.STATE_HIT) {
-			if (state.get() != PlayerComponent.STATE_FALL) {
-				state.set(PlayerComponent.STATE_FALL);
-			}
+			//if (state.get() != PlayerComponent.STATE_FALL) {
+			//	state.set(PlayerComponent.STATE_FALL);
+			//}
 		}
 
 		if (t.pos.x < 0) {
@@ -123,7 +123,7 @@ public class PlayerSystem extends IteratingSystem {
 		MovementComponent mov = mm.get(entity);
 		
 		mov.velocity.y = PlayerComponent.JUMP_VELOCITY;
-		state.set(PlayerComponent.STATE_JUMP);
+		//state.set(PlayerComponent.STATE_JUMP);
 	}
 
 	public void hitSpring (Entity entity) {
@@ -133,6 +133,6 @@ public class PlayerSystem extends IteratingSystem {
 		MovementComponent mov = mm.get(entity);
 		
 		mov.velocity.y = PlayerComponent.JUMP_VELOCITY * 1.5f;
-		state.set(PlayerComponent.STATE_JUMP);
+		//state.set(PlayerComponent.STATE_JUMP);
 	}
 }

@@ -1,5 +1,6 @@
 package com.mygdx.game;
 
+import com.badlogic.ashley.core.Engine;
 import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
@@ -20,6 +21,7 @@ public class PowerfulPandaApp extends Game {
 	public SpriteBatch batcher;
 	public ShapeRenderer shapeRenderer;
 	public OrthographicCamera camera;
+	public Engine engine;
 
 	@Override
 	public void create() {
@@ -34,6 +36,8 @@ public class PowerfulPandaApp extends Game {
 		// debugging settings
 		Gdx.app.setLogLevel(Application.LOG_DEBUG);
 		shapeRenderer = new ShapeRenderer();
+
+		engine = new Engine();
 
 		setScreen(new MainMenuScreen(this));
 	}

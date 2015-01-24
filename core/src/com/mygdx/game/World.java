@@ -18,10 +18,10 @@ package com.mygdx.game;
 
 import com.badlogic.ashley.core.Engine;
 import com.badlogic.ashley.core.Entity;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Vector2;
 import com.mygdx.game.components.*;
 import com.mygdx.game.systems.RenderingSystem;
-import com.badlogic.gdx.graphics.Color;
 
 import java.util.Random;
 
@@ -35,11 +35,13 @@ public class World {
 
 	public final Random rand;
 	public int state;
-	
+
+	PowerfulPandaApp game;
 	private Engine engine;
 
-	public World (Engine engine) {
-		this.engine = engine;
+	public World (PowerfulPandaApp game) {
+		this.game = game;
+		engine = game.engine;
 		this.rand = new Random();
 	}
 	
@@ -62,17 +64,15 @@ public class World {
 		TransformComponent position = new TransformComponent();
 		StateComponent state = new StateComponent();
 		TextureComponent texture = new TextureComponent();
-		
-		//animation.animations.put(PlayerComponent.STATE_FALL, Assets.bobFall);
-		//animation.animations.put(PlayerComponent.STATE_HIT, Assets.bobHit);
-		//animation.animations.put(PlayerComponent.STATE_JUMP, Assets.bobJump);
+
+		//animation.animations.put(PlayerComponent.STATE_WALK, );
 		
 		bounds.bounds.width = PlayerComponent.WIDTH;
 		bounds.bounds.height = PlayerComponent.HEIGHT;
 		
 		position.pos.set(5.0f, 1.0f, 0.0f);
 		
-		state.set(PlayerComponent.STATE_JUMP);
+		state.set(PlayerComponent.STATE_WALK);
 		
 		entity.add(animation);
 		entity.add(bob);
