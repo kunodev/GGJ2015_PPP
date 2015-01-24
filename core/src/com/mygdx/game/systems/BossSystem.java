@@ -10,13 +10,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.IntMap.Entries;
 import com.mygdx.game.World;
-import com.mygdx.game.components.AnimationComponent;
-import com.mygdx.game.components.BossComponent;
-import com.mygdx.game.components.MovementComponent;
-import com.mygdx.game.components.PlayerComponent;
-import com.mygdx.game.components.StateComponent;
-import com.mygdx.game.components.TextureComponent;
-import com.mygdx.game.components.TransformComponent;
+import com.mygdx.game.components.*;
 
 public class BossSystem extends IteratingSystem {
 	@SuppressWarnings("unchecked")
@@ -74,17 +68,33 @@ public class BossSystem extends IteratingSystem {
 
 			if (this.time >= 1.5f) {
 				this.time -= 1.5f;
-				state.set(BossComponent.STATE_SHOOT);
+
+				double rand = Math.random();
+				if(rand >= 0.4) {
+					state.set(BossComponent.STATE_SHOOT);
+				} else {
+					state.set(BossComponent.STATE_JUMP);
+				}
 			}
 		}
 
 		if (state.get() == BossComponent.STATE_SHOOT) {
-			System.out.println("peng");
 			world.createBullet();
-			state.set(BossComponent.STATE_SHOOTED);
+			state.set(BossComponent.STATE_ACTIONED);
 		}
 
-		if (state.get() == BossComponent.STATE_SHOOTED) {
+		if (state.get() == BossComponent.STATE_JUMP) {
+			float distance = 10.0f;
+			int xPlus = (int)Math.round(Math.random());
+			int yPlus = (int)Math.round(Math.random());
+			float xRand = (float)Math.random() * 10;
+			float yRand = (float)Math.random() * 10;
+			if(xPlus == 1) { t.pos.x += distance * xRand; } else { t.pos.x -= distance * xRand; }
+			if(yPlus == 1) { t.pos.y += distance * yRand; } else { t.pos.y -= distance * yRand; }
+			state.set(BossComponent.STATE_ACTIONED);
+		}
+
+		if (state.get() == BossComponent.STATE_ACTIONED) {
 			if (this.time >= 1.0f) {
 				this.time -= 1.0f;
 				state.set(BossComponent.STATE_MOVE);
