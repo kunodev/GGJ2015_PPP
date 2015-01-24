@@ -132,10 +132,6 @@ public class GameScreen extends ScreenAdapter {
 			}
 		}
 
-		ApplicationType appType = Gdx.app.getType();
-
-		// should work also with
-		// Gdx.input.isPeripheralAvailable(Peripheral.Accelerometer)
 		float accelX = 0.0f;
 		float accelY = 0.0f;
 

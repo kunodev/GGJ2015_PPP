@@ -77,9 +77,9 @@ public class World {
 		dummy.height = bob.HEIGHT;
 
 		//animation.animations.put(PlayerComponent.STATE_WALK, );
-		Texture tex = game.assetManager.get("f.png");
-		TextureRegion texReg = new TextureRegion(tex);
-		texture.region = texReg;
+//		Texture tex = game.assetManager.get("f.png");
+//		TextureRegion texReg = new TextureRegion(tex);
+//		texture.region = texReg;
 
 		bounds.bounds.width = PlayerComponent.WIDTH;
 		bounds.bounds.height = PlayerComponent.HEIGHT;

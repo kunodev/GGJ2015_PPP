@@ -96,13 +96,13 @@ public class PlayerSystem extends IteratingSystem {
 			//}
 		}
 
-		if (t.pos.x < 0) {
-			t.pos.x = PowerfulPandaApp.DEFAULT_WIDTH;
-		}
-		
-		if (t.pos.x > PowerfulPandaApp.DEFAULT_WIDTH) {
-			t.pos.x = 0;
-		}
+//		if (t.pos.x < 0) {
+//			t.pos.x = PowerfulPandaApp.DEFAULT_WIDTH;
+//		}
+//
+//		if (t.pos.x > PowerfulPandaApp.DEFAULT_WIDTH) {
+//			t.pos.x = 0;
+//		}
 		
 		t.scale.x = mov.velocity.x < 0.0f ? Math.abs(t.scale.x) * -1.0f : Math.abs(t.scale.x);
 		t.scale.y = mov.velocity.y < 0.0f ? Math.abs(t.scale.y) * -1.0f : Math.abs(t.scale.y);

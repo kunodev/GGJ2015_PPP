@@ -20,6 +20,7 @@ import com.badlogic.ashley.core.ComponentMapper;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.systems.IteratingSystem;
+import com.mygdx.game.PowerfulPandaApp;
 import com.mygdx.game.components.CameraComponent;
 import com.mygdx.game.components.TransformComponent;
 
@@ -27,12 +28,17 @@ public class CameraSystem extends IteratingSystem {
 	
 	private ComponentMapper<TransformComponent> tm;
 	private ComponentMapper<CameraComponent> cm;
+	private final float cameraTargetOffsetX;
+	private final float cameraTargetOffsetY;
 	
 	public CameraSystem() {
 		super(Family.getFor(CameraComponent.class));
 		
 		tm = ComponentMapper.getFor(TransformComponent.class);
 		cm = ComponentMapper.getFor(CameraComponent.class);
+
+		cameraTargetOffsetX = PowerfulPandaApp.DEFAULT_WIDTH * 0.3f ;
+		cameraTargetOffsetY = PowerfulPandaApp.DEFAULT_HEIGHT * 0.3f;
 	}
 
 	@Override
@@ -48,7 +54,23 @@ public class CameraSystem extends IteratingSystem {
 		if (target == null) {
 			return;
 		}
-		
-		cam.camera.position.y = Math.max(cam.camera.position.y, target.pos.y);
+
+		if (target.pos.x - cam.camera.position.x < -cameraTargetOffsetX) {
+			cam.camera.position.x = target.pos.x + (cameraTargetOffsetX - 1);
+		} else if (target.pos.x - cam.camera.position.x > cameraTargetOffsetX) {
+			cam.camera.position.x = target.pos.x - (cameraTargetOffsetX - 1);
+		}
+
+		if (target.pos.y - cam.camera.position.y < -cameraTargetOffsetY) {
+			cam.camera.position.y = target.pos.y + (cameraTargetOffsetY - 1);
+		} else if (target.pos.y - cam.camera.position.y > cameraTargetOffsetY) {
+			cam.camera.position.y = target.pos.y - (cameraTargetOffsetY - 1);
+		}
+
+
+//		cam.camera.position.y = target.pos.y;
+//		cam.camera.position.x = target.pos.x;
+
+//		cam.camera.position.y = Math.max(cam.camera.position.y, target.pos.y);
 	}
 }
