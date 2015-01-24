@@ -101,23 +101,20 @@ public class World {
 		// animation.animations.put(PlayerComponent.STATE_WALK, );
 		Texture walk = game.assetManager.get("Living/headbut_walk_animscheet.png");
 		List<TextureRegion> walkList = extractListOfRegions(walk, 4);
-		animComp.animations.put(PlayerComponent.STATE_IDLE, new Animation(5, (TextureRegion[]) walkList.toArray()));
+		animComp.animations.put(PlayerComponent.STATE_IDLE, new Animation(5, cast(walkList)));
 		animComp.animations.get(PlayerComponent.STATE_IDLE).setPlayMode(PlayMode.NORMAL);
-		animComp.animations.put(PlayerComponent.STATE_WALKING, new Animation(5, (TextureRegion[]) walkList.toArray()));
+		animComp.animations.put(PlayerComponent.STATE_WALKING, new Animation(5, cast(walkList)));
 		animComp.animations.get(PlayerComponent.STATE_WALKING).setPlayMode(PlayMode.LOOP_PINGPONG);
 
-		Texture attack = game.assetManager.get("Living/headbug_attack_animscheet.png");
+		Texture attack = game.assetManager.get("Living/headbut_attack_animscheet.png");
 		List<TextureRegion> attckList = extractListOfRegions(attack, 2);
-		animComp.animations.put(PlayerComponent.STATE_ATTACKING,
-				new Animation(PlayerComponent.ATTACK_DURATION, (TextureRegion[]) attckList.toArray()));
+		animComp.animations.put(PlayerComponent.STATE_ATTACKING, new Animation(PlayerComponent.ATTACK_DURATION, cast(attckList)));
 		animComp.animations.get(PlayerComponent.STATE_ATTACKING).setPlayMode(PlayMode.LOOP_PINGPONG);
 
 		bounds.bounds.width = PlayerComponent.WIDTH;
 		bounds.bounds.height = PlayerComponent.HEIGHT;
 
 		position.pos.set(5.0f, 1.0f, 0.0f);
-
-		animComp.animations = null;
 
 		state.set(PlayerComponent.STATE_WALKING);
 
@@ -130,9 +127,16 @@ public class World {
 		entity.add(texture);
 		entity.add(dummy);
 		entity.add(col);
+		entity.add(animComp);
 		engine.addEntity(entity);
 
 		return entity;
+	}
+
+	private TextureRegion[] cast(List<TextureRegion> walkList) {
+		TextureRegion[] result = new TextureRegion[walkList.size()];
+		walkList.toArray(result);
+		return result;
 	}
 
 	private List<TextureRegion> extractListOfRegions(Texture walk, int xParts) {

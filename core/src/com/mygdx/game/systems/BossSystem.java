@@ -4,10 +4,13 @@ import com.badlogic.ashley.core.ComponentMapper;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.systems.IteratingSystem;
+import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.utils.IntMap.Entries;
 import com.mygdx.game.World;
+import com.mygdx.game.components.AnimationComponent;
 import com.mygdx.game.components.BossComponent;
 import com.mygdx.game.components.MovementComponent;
 import com.mygdx.game.components.PlayerComponent;
@@ -93,7 +96,17 @@ public class BossSystem extends IteratingSystem {
 		Vector3 pos3d = e.getComponent(TransformComponent.class).pos;
 		Vector2 pos = new Vector2(pos3d.x, pos3d.y);
 		TextureRegion region = e.getComponent(TextureComponent.class).region;
-		Vector2 offset = new Vector2(region.getRegionWidth() / 2, region.getRegionHeight() / 2);
+		Vector2 offset;
+
+		if (region != null) {
+			offset = new Vector2(region.getRegionWidth() / 2, region.getRegionHeight() / 2);
+		} else {
+			AnimationComponent component = e.getComponent(AnimationComponent.class);
+			Entries<Animation> entries = component.animations.entries();
+			region = entries.next().value.getKeyFrames()[0];
+			offset = new Vector2(region.getRegionWidth() / 2, region.getRegionHeight() / 2);
+
+		}
 		return pos.add(offset);
 	}
 }
