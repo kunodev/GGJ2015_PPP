@@ -16,10 +16,10 @@ public class PowerfulPandaApp extends Game {
 	public static float DEFAULT_WIDTH = 1920;
 	public static float DEFAULT_HEIGHT = 1080;
 
-	AssetManager assetManager;
-	SpriteBatch batcher;
-	ShapeRenderer shapeRenderer;
-	OrthographicCamera camera;
+	public AssetManager assetManager;
+	public SpriteBatch batcher;
+	public ShapeRenderer shapeRenderer;
+	public OrthographicCamera camera;
 
 	@Override
 	public void create() {
@@ -28,6 +28,8 @@ public class PowerfulPandaApp extends Game {
 
 		batcher = new SpriteBatch();
 		camera = new OrthographicCamera(DEFAULT_WIDTH, DEFAULT_HEIGHT);
+
+		Gdx.graphics.setDisplayMode(1280, 720, false);
 
 		// debugging settings
 		Gdx.app.setLogLevel(Application.LOG_DEBUG);
