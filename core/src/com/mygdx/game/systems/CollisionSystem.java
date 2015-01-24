@@ -17,7 +17,6 @@
 package com.mygdx.game.systems;
 
 import com.badlogic.ashley.core.ComponentMapper;
-import com.badlogic.ashley.core.Engine;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.systems.IteratingSystem;
@@ -42,7 +41,6 @@ public class CollisionSystem extends IteratingSystem {
 		public void hit();
 	}
 
-	private Engine engine;
 	private World world;
 	public ImmutableArray<Entity> collidables;
 	private static final Family colliderFamily = Family.all(TransformComponent.class).one(WallComponent.class, CollisionComponent.class).get();
@@ -57,15 +55,10 @@ public class CollisionSystem extends IteratingSystem {
 		dm = ComponentMapper.getFor(DummyComponent.class);
 	}
 
-	@SuppressWarnings("unchecked")
-	@Override
-	public void addedToEngine(Engine engine) {
-		this.engine = engine;
-	}
-
 	@Override
 	public void update(float deltaTime) {
-		collidables = engine.getEntitiesFor(colliderFamily);
+		collidables = super.getEntities();
+		super.update(deltaTime);
 	}
 
 	@Override
@@ -75,14 +68,15 @@ public class CollisionSystem extends IteratingSystem {
 		for (Entity collidable : collidables) {
 			Rectangle collidableRect = buildRectangle(collidable);
 			if (thisEntityRect.overlaps(collidableRect)) {
-
+				// TODO: more info?
+				getCollisionComponent(entity).listener.hit();
 			}
 		}
 	}
 
 	private Rectangle buildRectangle(Entity entity) {
 		Rectangle result = new Rectangle(0, 0, 0, 0);
-		CollisionComponent collisionComp = cm.get(entity);
+		CollisionComponent collisionComp = getCollisionComponent(entity);
 		float width = collisionComp.width;
 		if (width > 0) {
 			result.setWidth(width);
@@ -103,5 +97,13 @@ public class CollisionSystem extends IteratingSystem {
 		Vector2 pos = new Vector2(pos2.x, pos2.y);
 		result.setCenter(pos);
 		return result;
+	}
+
+	private CollisionComponent getCollisionComponent(Entity entity) {
+		CollisionComponent collisionComp = cm.get(entity);
+		if (collisionComp == null) {
+			collisionComp = entity.getComponent(WallComponent.class);
+		}
+		return collisionComp;
 	}
 }
