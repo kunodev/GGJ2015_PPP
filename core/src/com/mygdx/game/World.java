@@ -66,7 +66,7 @@ public class World {
 
 	public void create() {
 		bob = createBob();
-		// boss = createBoss();
+		boss = createBoss();
 		createCamera(bob);
 		createBackground();
 
@@ -123,13 +123,15 @@ public class World {
 		Entity entity = new Entity();
 
 		// AnimationComponent animation = new AnimationComponent();
-		// BossComponent boss = new BossComponent();
+		BossComponent boss = new BossComponent();
 		BoundsComponent bounds = new BoundsComponent();
 		MovementComponent movement = new MovementComponent();
 		TransformComponent position = new TransformComponent();
 		StateComponent state = new StateComponent();
 		TextureComponent texture = new TextureComponent();
-		DummyComponent dummy = new DummyComponent();
+
+		Texture text = game.assetManager.get("Living/boss_sprite.png");
+		texture.region = new TextureRegion(text);
 
 		bounds.bounds.width = BossComponent.WIDTH;
 		bounds.bounds.height = BossComponent.HEIGHT;
@@ -138,17 +140,13 @@ public class World {
 
 		state.set(BossComponent.STATE_MOVE);
 
-		dummy.color = Color.RED;
-		dummy.width = 4f;// boss.WIDTH;
-		dummy.height = 4f;// boss.HEIGHT;
-
 		// entity.add(animation);
-		// entity.add(boss);
+		entity.add(boss);
 		entity.add(bounds);
 		entity.add(movement);
 		entity.add(position);
 		entity.add(state);
-		entity.add(dummy);
+		entity.add(texture);
 
 		engine.addEntity(entity);
 

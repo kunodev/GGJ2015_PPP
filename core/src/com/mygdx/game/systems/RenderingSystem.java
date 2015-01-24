@@ -1,20 +1,22 @@
 /*******************************************************************************
  * Copyright 2014 See AUTHORS file.
  * 
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not
+ * use this file except in compliance with the License. You may obtain a copy of
+ * the License at
  * 
- *   http://www.apache.org/licenses/LICENSE-2.0
+ * http://www.apache.org/licenses/LICENSE-2.0
  * 
  * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+ * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+ * License for the specific language governing permissions and limitations under
+ * the License.
  ******************************************************************************/
 
 package com.mygdx.game.systems;
+
+import java.util.Comparator;
 
 import com.badlogic.ashley.core.ComponentMapper;
 import com.badlogic.ashley.core.Entity;
@@ -22,14 +24,11 @@ import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.systems.IteratingSystem;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.utils.Array;
 import com.mygdx.game.PowerfulPandaApp;
 import com.mygdx.game.components.DummyComponent;
 import com.mygdx.game.components.TextureComponent;
 import com.mygdx.game.components.TransformComponent;
-
-import java.util.Comparator;
 
 public class RenderingSystem extends IteratingSystem {
 
@@ -54,8 +53,7 @@ public class RenderingSystem extends IteratingSystem {
 		comparator = new Comparator<Entity>() {
 			@Override
 			public int compare(Entity entityA, Entity entityB) {
-				return (int)Math.signum(transformM.get(entityB).pos.z -
-										transformM.get(entityA).pos.z);
+				return (int) Math.signum(transformM.get(entityB).pos.z - transformM.get(entityA).pos.z);
 			}
 		};
 	}
@@ -63,12 +61,14 @@ public class RenderingSystem extends IteratingSystem {
 	@Override
 	public void update(float deltaTime) {
 		super.update(deltaTime);
-		
+
 		renderQueue.sort(comparator);
-		
+
 		game.camera.update();
 		game.batcher.setProjectionMatrix(game.camera.combined);
 		game.batcher.begin();
+		game.shapeRenderer.setProjectionMatrix(game.camera.combined);
+		game.shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
 
 		for (Entity entity : renderQueue) {
 			TextureComponent tex = textureM.get(entity);
@@ -77,44 +77,32 @@ public class RenderingSystem extends IteratingSystem {
 
 			if (tex == null) {
 				if (dum != null) {
-					game.shapeRenderer.setProjectionMatrix(game.camera.combined);
-					game.shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
 					game.shapeRenderer.setColor(dum.color);
 					game.shapeRenderer.rect(t.pos.x, t.pos.y, dum.width, dum.height);
-					game.shapeRenderer.end();
 				}
-			} else if (tex.region != null){
+			} else if (tex.region != null) {
 
 				float width = tex.region.getRegionWidth();
 				float height = tex.region.getRegionHeight();
 
-
-				game.batcher.draw(
-						tex.region,
-						t.pos.x , t.pos.y ,
-						width / 2, height / 2,
-						width, height,
-						t.scale.x, t.scale.y,
-						t.rotation + 50);
+				game.batcher.draw(tex.region, t.pos.x, t.pos.y, width / 2, height / 2, width, height, t.scale.x, t.scale.y, t.rotation + 50);
 
 			} else if (dum != null) {
-					game.shapeRenderer.setProjectionMatrix(game.camera.combined);
-					game.shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
-					game.shapeRenderer.setColor(dum.color);
-					game.shapeRenderer.rect(t.pos.x, t.pos.y, dum.width, dum.height);
-					game.shapeRenderer.end();
+				game.shapeRenderer.setColor(dum.color);
+				game.shapeRenderer.rect(t.pos.x, t.pos.y, dum.width, dum.height);
 			}
 		}
-		
+
 		game.batcher.end();
+		game.shapeRenderer.end();
 		renderQueue.clear();
 	}
-	
+
 	@Override
 	public void processEntity(Entity entity, float deltaTime) {
 		renderQueue.add(entity);
 	}
-	
+
 	public OrthographicCamera getCamera() {
 		return game.camera;
 	}

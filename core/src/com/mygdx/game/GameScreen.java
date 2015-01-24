@@ -30,7 +30,18 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.mygdx.game.components.TransformComponent;
-import com.mygdx.game.systems.*;
+import com.mygdx.game.systems.AnimationSystem;
+import com.mygdx.game.systems.BackgroundSystem;
+import com.mygdx.game.systems.BossSystem;
+import com.mygdx.game.systems.BoundsSystem;
+import com.mygdx.game.systems.BulletSystem;
+import com.mygdx.game.systems.CameraSystem;
+import com.mygdx.game.systems.CollisionSystem;
+import com.mygdx.game.systems.MovementSystem;
+import com.mygdx.game.systems.PlayerSystem;
+import com.mygdx.game.systems.RenderingSystem;
+import com.mygdx.game.systems.StateSystem;
+
 import de.panda.tiled.MapRenderer;
 
 public class GameScreen extends ScreenAdapter {
@@ -149,7 +160,8 @@ public class GameScreen extends ScreenAdapter {
 		if (Gdx.input.isKeyPressed(Keys.W))
 			accelY = -5f;
 
-		Vector3 v3 = new Vector3(game.camera.unproject(new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0)).x, game.camera.unproject(new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0)).y, 0f).sub(world.bob.getComponent(TransformComponent.class).pos);
+		Vector3 v3 = new Vector3(game.camera.unproject(new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0)).x, game.camera.unproject(new Vector3(
+				Gdx.input.getX(), Gdx.input.getY(), 0)).y, 0f).sub(world.bob.getComponent(TransformComponent.class).pos);
 
 		world.bob.getComponent(TransformComponent.class).rotation = new Vector2(v3.x, v3.y).angle();
 		engine.getSystem(PlayerSystem.class).setAccelX(accelX);
@@ -310,7 +322,7 @@ public class GameScreen extends ScreenAdapter {
 	public void show() {
 		game.assetManager.load("f.png", Texture.class);
 		game.assetManager.load("Stuff/boss_attack_kugel.png", Texture.class);
-
+		game.assetManager.load("Living/boss_sprite.png", Texture.class);
 		game.assetManager.load("stage_test.tmx", TiledMap.class);
 		game.assetManager.finishLoading();
 		font = new BitmapFont();
