@@ -143,9 +143,9 @@ public class GameScreen extends ScreenAdapter {
 			if (Gdx.input.isKeyPressed(Keys.DPAD_RIGHT))
 				accelX = -5f;
 			if (Gdx.input.isKeyPressed(Keys.DPAD_DOWN))
-				accelY = -5f;
-			if (Gdx.input.isKeyPressed(Keys.DPAD_UP))
 				accelY = 5f;
+			if (Gdx.input.isKeyPressed(Keys.DPAD_UP))
+				accelY = -5f;
 
 		engine.getSystem(PlayerSystem.class).setAccelX(accelX);
 		engine.getSystem(PlayerSystem.class).setAccelY(accelY);

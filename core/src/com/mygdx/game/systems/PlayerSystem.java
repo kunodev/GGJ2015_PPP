@@ -61,7 +61,7 @@ public class PlayerSystem extends IteratingSystem {
 	@Override
 	public void update(float deltaTime) {
 		super.update(deltaTime);
-		
+		accelY = 0.0f;
 		accelX = 0.0f;
 	}
 	
@@ -78,6 +78,10 @@ public class PlayerSystem extends IteratingSystem {
 		
 		if (state.get() != PlayerComponent.STATE_HIT) {
 			mov.velocity.x = -accelX / 10.0f * PlayerComponent.MOVE_VELOCITY;
+		}
+
+		if (state.get() != PlayerComponent.STATE_HIT) {
+			mov.velocity.y = -accelY / 10.0f * PlayerComponent.MOVE_VELOCITY;
 		}
 		
 		if (mov.velocity.y > 0 && state.get() != PlayerComponent.STATE_HIT) {
