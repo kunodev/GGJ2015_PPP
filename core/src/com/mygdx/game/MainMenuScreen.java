@@ -20,8 +20,10 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 
 public class MainMenuScreen extends ScreenAdapter {
@@ -34,6 +36,7 @@ public class MainMenuScreen extends ScreenAdapter {
 	Rectangle playBounds;
 	Rectangle creditsBounds;
 	Rectangle tiledBounds;
+	BitmapFont font;
 
 	Vector3 touchPoint;
 
@@ -83,6 +86,15 @@ public class MainMenuScreen extends ScreenAdapter {
 
 		game.batcher.enableBlending();
 		game.batcher.begin();
+		Vector2 center = new Vector2();
+		playBounds.getCenter(center);
+		font.draw(game.batcher, "PLAY", center.x, center.y);
+
+		creditsBounds.getCenter(center);
+		font.draw(game.batcher, "Credits", center.x, center.y);
+
+		tiledBounds.getCenter(center);
+		font.draw(game.batcher, "TileMapTest", center.x, center.y);
 
 		game.batcher.end();
 
@@ -112,10 +124,12 @@ public class MainMenuScreen extends ScreenAdapter {
 	public void show() {
 		// game.assetManager.load("/pathToTexture.png", Texture.class);
 		game.assetManager.finishLoading();
+		font = new BitmapFont();
 	}
 
 	@Override
-	public void dispose() {
+	public void hide() {
 		game.assetManager.clear();
+		font.dispose();
 	}
 }
