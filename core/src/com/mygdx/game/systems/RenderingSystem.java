@@ -87,16 +87,14 @@ public class RenderingSystem extends IteratingSystem {
 
 				float width = tex.region.getRegionWidth()* 100f;
 				float height = tex.region.getRegionHeight()* 100f;
-				float originX = 1f;
-				float originY = 1f;
 
 				game.batcher.draw(
 						tex.region,
-						t.pos.x, t.pos.y,
-						originX, originY,
+						t.pos.x , t.pos.y ,
+						1f, 1f,
 						width, height,
-						t.scale.x * 32, t.scale.y * 32,
-						MathUtils.radiansToDegrees * t.rotation);
+						t.scale.x * 0.03f, t.scale.y * 0.03f,
+						t.rotation);
 
 			} else if (dum != null) {
 					game.shapeRenderer.setProjectionMatrix(game.camera.combined);

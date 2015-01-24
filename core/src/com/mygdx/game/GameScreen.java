@@ -149,18 +149,7 @@ public class GameScreen extends ScreenAdapter {
 		if (Gdx.input.isKeyPressed(Keys.W))
 			accelY = -5f;
 
-		Vector3 v3 = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0f).sub(world.bob.getComponent(TransformComponent.class).pos);
-
-		System.out.println(Gdx.input.getY());
-		System.out.println(world.bob.getComponent(TransformComponent.class).pos.y);
-
-//		double a;
-//		a = Math.atan2
-//				(
-//					(world.bob.getComponent(TransformComponent.class).pos.y - Gdx.input.getY())
-//					/
-//					(world.bob.getComponent(TransformComponent.class).pos.x - Gdx.input.getX())
-//				);
+		Vector3 v3 = new Vector3(game.camera.unproject(new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0)).x, game.camera.unproject(new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0)).y, 0f).sub(world.bob.getComponent(TransformComponent.class).pos);
 
 		world.bob.getComponent(TransformComponent.class).rotation = new Vector2(v3.x, v3.y).angle();
 		engine.getSystem(PlayerSystem.class).setAccelX(accelX);

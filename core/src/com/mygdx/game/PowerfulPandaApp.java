@@ -42,6 +42,7 @@ public class PowerfulPandaApp extends Game {
 
 		setScreen(new MainMenuScreen(this));
 	}
+
 	@Override
 	public void render() {
 		GL20 gl = Gdx.gl;
