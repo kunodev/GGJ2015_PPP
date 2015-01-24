@@ -1,12 +1,5 @@
 package de.panda.tiled;
 
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
-import java.util.Set;
-
-import org.reflections.Reflections;
-
 import com.badlogic.ashley.core.Component;
 import com.badlogic.ashley.core.Engine;
 import com.badlogic.ashley.core.Entity;
@@ -22,6 +15,12 @@ import com.badlogic.gdx.maps.tiled.TiledMapTileLayer.Cell;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.mygdx.game.components.BoundsComponent;
 import com.mygdx.game.components.WallComponent;
+import org.reflections.Reflections;
+
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Set;
 
 public class MapRenderer {
 
@@ -53,7 +52,7 @@ public class MapRenderer {
 		int tileWidth = (Integer) map.getProperties().get("tilewidth");
 		int height = (Integer) map.getProperties().get("height");
 		int tileHeight = (Integer) map.getProperties().get("tileheight");
-		cam.setToOrtho(false, width * tileWidth, height * tileHeight);
+		cam.translate(width * tileWidth * 0.20f, height * tileHeight * 0.65f);
 	}
 
 	public void loadComponentsFromMap(Engine engine) {

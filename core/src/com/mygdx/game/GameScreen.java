@@ -17,7 +17,6 @@
 package com.mygdx.game;
 
 import com.badlogic.ashley.core.Engine;
-import com.badlogic.gdx.Application.ApplicationType;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.ScreenAdapter;
@@ -28,7 +27,6 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
-import com.mygdx.game.components.PlayerComponent;
 import com.mygdx.game.components.TransformComponent;
 import com.mygdx.game.systems.*;
 
@@ -201,6 +199,7 @@ public class GameScreen extends ScreenAdapter {
 		game.batcher.setProjectionMatrix(game.camera.combined);
 
 		game.batcher.begin();
+		game.batcher.draw(game.assetManager.get("f.png", Texture.class),128.0f, 128.0f);
 		switch (state) {
 		case GAME_READY:
 			presentReady();
