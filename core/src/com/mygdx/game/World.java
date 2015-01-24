@@ -22,7 +22,6 @@ import java.util.Random;
 
 import com.badlogic.ashley.core.Engine;
 import com.badlogic.ashley.core.Entity;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Animation.PlayMode;
@@ -36,7 +35,6 @@ import com.mygdx.game.components.BoundsComponent;
 import com.mygdx.game.components.BulletComponent;
 import com.mygdx.game.components.CameraComponent;
 import com.mygdx.game.components.CollisionComponent;
-import com.mygdx.game.components.DummyComponent;
 import com.mygdx.game.components.HealthComponent;
 import com.mygdx.game.components.MovementComponent;
 import com.mygdx.game.components.PlayerComponent;
@@ -202,16 +200,11 @@ public class World {
 	public Entity createBullet() {
 		Entity entity = new Entity();
 
-		AnimationComponent animation = new AnimationComponent();
 		BulletComponent bullet = new BulletComponent();
 		MovementComponent movement = new MovementComponent();
 		TransformComponent position = new TransformComponent();
 		StateComponent state = new StateComponent();
 		TextureComponent texture = new TextureComponent();
-		DummyComponent dummy = new DummyComponent();
-
-		// bounds.bounds.width = BulletComponent.WIDTH;
-		// bounds.bounds.height = BulletComponent.HEIGHT;
 
 		Vector3 playerPos = this.bob.getComponent(TransformComponent.class).pos;
 		Vector3 bossPos = this.boss.getComponent(TransformComponent.class).pos;
@@ -221,21 +214,16 @@ public class World {
 
 		state.set(BulletComponent.STATE_MOVE);
 
-		dummy.color = Color.BLUE;
-		dummy.width = bullet.WIDTH;
-		dummy.height = bullet.HEIGHT;
-
 		Texture tex = game.assetManager.get("Stuff/boss_attack_kugel.png");
 		TextureRegion texReg = new TextureRegion(tex);
 		texture.region = texReg;
 
-		entity.add(animation);
 		entity.add(bullet);
 		// entity.add(bounds);
 		entity.add(movement);
 		entity.add(position);
 		entity.add(state);
-		entity.add(dummy);
+		entity.add(texture);
 
 		engine.addEntity(entity);
 
