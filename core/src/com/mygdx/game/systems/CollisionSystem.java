@@ -30,6 +30,7 @@ import com.mygdx.game.components.CollisionComponent;
 import com.mygdx.game.components.DummyComponent;
 import com.mygdx.game.components.TextureComponent;
 import com.mygdx.game.components.TransformComponent;
+import com.mygdx.game.components.WallComponent;
 
 public class CollisionSystem extends IteratingSystem {
 	private ComponentMapper<TransformComponent> tm;
@@ -44,13 +45,11 @@ public class CollisionSystem extends IteratingSystem {
 	private Engine engine;
 	private World world;
 	private CollisionListener listener;
-	private ImmutableArray<Entity> player;
-	private ImmutableArray<Entity> collidables;
-	private static final Family colliderFamily = Family.all(CollisionComponent.class, TransformComponent.class).get();
+	public ImmutableArray<Entity> collidables;
+	private static final Family colliderFamily = Family.all(TransformComponent.class).one(WallComponent.class, CollisionComponent.class).get();
 
-	public CollisionSystem(World world) {
+	public CollisionSystem(World world, CollisionListener listener) {
 		super(colliderFamily);
-
 		this.world = world;
 
 		tm = ComponentMapper.getFor(TransformComponent.class);
@@ -63,7 +62,6 @@ public class CollisionSystem extends IteratingSystem {
 	@Override
 	public void addedToEngine(Engine engine) {
 		this.engine = engine;
-
 	}
 
 	@Override
@@ -74,14 +72,16 @@ public class CollisionSystem extends IteratingSystem {
 	@Override
 	public void processEntity(Entity entity, float deltaTime) {
 
-		Rectangle rect = buildRectangle(entity);
+		Rectangle thisEntityRect = buildRectangle(entity);
 		for (Entity collidable : collidables) {
+			Rectangle collidableRect = buildRectangle(collidable);
+			if (thisEntityRect.overlaps(collidableRect)) {
+
+			}
 		}
 	}
 
 	private Rectangle buildRectangle(Entity entity) {
-		Vector3 pos2 = entity.getComponent(TransformComponent.class).pos;
-		Vector2 pos = new Vector2(pos2.x, pos2.y);
 		Rectangle result = new Rectangle(0, 0, 0, 0);
 		CollisionComponent collisionComp = entity.getComponent(CollisionComponent.class);
 		float width = collisionComp.width;
@@ -100,6 +100,9 @@ public class CollisionSystem extends IteratingSystem {
 				result.setHeight(dummyComp.height);
 			}
 		}
+		Vector3 pos2 = entity.getComponent(TransformComponent.class).pos;
+		Vector2 pos = new Vector2(pos2.x, pos2.y);
+		result.setCenter(pos);
 		return result;
 	}
 }
