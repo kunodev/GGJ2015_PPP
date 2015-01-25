@@ -27,7 +27,7 @@ public class MobFactory {
         StateComponent sc = new StateComponent();
         tc.pos.set(pos.x, pos.y, 0);
 
-        Vector2 vel = new Vector2((float) Math.random(), (float) Math.random()).nor().scl((float) Math.random() * 48f);
+        Vector2 vel = new Vector2(-0.5f + (float) Math.random(),-0.5f +  (float) Math.random()).nor().scl((float) Math.random() * 48f);
         mc.velocity.x = vel.x;
         mc.velocity.y = vel.y;
 
