@@ -16,10 +16,6 @@
 
 package com.mygdx.game;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
-
 import com.badlogic.ashley.core.Engine;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.audio.Sound;
@@ -27,33 +23,19 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Animation.PlayMode;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
-import com.mygdx.game.components.AnimationComponent;
-import com.mygdx.game.components.BackgroundComponent;
-import com.mygdx.game.components.BossComponent;
-import com.mygdx.game.components.BoundsComponent;
-import com.mygdx.game.components.BulletComponent;
-import com.mygdx.game.components.CameraComponent;
-import com.mygdx.game.components.CollisionComponent;
-import com.mygdx.game.components.HealthComponent;
-import com.mygdx.game.components.MovementComponent;
-import com.mygdx.game.components.PlayerComponent;
-import com.mygdx.game.components.StateComponent;
-import com.mygdx.game.components.TextureComponent;
-import com.mygdx.game.components.TransformComponent;
+import com.mygdx.game.components.*;
 import com.mygdx.game.systems.RenderingSystem;
 import com.mygdx.game.systems.WallCollisionListener;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class World {
-	public static final float WORLD_WIDTH = 10;
-	public static final float WORLD_HEIGHT = 15 * 20;
 	public static final int WORLD_STATE_RUNNING = 0;
 	public static final int WORLD_STATE_NEXT_LEVEL = 1;
 	public static final int WORLD_STATE_GAME_OVER = 2;
-	public static final Vector2 gravity = new Vector2(0, -12);
 
-	public final Random rand;
 	public int state;
 
 	public PowerfulPandaApp game;
@@ -66,14 +48,13 @@ public class World {
 	public World(PowerfulPandaApp game) {
 		this.game = game;
 		engine = game.engine;
-		this.rand = new Random();
 	}
 
 	public void create() {
 		bob = createBob();
 		boss = createBoss();
 		createCamera(bob);
-		createBackground();
+		//createBackground();
 
 		this.state = WORLD_STATE_RUNNING;
 
@@ -84,7 +65,6 @@ public class World {
 	private Entity createBob() {
 		Entity entity = new Entity();
 
-		// AnimationComponent animation = new AnimationComponent();
 		PlayerComponent bob = new PlayerComponent();
 		BoundsComponent bounds = new BoundsComponent();
 		MovementComponent movement = new MovementComponent();
@@ -97,7 +77,6 @@ public class World {
 		// TODO Real playercollisionsListener
 		col.listener = new WallCollisionListener();
 
-		// animation.animations.put(PlayerComponent.STATE_WALK, );
 		Texture walk = game.assetManager.get("Living/headbut_walk_animscheet.png");
 		List<TextureRegion> walkList = extractListOfRegions(walk, 4);
 		animComp.animations.put(PlayerComponent.STATE_IDLE, new Animation(5, cast(walkList)));
@@ -117,7 +96,6 @@ public class World {
 
 		state.set(PlayerComponent.STATE_WALKING);
 
-		// entity.add(animation);
 		entity.add(bob);
 		entity.add(bounds);
 		entity.add(movement);
@@ -131,31 +109,8 @@ public class World {
 		return entity;
 	}
 
-	private TextureRegion[] cast(List<TextureRegion> walkList) {
-		TextureRegion[] result = new TextureRegion[walkList.size()];
-		walkList.toArray(result);
-		return result;
-	}
-
-	private List<TextureRegion> extractListOfRegions(Texture walk, int xParts) {
-		List<TextureRegion> walkList = new ArrayList<TextureRegion>();
-		int heightOfOne = walk.getHeight();
-		int widthOfOne = walk.getWidth() / xParts;
-		for (int i = 0; i < xParts; i++) {
-			TextureRegion nextOne = new TextureRegion(walk, widthOfOne * i, 0, widthOfOne, heightOfOne);
-			walkList.add(nextOne);
-		}
-		return walkList;
-	}
-
-	public TextureRegion[] doTextureMagic(Texture t, int xParts) {
-		return cast(extractListOfRegions(t, xParts));
-	}
-
 	private Entity createBoss() {
 		final Entity entity = new Entity();
-
-		// AnimationComponent animation = new AnimationComponent();
 		BossComponent boss = new BossComponent();
 		BoundsComponent bounds = new BoundsComponent();
 		MovementComponent movement = new MovementComponent();
@@ -168,13 +123,10 @@ public class World {
 			@Override
 			public void attack(Entity enemy, int healthLeft) {
 				if (healthLeft == 0) {
-					System.out.println("DEINE MUDDA");
 					game.engine.removeEntity(entity);
 					bossMucke.stop();
 					Sound world = game.assetManager.get("Sound/Level1Idee1.mp3.mp3");
 					world.loop(0.2f);
-				} else {
-					System.out.println("ATTACK");
 				}
 			}
 		};
@@ -194,7 +146,6 @@ public class World {
 
 		state.set(BossComponent.STATE_MOVE);
 
-		// entity.add(animation);
 		entity.add(boss);
 		entity.add(bounds);
 		entity.add(movement);
@@ -254,20 +205,24 @@ public class World {
 		engine.addEntity(entity);
 	}
 
-	private void createBackground() {
-		Entity entity = new Entity();
-
-		BackgroundComponent background = new BackgroundComponent();
-		TransformComponent position = new TransformComponent();
-		TextureComponent texture = new TextureComponent();
-
-		// texture.region = Assets.backgroundRegion;
-
-		entity.add(background);
-		entity.add(position);
-		entity.add(texture);
-
-		engine.addEntity(entity);
+	private TextureRegion[] cast(List<TextureRegion> walkList) {
+		TextureRegion[] result = new TextureRegion[walkList.size()];
+		walkList.toArray(result);
+		return result;
 	}
 
+	private List<TextureRegion> extractListOfRegions(Texture walk, int xParts) {
+		List<TextureRegion> walkList = new ArrayList<TextureRegion>();
+		int heightOfOne = walk.getHeight();
+		int widthOfOne = walk.getWidth() / xParts;
+		for (int i = 0; i < xParts; i++) {
+			TextureRegion nextOne = new TextureRegion(walk, widthOfOne * i, 0, widthOfOne, heightOfOne);
+			walkList.add(nextOne);
+		}
+		return walkList;
+	}
+
+	public TextureRegion[] doTextureMagic(Texture t, int xParts) {
+		return cast(extractListOfRegions(t, xParts));
+	}
 }
