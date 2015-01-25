@@ -1,6 +1,7 @@
 package com.mygdx.game;
 
 import com.badlogic.gdx.ScreenAdapter;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -12,6 +13,7 @@ public class IntroScreen extends ScreenAdapter {
     static final int INTRO_2 = 2;
     static final int INTRO_3 = 3;
     static final int INTRO_4 = 4;
+    static final int INTRO_FINISH = 5;
 
     PowerfulPandaApp game;
 
@@ -21,6 +23,7 @@ public class IntroScreen extends ScreenAdapter {
 
     Texture background;
     float backgroundStateTime = 0.0f;
+    private Sound backgroundMucke;
 
     public IntroScreen(PowerfulPandaApp game) {
         this.game = game;
@@ -29,38 +32,51 @@ public class IntroScreen extends ScreenAdapter {
         world = new World(game);
     }
 
-    public void update(float deltaTime) {
-        backgroundStateTime += deltaTime;
-
-        TextureComponent texComp = new TextureComponent();
-        Texture tex = game.assetManager.get("menu_1.jpg");
-        texComp.region = new TextureRegion(tex);
-
-        game.setScreen(new MainMenuScreen(game));
-    }
-
     @Override
     public void render(float delta) {
-        update(delta);
+        switch (state) {
+            case INTRO_READY:
+                background = new Texture("Background/menu_1.jpg");
+                break;
+            case INTRO_1:
+                background = new Texture("Background/menu_3.jpg");
+                break;
+            case INTRO_2:
+                background = new Texture("Background/menu_2.jpg");
+                break;
+            case INTRO_3:
+                background = new Texture("Background/menu_1.jpg");
+                break;
+            case INTRO_4:
+                background = new Texture("Background/menu_3.jpg");
+                break;
+            case INTRO_FINISH:
+                backgroundMucke.stop();
+                game.setScreen(new GameScreen(game));
+                return;
+        }
+
+        game.batcher.disableBlending();
+        game.batcher.begin();
+        game.batcher.draw(background, 0f, 0f, PowerfulPandaApp.DEFAULT_WIDTH, PowerfulPandaApp.DEFAULT_HEIGHT);
+        game.batcher.end();
+        game.batcher.enableBlending();
+
+        backgroundStateTime += delta;
+        if(backgroundStateTime >= 5) {
+            backgroundStateTime -= 5;
+            state++;
+        }
     }
 
-    @Override
-    public void pause() {
-        Settings.save();
-    }
-
-    @Override
     public void show() {
         game.assetManager.load("Background/menu_1.jpg", Texture.class);
         game.assetManager.load("Background/menu_2.jpg", Texture.class);
         game.assetManager.load("Background/menu_3.jpg", Texture.class);
+        game.assetManager.load("Sound/Level1Idee1.mp3.mp3", Sound.class);
         game.assetManager.finishLoading();
 
-        background = new Texture("Background/menu_1.jpg");
-    }
-
-    @Override
-    public void hide() {
-        game.assetManager.clear();
+        backgroundMucke = game.assetManager.get("Sound/Level1Idee1.mp3.mp3");
+        backgroundMucke.loop();
     }
 }

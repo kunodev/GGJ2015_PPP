@@ -93,6 +93,7 @@ public class BossSystem extends IteratingSystem {
 		}
 
 		if (state.get() == BossComponent.STATE_JUMP) {
+			System.out.println("jump");
 			float distance = 10.0f;
 			int xPlus = (int) Math.round(Math.random());
 			int yPlus = (int) Math.round(Math.random());
