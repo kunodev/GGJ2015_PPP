@@ -190,7 +190,7 @@ public class World {
 		bounds.bounds.width = BossComponent.WIDTH;
 		bounds.bounds.height = BossComponent.HEIGHT;
 
-		position.pos.set(500.0f, 200.0f, 1.0f);
+		position.pos.set(1000.0f, 2000.0f, 1.0f);
 
 		state.set(BossComponent.STATE_MOVE);
 
