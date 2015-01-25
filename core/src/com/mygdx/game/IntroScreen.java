@@ -74,6 +74,6 @@ public class IntroScreen extends ScreenAdapter {
         game.assetManager.finishLoading();
 
         backgroundMucke = game.assetManager.get("Sound/Level1Idee1.mp3.mp3");
-        backgroundMucke.loop();
+        backgroundMucke.loop(0.1f);
     }
 }

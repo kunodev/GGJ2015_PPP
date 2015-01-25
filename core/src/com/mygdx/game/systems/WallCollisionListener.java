@@ -7,7 +7,7 @@ public class WallCollisionListener implements CollisionListener {
 
 	@Override
 	public void hit(Entity thisEntity, Entity otherEntity) {
-//		System.out.println("Collision Detected");
+		System.out.println("Collision Detected");
 	}
 
 }
