@@ -12,8 +12,7 @@ public class IntroScreen extends ScreenAdapter {
     static final int INTRO_1 = 1;
     static final int INTRO_2 = 2;
     static final int INTRO_3 = 3;
-    static final int INTRO_4 = 4;
-    static final int INTRO_FINISH = 5;
+    static final int INTRO_FINISH = 4;
 
     PowerfulPandaApp game;
 
@@ -36,19 +35,16 @@ public class IntroScreen extends ScreenAdapter {
     public void render(float delta) {
         switch (state) {
             case INTRO_READY:
-                background = new Texture("Background/menu_1.jpg");
+                background = new Texture("Background/intro1.jpg");
                 break;
             case INTRO_1:
-                background = new Texture("Background/menu_3.jpg");
+                background = new Texture("Background/intro2.jpg");
                 break;
             case INTRO_2:
-                background = new Texture("Background/menu_2.jpg");
+                background = new Texture("Background/intro3.jpg");
                 break;
             case INTRO_3:
-                background = new Texture("Background/menu_1.jpg");
-                break;
-            case INTRO_4:
-                background = new Texture("Background/menu_3.jpg");
+                background = new Texture("Background/intro4.jpg");
                 break;
             case INTRO_FINISH:
                 backgroundMucke.stop();
@@ -63,16 +59,17 @@ public class IntroScreen extends ScreenAdapter {
         game.batcher.enableBlending();
 
         backgroundStateTime += delta;
-        if(backgroundStateTime >= 5) {
-            backgroundStateTime -= 5;
+        if(backgroundStateTime >= 4) {
+            backgroundStateTime -= 4;
             state++;
         }
     }
 
     public void show() {
-        game.assetManager.load("Background/menu_1.jpg", Texture.class);
-        game.assetManager.load("Background/menu_2.jpg", Texture.class);
-        game.assetManager.load("Background/menu_3.jpg", Texture.class);
+        game.assetManager.load("Background/intro1.jpg", Texture.class);
+        game.assetManager.load("Background/intro2.jpg", Texture.class);
+        game.assetManager.load("Background/intro3.jpg", Texture.class);
+        game.assetManager.load("Background/intro4.jpg", Texture.class);
         game.assetManager.load("Sound/Level1Idee1.mp3.mp3", Sound.class);
         game.assetManager.finishLoading();
 
