@@ -20,6 +20,7 @@ import com.badlogic.ashley.core.Engine;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.ScreenAdapter;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -307,6 +308,11 @@ public class GameScreen extends ScreenAdapter {
 		game.assetManager.load("Living/headbut_boss_attack_animsheet.png", Texture.class);
 		game.assetManager.load("Living/buthead_gegner1_animsheet.png", Texture.class);
 		game.assetManager.load("Living/buthead_ratte_gegner_animsheet.png", Texture.class);
+		game.assetManager.load("Sound/headbut.mp3.mp3", Sound.class);
+		game.assetManager.load("Sound/Level1Idee1.mp3.mp3", Sound.class);
+		game.assetManager.load("Sound/Monster.mp3.mp3", Sound.class);
+		game.assetManager.load("Sound/Outro.mp3.mp3", Sound.class);
+		game.assetManager.load("Sound/Schwusch.mp3.mp3", Sound.class);
 		game.assetManager.finishLoading();
 		font = new BitmapFont();
 

@@ -23,6 +23,7 @@ import com.badlogic.ashley.systems.IteratingSystem;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Buttons;
 import com.badlogic.gdx.Input.Keys;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.mygdx.game.World;
@@ -90,6 +91,8 @@ public class PlayerSystem extends IteratingSystem {
 			}
 			if (Gdx.input.isButtonPressed(Buttons.LEFT)) {
 				state.set(PlayerComponent.STATE_HEADBUTT);
+				Sound headbut = world.game.assetManager.get("Sound/headbut.mp3.mp3");
+				headbut.play();
 			}
 
 			Vector2 playerPos = BossSystem.getDeepCopyCentralPos(entity);

@@ -27,7 +27,7 @@ public class PlayerComponent extends Component {
 	public static final float MOVE_VELOCITY = 2000;
 	public static final float WIDTH = 1f;
 	public static final float HEIGHT = 1f;
-	public static final float ATTACK_DURATION = 0.4f;
+	public static final float ATTACK_DURATION = 0.7f;
 
 	public float heightSoFar = 0.0f;
 }
