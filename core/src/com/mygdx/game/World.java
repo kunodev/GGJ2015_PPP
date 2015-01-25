@@ -27,8 +27,8 @@ import com.badlogic.gdx.math.Vector3;
 import com.mygdx.game.components.*;
 import com.mygdx.game.systems.RenderingSystem;
 import com.mygdx.game.systems.WallCollisionListener;
+import de.panda.tiled.TextureHelper;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class World {
@@ -78,15 +78,15 @@ public class World {
 		col.listener = new WallCollisionListener();
 
 		Texture walk = game.assetManager.get("Living/headbut_walk_animscheet.png");
-		List<TextureRegion> walkList = extractListOfRegions(walk, 4);
-		animComp.animations.put(PlayerComponent.STATE_IDLE, new Animation(5, cast(walkList)));
+		List<TextureRegion> walkList = TextureHelper.extractListOfRegions(walk, 4);
+		animComp.animations.put(PlayerComponent.STATE_IDLE, new Animation(5, TextureHelper.cast(walkList)));
 		animComp.animations.get(PlayerComponent.STATE_IDLE).setPlayMode(PlayMode.NORMAL);
-		animComp.animations.put(PlayerComponent.STATE_WALKING, new Animation(0.3f, cast(walkList)));
+		animComp.animations.put(PlayerComponent.STATE_WALKING, new Animation(0.3f, TextureHelper.cast(walkList)));
 		animComp.animations.get(PlayerComponent.STATE_WALKING).setPlayMode(PlayMode.LOOP);
 
 		Texture attack = game.assetManager.get("Living/headbut_attack_animscheet.png");
-		List<TextureRegion> attckList = extractListOfRegions(attack, 2);
-		animComp.animations.put(PlayerComponent.STATE_HEADBUTT, new Animation(PlayerComponent.ATTACK_DURATION, cast(attckList)));
+		List<TextureRegion> attckList = TextureHelper.extractListOfRegions(attack, 2);
+		animComp.animations.put(PlayerComponent.STATE_HEADBUTT, new Animation(PlayerComponent.ATTACK_DURATION, TextureHelper.cast(attckList)));
 		animComp.animations.get(PlayerComponent.STATE_HEADBUTT).setPlayMode(PlayMode.NORMAL);
 
 		bounds.bounds.width = PlayerComponent.WIDTH;
@@ -138,7 +138,7 @@ public class World {
 		anim.animations.put(BossComponent.STATE_SHOOT, new Animation(Float.MAX_VALUE, new TextureRegion(text)));
 
 		Texture tex = game.assetManager.get("Living/headbut_boss_attack_animsheet.png");
-		anim.animations.put(BossComponent.STATE_WAIT, new Animation(BossComponent.WAIT_DURATION / 2, cast(extractListOfRegions(tex, 4))));
+		anim.animations.put(BossComponent.STATE_WAIT, new Animation(BossComponent.WAIT_DURATION / 2, TextureHelper.cast(TextureHelper.extractListOfRegions(tex, 4))));
 		bounds.bounds.width = BossComponent.WIDTH;
 		bounds.bounds.height = BossComponent.HEIGHT;
 
@@ -203,26 +203,5 @@ public class World {
 		entity.add(camera);
 
 		engine.addEntity(entity);
-	}
-
-	private TextureRegion[] cast(List<TextureRegion> walkList) {
-		TextureRegion[] result = new TextureRegion[walkList.size()];
-		walkList.toArray(result);
-		return result;
-	}
-
-	private List<TextureRegion> extractListOfRegions(Texture walk, int xParts) {
-		List<TextureRegion> walkList = new ArrayList<TextureRegion>();
-		int heightOfOne = walk.getHeight();
-		int widthOfOne = walk.getWidth() / xParts;
-		for (int i = 0; i < xParts; i++) {
-			TextureRegion nextOne = new TextureRegion(walk, widthOfOne * i, 0, widthOfOne, heightOfOne);
-			walkList.add(nextOne);
-		}
-		return walkList;
-	}
-
-	public TextureRegion[] doTextureMagic(Texture t, int xParts) {
-		return cast(extractListOfRegions(t, xParts));
 	}
 }
