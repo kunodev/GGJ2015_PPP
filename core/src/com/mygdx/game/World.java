@@ -22,6 +22,7 @@ import java.util.Random;
 
 import com.badlogic.ashley.core.Engine;
 import com.badlogic.ashley.core.Entity;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Animation.PlayMode;
@@ -60,6 +61,7 @@ public class World {
 
 	public Entity bob;
 	public Entity boss;
+	public Sound bossMucke;
 
 	public World(PowerfulPandaApp game) {
 		this.game = game;
@@ -74,6 +76,9 @@ public class World {
 		createBackground();
 
 		this.state = WORLD_STATE_RUNNING;
+
+		bossMucke = game.assetManager.get("Sound/Monster.mp3.mp3");
+		bossMucke.loop(0.2f);
 	}
 
 	private Entity createBob() {
@@ -165,6 +170,9 @@ public class World {
 				if (healthLeft == 0) {
 					System.out.println("DEINE MUDDA");
 					game.engine.removeEntity(entity);
+					bossMucke.stop();
+					Sound world = game.assetManager.get("Sound/Level1Idee1.mp3.mp3");
+					world.loop(0.2f);
 				} else {
 					System.out.println("ATTACK");
 				}
