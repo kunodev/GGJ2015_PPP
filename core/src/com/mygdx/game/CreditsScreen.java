@@ -1,5 +1,6 @@
 package com.mygdx.game;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
@@ -20,7 +21,11 @@ public class CreditsScreen extends ScreenAdapter {
 
     @Override
     public void render(float delta) {
-        background = new Texture("Background/menu_2.jpg");
+        if (Gdx.input.justTouched()) {
+            game.setScreen(new MainMenuScreen(game));
+            return;
+        }
+        background = new Texture("Background/credits.jpg");
 
         game.batcher.disableBlending();
         game.batcher.begin();
@@ -30,7 +35,7 @@ public class CreditsScreen extends ScreenAdapter {
     }
 
     public void show() {
-        game.assetManager.load("Background/menu_2.jpg", Texture.class);
+        game.assetManager.load("Background/credits.jpg", Texture.class);
         game.assetManager.load("Sound/Outro.mp3.mp3", Sound.class);
         game.assetManager.finishLoading();
 
