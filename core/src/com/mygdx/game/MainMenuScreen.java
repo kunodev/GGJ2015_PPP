@@ -18,6 +18,7 @@ package com.mygdx.game;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.ScreenAdapter;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
@@ -46,6 +47,7 @@ public class MainMenuScreen extends ScreenAdapter {
 	Vector3 touchPoint;
 	Animation background;
 	float backgroundStateTime = 0.0f;
+	private Sound backgroundMucke;
 
 	public MainMenuScreen(PowerfulPandaApp game) {
 		this.game = game;
@@ -64,7 +66,7 @@ public class MainMenuScreen extends ScreenAdapter {
 			game.camera.unproject(touchPoint);
 
 			if (playBounds.contains(touchPoint.x, touchPoint.y)) {
-				game.setScreen(new GameScreen(game));
+				game.setScreen(new IntroScreen(game));
 				return;
 			}
 			if (exitBounds.contains(touchPoint.x, touchPoint.y)) {
@@ -72,7 +74,7 @@ public class MainMenuScreen extends ScreenAdapter {
 				return;
 			}
 			if(creditsBounds.contains(touchPoint.x, touchPoint.y)){
-				game.setScreen(new MapLoaderTestScreen(game));
+				//game.setScreen(new MapLoaderTestScreen(game));
 				return;
 			}
 
@@ -131,6 +133,7 @@ public class MainMenuScreen extends ScreenAdapter {
 		game.assetManager.load("Background/menu_1.jpg", Texture.class);
 		game.assetManager.load("Background/menu_2.jpg", Texture.class);
 		game.assetManager.load("Background/menu_3.jpg", Texture.class);
+		game.assetManager.load("Sound/Outro.mp3.mp3", Sound.class);
 		game.assetManager.finishLoading();
 
 		font = new BitmapFont();
@@ -142,6 +145,9 @@ public class MainMenuScreen extends ScreenAdapter {
 		);
 
 		background.setPlayMode(Animation.PlayMode.LOOP_PINGPONG);
+
+		backgroundMucke = game.assetManager.get("Sound/Outro.mp3.mp3");
+		backgroundMucke.loop();
 	}
 
 	@Override

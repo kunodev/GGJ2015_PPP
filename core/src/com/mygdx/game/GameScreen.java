@@ -26,28 +26,18 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.maps.tiled.TiledMap;
+import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
-import com.mygdx.game.systems.AnimationSystem;
-import com.mygdx.game.systems.BackgroundSystem;
-import com.mygdx.game.systems.BossSystem;
-import com.mygdx.game.systems.BoundsSystem;
-import com.mygdx.game.systems.BulletSystem;
-import com.mygdx.game.systems.CameraSystem;
-import com.mygdx.game.systems.CollisionSystem;
-import com.mygdx.game.systems.MovementSystem;
-import com.mygdx.game.systems.PlayerSystem;
-import com.mygdx.game.systems.RenderingSystem;
-import com.mygdx.game.systems.StateSystem;
-
+import com.mygdx.game.systems.*;
 import de.panda.tiled.MapRenderer;
 
 public class GameScreen extends ScreenAdapter {
-	static final int GAME_READY = 0;
-	static final int GAME_RUNNING = 1;
-	static final int GAME_PAUSED = 2;
-	static final int GAME_LEVEL_END = 3;
-	static final int GAME_OVER = 4;
+	public static final int GAME_READY = 0;
+	public static final int GAME_RUNNING = 1;
+	public static final int GAME_PAUSED = 2;
+	public static final int GAME_LEVEL_END = 3;
+	public static final int GAME_OVER = 4;
 
 	PowerfulPandaApp game;
 
@@ -92,6 +82,8 @@ public class GameScreen extends ScreenAdapter {
 		engine.addSystem(new AnimationSystem());
 		engine.addSystem(new CollisionSystem(world));
 		engine.addSystem(new RenderingSystem(game));
+		engine.addSystem(new SpawnEnemySystem(this, 5f));
+
 
 		engine.getSystem(BackgroundSystem.class).setCamera(game.camera);
 
@@ -139,16 +131,12 @@ public class GameScreen extends ScreenAdapter {
 			game.camera.unproject(touchPoint.set(Gdx.input.getX(), Gdx.input.getY(), 0));
 
 			if (pauseBounds.contains(touchPoint.x, touchPoint.y)) {
-				// Assets.playSound(Assets.clickSound);
 				state = GAME_PAUSED;
 				pauseSystems();
 				return;
 			}
 		}
 
-		// if (world.state == World.WORLD_STATE_NEXT_LEVEL) {
-		// game.setScreen(new WinScreen(game));
-		// }
 
 		if (world.state == World.WORLD_STATE_GAME_OVER) {
 			state = GAME_OVER;
@@ -161,14 +149,12 @@ public class GameScreen extends ScreenAdapter {
 			game.camera.unproject(touchPoint.set(Gdx.input.getX(), Gdx.input.getY(), 0));
 
 			if (resumeBounds.contains(touchPoint.x, touchPoint.y)) {
-				// Assets.playSound(Assets.clickSound);
 				state = GAME_RUNNING;
 				resumeSystems();
 				return;
 			}
 
 			if (quitBounds.contains(touchPoint.x, touchPoint.y)) {
-				// Assets.playSound(Assets.clickSound);
 				game.setScreen(new MainMenuScreen(game));
 				return;
 			}
@@ -196,19 +182,14 @@ public class GameScreen extends ScreenAdapter {
 		game.batcher.begin();
 		switch (state) {
 		case GAME_READY:
-			presentReady();
 			break;
 		case GAME_RUNNING:
-			presentRunning();
 			break;
 		case GAME_PAUSED:
-			presentPaused();
 			break;
 		case GAME_LEVEL_END:
-			presentLevelEnd();
 			break;
 		case GAME_OVER:
-			presentGameOver();
 			break;
 		}
 		font.setColor(Color.GREEN);
@@ -219,7 +200,7 @@ public class GameScreen extends ScreenAdapter {
 		game.batcher.end();
 
 		if (game.shapeRenderer != null) {
-			game.shapeRenderer.setProjectionMatrix(game.camera.combined);
+			game.shapeRenderer.setProjectionMatrix(new Matrix4());
 
 			game.shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
 			game.shapeRenderer.rect(quitBounds.x, quitBounds.y, quitBounds.width, quitBounds.height);
@@ -229,41 +210,6 @@ public class GameScreen extends ScreenAdapter {
 		}
 	}
 
-	private void presentReady() {
-		// game.batcher.draw(Assets.ready, 160 - 192 / 2, 240 - 32 / 2, 192,
-		// 32);
-	}
-
-	private void presentRunning() {
-		// game.batcher.draw(Assets.pause, 320 - 64, 480 - 64, 64, 64);
-		// Assets.font.draw(game.batcher, scoreString, 16, 480 - 20);
-	}
-
-	private void presentPaused() {
-		// game.batcher.draw(Assets.pauseMenu, 160 - 192 / 2, 240 - 96 / 2, 192,
-		// 96);
-		// Assets.font.draw(game.batcher, scoreString, 16, 480 - 20);
-	}
-
-	private void presentLevelEnd() {
-		String topText = "the princess is ...";
-		String bottomText = "in another castle!";
-		// float topWidth = Assets.font.getBounds(topText).width;
-		// float bottomWidth = Assets.font.getBounds(bottomText).width;
-		// Assets.font.draw(game.batcher, topText, 160 - topWidth / 2, 480 -
-		// 40);
-		// Assets.font.draw(game.batcher, bottomText, 160 - bottomWidth / 2,
-		// 40);
-	}
-
-	private void presentGameOver() {
-		// game.batcher.draw(Assets.gameOver, 160 - 160 / 2, 240 - 96 / 2, 160,
-		// 96);
-		// float scoreWidth = Assets.font.getBounds(scoreString).width;
-		// Assets.font.draw(game.batcher, scoreString, 160 - scoreWidth / 2, 480
-		// - 20);
-	}
-
 	private void pauseSystems() {
 		engine.getSystem(PlayerSystem.class).setProcessing(false);
 		engine.getSystem(MovementSystem.class).setProcessing(false);
@@ -271,6 +217,7 @@ public class GameScreen extends ScreenAdapter {
 		engine.getSystem(StateSystem.class).setProcessing(false);
 		engine.getSystem(AnimationSystem.class).setProcessing(false);
 		engine.getSystem(CollisionSystem.class).setProcessing(false);
+		engine.getSystem(SpawnEnemySystem.class).setProcessing(false);
 	}
 
 	private void resumeSystems() {
@@ -280,6 +227,7 @@ public class GameScreen extends ScreenAdapter {
 		engine.getSystem(StateSystem.class).setProcessing(true);
 		engine.getSystem(AnimationSystem.class).setProcessing(true);
 		engine.getSystem(CollisionSystem.class).setProcessing(true);
+		engine.getSystem(SpawnEnemySystem.class).setProcessing(true);
 	}
 
 	@Override
@@ -299,7 +247,6 @@ public class GameScreen extends ScreenAdapter {
 
 	@Override
 	public void show() {
-		game.assetManager.load("f.png", Texture.class);
 		game.assetManager.load("Stuff/boss_attack_kugel.png", Texture.class);
 		game.assetManager.load("Living/boss_sprite.png", Texture.class);
 		game.assetManager.load("Living/headbut_attack_animscheet.png", Texture.class);
@@ -320,11 +267,18 @@ public class GameScreen extends ScreenAdapter {
 
 		renderer = new MapRenderer("stage_test.tmx", game.camera, game.assetManager);
 		renderer.loadComponentsFromMap(engine);
+
+		resumeSystems();
+		state = GAME_RUNNING;
 	}
 
 	@Override
 	public void hide() {
 		game.assetManager.clear();
 		font.dispose();
+	}
+
+	public int getState() {
+		return state;
 	}
 }
