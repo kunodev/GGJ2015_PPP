@@ -4,6 +4,7 @@ import com.badlogic.ashley.core.ComponentMapper;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.systems.IteratingSystem;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
@@ -78,6 +79,7 @@ public class BossSystem extends IteratingSystem {
 				double rand = Math.random();
 				if (rand >= 0.4) {
 					state.set(BossComponent.STATE_SHOOT);
+
 				} else {
 					state.set(BossComponent.STATE_JUMP);
 				}
@@ -86,6 +88,8 @@ public class BossSystem extends IteratingSystem {
 		if (state.get() == BossComponent.STATE_SHOOT) {
 			world.createBullet();
 			state.set(BossComponent.STATE_ACTIONED);
+			Sound swusch = world.game.assetManager.get("Sound/Schwusch.mp3.mp3");
+			swusch.play();
 		}
 
 		if (state.get() == BossComponent.STATE_JUMP) {
