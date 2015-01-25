@@ -1,58 +1,40 @@
 package com.mygdx.game;
 
-import com.badlogic.ashley.core.Engine;
-import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.ScreenAdapter;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.mygdx.game.components.TextureComponent;
-import com.mygdx.game.components.TransformComponent;
-import com.mygdx.game.systems.RenderingSystem;
 
 public class CreditsScreen extends ScreenAdapter {
-
     PowerfulPandaApp game;
-    Engine engine;
-    Entity testEnte;
+
+    World world;
+
+    Texture background;
+    private Sound backgroundMucke;
 
     CreditsScreen(PowerfulPandaApp game){
         this.game = game;
-        this.engine = game.engine;
-        engine.addSystem(new RenderingSystem(game));
-    }
-
-    public void createTestEnte(){
-        TransformComponent transformComp = new TransformComponent();
-        TextureComponent texComp = new TextureComponent();
-
-        transformComp.pos.x = 128.0f;
-        transformComp.pos.y = 128.0f;
-
-        Texture tex = game.assetManager.get("f.png");
-        texComp.region = new TextureRegion(tex);
-
-        testEnte = new Entity();
-        testEnte.add(transformComp);
-        testEnte.add(texComp);
-
-        game.engine.addEntity(testEnte);
-    }
-
-    @Override
-    public void show() {
-        game.assetManager.load("f.png", Texture.class);
-        game.assetManager.finishLoading();
-
-        createTestEnte();
-    }
-
-    @Override
-    public void hide() {
-        game.assetManager.clear();
+        game.camera.position.set(PowerfulPandaApp.DEFAULT_WIDTH / 2, PowerfulPandaApp.DEFAULT_HEIGHT / 2, 0);
+        world = new World(game);
     }
 
     @Override
     public void render(float delta) {
-        engine.update(delta);
+        background = new Texture("Background/menu_2.jpg");
+
+        game.batcher.disableBlending();
+        game.batcher.begin();
+        game.batcher.draw(background, 0f, 0f, PowerfulPandaApp.DEFAULT_WIDTH, PowerfulPandaApp.DEFAULT_HEIGHT);
+        game.batcher.end();
+        game.batcher.enableBlending();
+    }
+
+    public void show() {
+        game.assetManager.load("Background/menu_2.jpg", Texture.class);
+        game.assetManager.load("Sound/Outro.mp3.mp3", Sound.class);
+        game.assetManager.finishLoading();
+
+        backgroundMucke = game.assetManager.get("Sound/Outro.mp3.mp3");
+        backgroundMucke.loop();
     }
 }
