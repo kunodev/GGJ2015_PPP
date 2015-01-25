@@ -79,6 +79,11 @@ public class CollisionSystem extends IteratingSystem {
 						hc.attackListener.attack(collidable, hc.health);
 					}
 				}else {
+					// skip enemy vs. enemy
+					HealthComponent entityHc = entity.getComponent(HealthComponent.class);
+					if(hc != null && entityHc != null){
+						continue;
+					}
 					getCollisionComponent(entity).listener.hit(entity, collidable);
 
 					Vector2 vector2 = entity.getComponent(MovementComponent.class).velocity;

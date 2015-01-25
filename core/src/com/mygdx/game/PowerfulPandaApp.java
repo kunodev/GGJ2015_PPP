@@ -1,6 +1,7 @@
 package com.mygdx.game;
 
 import com.badlogic.ashley.core.Engine;
+import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
@@ -12,6 +13,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
+import com.mygdx.game.components.HealthComponent;
 
 public class PowerfulPandaApp extends Game {
 	public static float DEFAULT_WIDTH = 960;
@@ -22,6 +24,17 @@ public class PowerfulPandaApp extends Game {
 	public ShapeRenderer shapeRenderer;
 	public OrthographicCamera camera;
 	public Engine engine;
+
+	public int enemyCounter = 0;
+	public HealthComponent.AttackListener enemyKiller = new HealthComponent.AttackListener() {
+		@Override
+		public void attack(Entity enemy, int healthLeft) {
+			if (healthLeft == 0) {
+				engine.removeEntity(enemy);
+				enemyCounter -= 1;
+			}
+		}
+	};
 
 	@Override
 	public void create() {

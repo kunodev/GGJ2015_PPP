@@ -40,17 +40,17 @@ public class GameScreen extends ScreenAdapter {
 	public static final int GAME_OVER = 4;
 
 	PowerfulPandaApp game;
+	Engine engine;
+	World world;
+
+	private int state;
 
 	Vector3 touchPoint;
-	World world;
 	CollisionSystem.CollisionListener collisionListener;
+
 	Rectangle pauseBounds;
 	Rectangle resumeBounds;
 	Rectangle quitBounds;
-
-	Engine engine;
-
-	private int state;
 
 	BitmapFont font;
 	private MapRenderer renderer;
@@ -280,5 +280,9 @@ public class GameScreen extends ScreenAdapter {
 
 	public int getState() {
 		return state;
+	}
+
+	public PowerfulPandaApp getGame(){
+		return game;
 	}
 }
