@@ -11,13 +11,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.IntMap.Entries;
 import com.mygdx.game.World;
-import com.mygdx.game.components.AnimationComponent;
-import com.mygdx.game.components.BossComponent;
-import com.mygdx.game.components.MovementComponent;
-import com.mygdx.game.components.PlayerComponent;
-import com.mygdx.game.components.StateComponent;
-import com.mygdx.game.components.TextureComponent;
-import com.mygdx.game.components.TransformComponent;
+import com.mygdx.game.components.*;
 
 public class BossSystem extends IteratingSystem {
 	@SuppressWarnings("unchecked")
@@ -93,7 +87,6 @@ public class BossSystem extends IteratingSystem {
 		}
 
 		if (state.get() == BossComponent.STATE_JUMP) {
-			System.out.println("jump");
 			float distance = 10.0f;
 			int xPlus = (int) Math.round(Math.random());
 			int yPlus = (int) Math.round(Math.random());
