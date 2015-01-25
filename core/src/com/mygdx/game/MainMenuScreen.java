@@ -66,8 +66,8 @@ public class MainMenuScreen extends ScreenAdapter {
 			game.camera.unproject(touchPoint);
 
 			if (playBounds.contains(touchPoint.x, touchPoint.y)) {
-				//game.setScreen(new IntroScreen(game));
-				game.setScreen(new GameScreen(game));
+				game.setScreen(new IntroScreen(game));
+				//game.setScreen(new GameScreen(game));
 				return;
 			}
 			if (exitBounds.contains(touchPoint.x, touchPoint.y)) {
