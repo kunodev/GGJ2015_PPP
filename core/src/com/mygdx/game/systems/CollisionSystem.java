@@ -80,6 +80,20 @@ public class CollisionSystem extends IteratingSystem {
 					}
 				}else {
 					getCollisionComponent(entity).listener.hit(entity, collidable);
+
+					Vector2 vector2 = entity.getComponent(MovementComponent.class).velocity;
+
+					if (vector2.x > 0) {
+						entity.getComponent(TransformComponent.class).pos.x -= 5;
+					} else if (vector2.x < 0) {
+						entity.getComponent(TransformComponent.class).pos.x += 5;
+					}
+
+					if (vector2.y> 0) {
+						entity.getComponent(TransformComponent.class).pos.y -= 5;
+					} else if (vector2.y < 0) {
+						entity.getComponent(TransformComponent.class).pos.y += 5;
+					}
 				}
 			}
 		}

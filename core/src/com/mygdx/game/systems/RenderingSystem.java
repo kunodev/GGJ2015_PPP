@@ -85,7 +85,8 @@ public class RenderingSystem extends IteratingSystem {
 				float width = tex.region.getRegionWidth();
 				float height = tex.region.getRegionHeight();
 
-				game.batcher.draw(tex.region, t.pos.x, t.pos.y, width / 2, height / 2, width, height, t.scale.x, t.scale.y, t.rotation + 50);
+				game.shapeRenderer.rect(t.pos.x - (width / 2), t.pos.y - (height / 2), width, height);
+				game.batcher.draw(tex.region, t.pos.x - (width / 2), t.pos.y - (height / 2), width / 2, height / 2, width, height, t.scale.x, t.scale.y, t.rotation + 50);
 
 			} else if (dum != null) {
 				game.shapeRenderer.setColor(dum.color);

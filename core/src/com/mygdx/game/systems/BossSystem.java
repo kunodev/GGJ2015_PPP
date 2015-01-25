@@ -83,7 +83,6 @@ public class BossSystem extends IteratingSystem {
 				}
 			}
 		}
-
 		if (state.get() == BossComponent.STATE_SHOOT) {
 			world.createBullet();
 			state.set(BossComponent.STATE_ACTIONED);
