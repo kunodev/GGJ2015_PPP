@@ -51,7 +51,7 @@ public class BossSystem extends IteratingSystem {
 		TransformComponent t = tm.get(entity);
 		StateComponent state = sm.get(entity);
 		MovementComponent mov = mm.get(entity);
-		Entity player = world.bob;
+		Entity player = world.player;
 
 		Vector2 targetVec = getDeepCopyCentralPos(player).sub(getDeepCopyCentralPos(entity)).nor().scl(BossComponent.MOVE_VELOCITY);
 		float angle = targetVec.angle();

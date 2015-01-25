@@ -3,9 +3,6 @@ package com.mygdx.game;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Animation;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.mygdx.game.components.TextureComponent;
 
 public class IntroScreen extends ScreenAdapter {
     static final int INTRO_READY = 0;
@@ -75,5 +72,10 @@ public class IntroScreen extends ScreenAdapter {
 
         backgroundMucke = game.assetManager.get("Sound/Level1Idee1.mp3.mp3");
         backgroundMucke.loop(0.1f);
+    }
+
+    @Override
+    public void hide() {
+        game.assetManager.clear();
     }
 }

@@ -41,7 +41,7 @@ public class World {
 	public PowerfulPandaApp game;
 	private Engine engine;
 
-	public Entity bob;
+	public Entity player;
 	public Entity boss;
 	public Sound bossMucke;
 
@@ -51,9 +51,9 @@ public class World {
 	}
 
 	public void create() {
-		bob = createPlayer();
+		player = createPlayer();
 		boss = createBoss();
-		createCamera(bob);
+		createCamera(player);
 		//createBackground();
 
 		this.state = WORLD_STATE_RUNNING;
@@ -127,6 +127,15 @@ public class World {
 					bossMucke.stop();
 					Sound world = game.assetManager.get("Sound/Level1Idee1.mp3.mp3");
 					world.loop(0.2f);
+
+					MovementComponent mc = player.getComponent(MovementComponent.class);
+					mc.velocity.setZero();
+					mc.accel.setZero();
+
+					TransformComponent tc = player.getComponent(TransformComponent.class);
+					tc.pos.x = 64f * 66f;
+					tc.pos.y = 64f * 78f;
+					tc.rotation = 0f;
 				}
 			}
 		};
@@ -169,7 +178,7 @@ public class World {
 		StateComponent state = new StateComponent();
 		TextureComponent texture = new TextureComponent();
 
-		Vector3 playerPos = this.bob.getComponent(TransformComponent.class).pos;
+		Vector3 playerPos = this.player.getComponent(TransformComponent.class).pos;
 		Vector3 bossPos = this.boss.getComponent(TransformComponent.class).pos;
 
 		position.pos.set(bossPos);
