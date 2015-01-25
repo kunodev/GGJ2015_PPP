@@ -327,6 +327,20 @@
    <image width="64" height="64" source="Stuff/Glastisch_Blume.png"/>
   </tile>
  </tileset>
+ <tileset firstgid="108" name="Windows" tilewidth="64" tileheight="64">
+  <tile id="0">
+   <image width="64" height="64" source="Walls/Fenster_links.png"/>
+  </tile>
+  <tile id="1">
+   <image width="64" height="64" source="Walls/Fenster_oben.png"/>
+  </tile>
+  <tile id="2">
+   <image width="64" height="64" source="Walls/Fenster_rechts.png"/>
+  </tile>
+  <tile id="3">
+   <image width="64" height="64" source="Walls/Fenster_unten.png"/>
+  </tile>
+ </tileset>
  <layer name="Bottom" width="90" height="90">
   <data encoding="base64" compression="zlib">
    eJzt17EKgCAYhdEfarD3f+GWxpDSStMznK3h8gWKKSISAAAAAPzEcmi9Y3QaAwCMJTrYAAD0be1gwwyigw0AAAAAAAAAAAAAAAAAzGc70XrTKHJdtX62ce03PNNP5/cba13X+Yt/M7vSXjrf73Xl/mu9cwS51s6Id1p7mwAAAABAuR3Bdv0l
@@ -359,46 +373,51 @@
  </layer>
  <layer name="walls2" width="90" height="90">
   <data encoding="base64" compression="zlib">
-   eJzt2dEKgjAUANA99l5QEL3M///HCHqQlWF4dW6eA2OKoON6dyczJQAAAErX4vxWZRT9u9QeQIfK3AVSyrUH0Khc9LXUXCvGzz5XG0X/IuN8f/fDwvv0+L7Xnku+6z5F5dH9x7VH0DNaMF6XxmvTMNFYLnJenwLv1Rv1E/iXurENcd7GOM55okU58vfInvY35u5ft/hPppW6UTsHltpTPs/1qmWt5fRacc5fjqPrPfFamWutE+dtlHE+0v4qbfJ/AAAAAAAAAAAAAAAAAAAAAAAAACg9AcIQBno=
+   eJzt2UsKgzAQAFCX3bfQgnQT73/HbroIaRVbo/n4HoiKYMKYSXQcBgAAAFL35PxRpBf9u5XuQIfSsQsMQyjdgQz+ye2ta1dI9qWUXCvitq/FetG/nHEe3/tp4316fN5755L3uk+5xtG4cO2ZqY0WxOtSvDZNM9uZYrOXnHl9yXiv3pg/gV+ZN44hzseI4xxmtly1+TO/j9RU31hb42rxn0wr80bpMbBVTeN5rZxz2VH2inP4cpx+5/dsqcYzp4b6Riu51jpxPkYa5xpyDJb4PwAAAAAAAAAAAAAAAAAAAAAAAACkXiiWBxY=
+  </data>
+ </layer>
+ <layer name="windows" width="90" height="90">
+  <data encoding="base64" compression="zlib">
+   eJzt2UsOgjAQAFAOLHL/nWsbC3WA/nhvYxNL0plhKtRlAQAAIGdrvQCqSOs8U91nioVzXq0XEPAumJPGlbvmbC+UrKWGbfmOJR3X6vle8sGYvR1xZZxPyVmkT2fOzV2xtdoP14Lvj+bQrzUzbmnm/YE5eV4F/rW3b/gdhHvlzrp697T37l+16bVekTyPXJtRRO+XK5/tI/853CE9t0nHvZwF5Dy5X7xr1lGS5705R9f33mPM6+we794dy5p8pmMAAAAAAAAAAAAAAAAAAAAAAACI+gCDEhoZ
   </data>
  </layer>
  <objectgroup name="WallsColl">
-  <object id="20" x="4085" y="693" width="596" height="11">
+  <object id="20" x="4081" y="684" width="601" height="27">
    <properties>
     <property name="wall" value=""/>
    </properties>
   </object>
-  <object id="21" x="4672" y="705" width="10" height="521">
+  <object id="21" x="4665" y="704" width="25" height="527">
    <properties>
     <property name="wall" value=""/>
    </properties>
   </object>
-  <object id="22" x="4545" y="1213" width="126" height="13">
+  <object id="22" x="4545" y="1205" width="128" height="25">
    <properties>
     <property name="wall" value=""/>
    </properties>
   </object>
-  <object id="23" x="4086" y="1215" width="393" height="12">
+  <object id="23" x="4085" y="1209" width="395" height="22">
    <properties>
     <property name="wall" value=""/>
    </properties>
   </object>
-  <object id="24" x="4085" y="707" width="10" height="507">
+  <object id="24" x="4076" y="707" width="25" height="507">
    <properties>
     <property name="wall" value=""/>
    </properties>
   </object>
-  <object id="25" x="4406" y="706" width="10.3333" height="253.667">
+  <object id="25" x="4400" y="705" width="24.3333" height="266.667">
    <properties>
     <property name="wall" value=""/>
    </properties>
   </object>
-  <object id="26" x="4096" y="949" width="192" height="11">
+  <object id="26" x="4096" y="946" width="191" height="28">
    <properties>
     <property name="wall" value=""/>
    </properties>
   </object>
-  <object id="27" x="4352" y="949" width="55" height="12">
+  <object id="27" x="4352" y="943" width="58" height="30">
    <properties>
     <property name="wall" value=""/>
    </properties>
@@ -408,7 +427,7 @@
     <property name="wall" value=""/>
    </properties>
   </object>
-  <object id="30" x="4160" y="1170" width="64" height="42">
+  <object id="30" x="4159" y="1158" width="71" height="55">
    <properties>
     <property name="wall" value=""/>
    </properties>
@@ -423,22 +442,22 @@
     <property name="wall" value=""/>
    </properties>
   </object>
-  <object id="33" x="3842" y="960" width="241" height="6">
+  <object id="33" x="3831" y="947" width="266" height="19">
    <properties>
     <property name="wall" value=""/>
    </properties>
   </object>
-  <object id="34" x="3840" y="970" width="7" height="246">
+  <object id="34" x="3836" y="968.5" width="17" height="250">
    <properties>
     <property name="wall" value=""/>
    </properties>
   </object>
-  <object id="36" x="4033" y="1209" width="50" height="5">
+  <object id="36" x="4033" y="1209" width="51" height="17">
    <properties>
     <property name="wall" value=""/>
    </properties>
   </object>
-  <object id="37" x="3849" y="1210" width="57" height="8">
+  <object id="37" x="3836" y="1211" width="67" height="14.5">
    <properties>
     <property name="wall" value=""/>
    </properties>
