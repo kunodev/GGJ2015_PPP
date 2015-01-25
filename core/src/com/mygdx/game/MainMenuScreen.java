@@ -148,7 +148,7 @@ public class MainMenuScreen extends ScreenAdapter {
 		background.setPlayMode(Animation.PlayMode.LOOP_PINGPONG);
 
 		backgroundMucke = game.assetManager.get("Sound/Outro.mp3.mp3");
-		backgroundMucke.loop();
+		backgroundMucke.loop(0.3f);
 	}
 
 	@Override

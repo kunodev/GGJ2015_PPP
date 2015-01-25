@@ -81,23 +81,31 @@ public class CollisionSystem extends IteratingSystem {
 				}else {
 					// skip enemy vs. enemy
 					HealthComponent entityHc = entity.getComponent(HealthComponent.class);
+
 					if(hc != null && entityHc != null){
 						continue;
 					}
-					getCollisionComponent(entity).listener.hit(entity, collidable);
 
-					Vector2 vector2 = entity.getComponent(MovementComponent.class).velocity;
+					CollisionComponent collisionComponent = getCollisionComponent(entity);
+					if (collisionComponent != null) getCollisionComponent(entity).listener.hit(entity, collidable);
 
-					if (vector2.x > 0) {
-						entity.getComponent(TransformComponent.class).pos.x -= 5;
-					} else if (vector2.x < 0) {
-						entity.getComponent(TransformComponent.class).pos.x += 5;
-					}
 
-					if (vector2.y> 0) {
-						entity.getComponent(TransformComponent.class).pos.y -= 5;
-					} else if (vector2.y < 0) {
-						entity.getComponent(TransformComponent.class).pos.y += 5;
+					MovementComponent movementComponent = entity.getComponent(MovementComponent.class);
+
+					if (movementComponent != null) {
+						Vector2 vector2 = movementComponent.velocity;
+
+						if (vector2.x > 0) {
+							entity.getComponent(TransformComponent.class).pos.x -= 5;
+						} else if (vector2.x < 0) {
+							entity.getComponent(TransformComponent.class).pos.x += 5;
+						}
+
+						if (vector2.y> 0) {
+							entity.getComponent(TransformComponent.class).pos.y -= 5;
+						} else if (vector2.y < 0) {
+							entity.getComponent(TransformComponent.class).pos.y += 5;
+						}
 					}
 				}
 			}
