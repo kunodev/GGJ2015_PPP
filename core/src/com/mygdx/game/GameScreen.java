@@ -69,6 +69,8 @@ public class GameScreen extends ScreenAdapter {
 		};
 
 		engine = game.engine;
+		engine.removeAllEntities();
+		game.enemyCounter = 0;
 		world = new World(game);
 
 		engine.addSystem(new PlayerSystem(world));

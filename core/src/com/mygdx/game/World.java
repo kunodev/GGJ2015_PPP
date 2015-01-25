@@ -51,7 +51,7 @@ public class World {
 	}
 
 	public void create() {
-		bob = createBob();
+		bob = createPlayer();
 		boss = createBoss();
 		createCamera(bob);
 		//createBackground();
@@ -62,7 +62,7 @@ public class World {
 		bossMucke.loop(0.2f);
 	}
 
-	private Entity createBob() {
+	private Entity createPlayer() {
 		Entity entity = new Entity();
 
 		PlayerComponent bob = new PlayerComponent();
@@ -92,7 +92,7 @@ public class World {
 		bounds.bounds.width = PlayerComponent.WIDTH;
 		bounds.bounds.height = PlayerComponent.HEIGHT;
 
-		position.pos.set(5.0f, 1.0f, 0.0f);
+		position.pos.set(64f * 45f, 64f * 20, 0.0f);
 
 		state.set(PlayerComponent.STATE_WALKING);
 
