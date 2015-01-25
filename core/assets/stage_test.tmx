@@ -20,13 +20,40 @@
    <image width="64" height="64" source="Background/Holz_boden.png"/>
   </tile>
   <tile id="6">
-   <image width="64" height="64" source="Background/Kueche.png"/>
-  </tile>
-  <tile id="7">
    <image width="64" height="64" source="Background/Kueche_klein.png"/>
   </tile>
+  <tile id="7">
+   <image width="64" height="64" source="Background/Rasen.png"/>
+  </tile>
+  <tile id="8">
+   <image width="64" height="64" source="Background/Rasen_1.png"/>
+  </tile>
+  <tile id="9">
+   <image width="64" height="64" source="Background/Rasen_3.png"/>
+  </tile>
+  <tile id="10">
+   <image width="64" height="64" source="Background/Gehweg_1.png"/>
+  </tile>
+  <tile id="11">
+   <image width="64" height="64" source="Background/Gehweg_2.png"/>
+  </tile>
+  <tile id="12">
+   <image width="64" height="64" source="Background/Strasse_Links.png"/>
+  </tile>
+  <tile id="13">
+   <image width="64" height="64" source="Background/Strasse_Rechts.png"/>
+  </tile>
+  <tile id="14">
+   <image width="64" height="64" source="Background/Strasse_Links2.png"/>
+  </tile>
+  <tile id="15">
+   <image width="64" height="64" source="Background/Strasse_Rechts2.png"/>
+  </tile>
+  <tile id="16">
+   <image width="64" height="64" source="Background/Kueche_groß.png"/>
+  </tile>
  </tileset>
- <tileset firstgid="9" name="Walls" tilewidth="64" tileheight="64">
+ <tileset firstgid="18" name="Walls" tilewidth="64" tileheight="64">
   <tile id="0">
    <image width="64" height="64" source="Walls/Mauer.png"/>
   </tile>
@@ -130,7 +157,7 @@
    <image width="64" height="64" source="Walls/Wandende_rechts.png"/>
   </tile>
  </tileset>
- <tileset firstgid="43" name="Stuff" tilewidth="64" tileheight="64">
+ <tileset firstgid="52" name="Stuff" tilewidth="69" tileheight="64">
   <tile id="0">
    <image width="64" height="64" source="Stuff/Abwaesche.png"/>
   </tile>
@@ -227,30 +254,112 @@
   <tile id="31">
    <image width="64" height="64" source="Stuff/Bett_rech_unten.png"/>
   </tile>
+  <tile id="32">
+   <image width="64" height="64" source="Stuff/Bett_rech_oben2.png"/>
+  </tile>
+  <tile id="33">
+   <image width="64" height="64" source="Stuff/Bett_rech_oben3.png"/>
+  </tile>
+  <tile id="34">
+   <image width="64" height="64" source="Stuff/Bett_rech_oben4.png"/>
+  </tile>
+  <tile id="35">
+   <image width="64" height="64" source="Stuff/Bett_rech_unten2.png"/>
+  </tile>
+  <tile id="36">
+   <image width="64" height="64" source="Stuff/Bett_rech_unten3.png"/>
+  </tile>
+  <tile id="37">
+   <image width="64" height="64" source="Stuff/Bett_rech_unten4.png"/>
+  </tile>
+  <tile id="38">
+   <image width="64" height="64" source="Stuff/Bett_links_oben.png"/>
+  </tile>
+  <tile id="39">
+   <image width="64" height="64" source="Stuff/Bett_links_unten.png"/>
+  </tile>
+  <tile id="40">
+   <image width="64" height="64" source="Stuff/Bett_links_oben2.png"/>
+  </tile>
+  <tile id="41">
+   <image width="64" height="64" source="Stuff/Bett_links_oben3.png"/>
+  </tile>
+  <tile id="42">
+   <image width="64" height="64" source="Stuff/Bett_links_oben4.png"/>
+  </tile>
+  <tile id="43">
+   <image width="64" height="64" source="Stuff/Bett_links_unten2.png"/>
+  </tile>
+  <tile id="44">
+   <image width="64" height="64" source="Stuff/Bett_links_unten3.png"/>
+  </tile>
+  <tile id="45">
+   <image width="64" height="64" source="Stuff/Bett_links_unten4.png"/>
+  </tile>
+  <tile id="46">
+   <image width="64" height="64" source="Stuff/couch_1.png"/>
+  </tile>
+  <tile id="47">
+   <image width="64" height="64" source="Stuff/couch_ecke_rechts.png"/>
+  </tile>
+  <tile id="48">
+   <image width="64" height="64" source="Stuff/couch_ende_rechts_2.png"/>
+  </tile>
+  <tile id="49">
+   <image width="64" height="64" source="Stuff/couch_mitte.png"/>
+  </tile>
+  <tile id="50">
+   <image width="64" height="64" source="Stuff/Bett_links_unten.png"/>
+  </tile>
+  <tile id="51">
+   <image width="64" height="64" source="Stuff/couch.png"/>
+  </tile>
+  <tile id="52">
+   <image width="64" height="64" source="Stuff/couch_rechts.png"/>
+  </tile>
+  <tile id="53">
+   <image width="64" height="64" source="Stuff/Pflanze_1.png"/>
+  </tile>
+  <tile id="54">
+   <image width="69" height="64" source="Stuff/Glastisch.png"/>
+  </tile>
+  <tile id="55">
+   <image width="64" height="64" source="Stuff/Glastisch_Blume.png"/>
+  </tile>
  </tileset>
+ <layer name="Bottom" width="90" height="90">
+  <data encoding="base64" compression="zlib">
+   eJzt17EKgCAYhdEfarD3f+GWxpDSStMznK3h8gWKKSISAAAAAPzEcmi9Y3QaAwCMJTrYAAD0be1gwwyigw0AAAAAAAAAAAAAAAAAzGc70XrTKHJdtX62ce03PNNP5/cba13X+Yt/M7vSXjrf73Xl/mu9cwS51s6Id1p7mwAAAABAuR3Bdv0l
+  </data>
+ </layer>
  <layer name="Background" width="90" height="90">
   <data encoding="base64" compression="zlib">
-   eJzt2tFuwjAMQNGUThX//8U8VYq8ZLXbLA72RToSVJAlt2VjLVspZQMAAAAAAPgHPw1v4ah4z3d2j6OMWT+d6bxC55dA57U6y/dBPcYu7p+PM3WWx5jsrO3Q61x3re/T+ffxfLfz3hgva2eNJ8dzq3PG3xujOtetR4yVEZ3pHAlt6BxJxs7y81Mk3m3pHFPGNdM5LjrTORI60zmSUZ1b50Xrc93e6/RGZzpH0Ps/7W6b3jWVp9fSvx2d1+lsaU1nOnvq9bjbGbbO3vOKhs4ARikLzAEAVmO9Dp/1Gv2Ixlf9/9oGXeOrZod4/qZ4DdoNrc5ba7+xH8Z3lq095vINPL6D1vtZUTt7/z3L8j3Dlda20lxmr03zea/lvFnGjdpY9tLuA9ny6rFlXO8es3pfrVs2bHWV27Q9M3SW67Qc49ptmrG9G8zqrDmvYRlLs081z4/Ccg5p1j7NwnoO7844dH7WzdKR5gAAAAAAAAAAAAAAAMAaPvX6KPg=
+   eJzt2etOAjEQQOEiRFfjH9//ZQ0JG+tktu32Nm33THIi6gLtt4ABN+fcRkREwWJjvb4VSh3rdc4exuNYW6+v1v6s17FqZ8Z6rbMVmnclnPs4372s1z5b7sB+JOeH0ofIX6e16Rl7bW8xZ3m8PE84/zfGuY9xLec30azOP6LdQFvX4+VX4uzfV0tn+Tzwb+MuLu/fj+YcspYj7WLO8jEmnW+vcp19V//ybM6adU3nrcD5rtzeyM4ptysnxSa1ksez5mz5upHqOarzflzs2JrrCnV0fkudpTfObZ19631w/nO+BZJ7cN5X3/Jbub+vVziHnbX1+7b+PJ21zzhmqYezf4yL3IYLHHNmX6PNaM6lxZ7f8nfS4qxRr9eKM87aumu7lzin2o7qXPJ+sLVzjftb0Tn3b8/RMf778tWd/ZnBWfs8o/R8Xck51Uj7bKOnc6jUObq+9Hh25v8lV3FOcQ8dX+p89BlbLeca/6cZoRTnHJucteCM80rhTERERERELfPHei2rpo31mlYMZ5xXSxpj3c/deg0zpg3ObX1TDbHONz57Xes9zFDMOGes9zRyMbfUsd7HDNUa632M0JGFZpUz1vsb5bFWY6wtrmwfG2urlUytjXo4j3AurI2u8njex9pqFWdri6s4y7G2uZK5tUlr65zz0eKcWXuMWI2x3gMRERHV6fMg63WtHM59jXFub7w5nHsY49zWWf7Mel1ERERERERERFS/Xxvk338=
+  </data>
+ </layer>
+ <layer name="Strasse" width="90" height="90">
+  <data encoding="base64" compression="zlib">
+   eJzt0DEKACAMBMGUdvr/19paCQEJSGZguf4iAAAAAAAAAICb2bhKq3HVxrGZeMevdfwMAAAAAAAAAAAAAAAAAAAAAAAAAAAA/G4DUrcIMg==
   </data>
  </layer>
  <layer name="Stuff" width="90" height="90">
   <data encoding="base64" compression="zlib">
-   eJzt2d0KgjAUAODydfrvNgiCoJ/3f6AcGInsImlzat8HYzpwHs6GE85iAQAAAJDXo3W9q9uqbuu67cuEU9w7H/fE8z4Tzzd1Q+TjMMA7pmTT9NuiUczPMTL2695rr1XVGq869/8inE3hXArnU+qzKaxVFWl8xPZ4X928ynMe3bVq7+nU/zUAAAAAAEAe16a/FY1iPLo1jlBLDXXUUDdMXT9UT2EMLqUDmKFYzfvU43nfhrhv8nLOHgUAjM+ydAAAAAAAAAAAAAAAAAAAAAAU9QJxsQie
+   eJzt2WtLwzAUgOF2n/xBU6eCIDicisK8oHhB8YJO//93T2BhIaRNsqSX2feBQ9d1aeNpmtbTogAAAAAAzLvuAAZr4YmcXiSeMu8zxIPElbE+kRhLbEvsddAfzZd7X/6rtt9J3NS0M/ORc+55lLjOuL+2+HL9JvEp8R6537bysd/CMXLw5flrufxOPM7OcrmbuJ8u6flJxcTaFnLN+uaOg4rfjyPaKKljT19bHxIj4/uRtd5Xue+R6lyrc67OQ857k7q2fiR+i1Vu28zxqfHZNX7vJV5r2sc+j0wlziVmEW0U1xiPZee1qzy73Eo812xv4rmvKfa5Msd00/9T6TzPivgxpoTkeW4tUyys5VCE/L058/xfkRsAsZg3+mHd+/5W1l78f+Q5D7tmaxvac2xTfDXK0Dyr35m1nBD2vUHV7VTNTtU9ctc/+i5mPOs6aRd1X1c/Vc1Kn7O+i503ctSDTGeZ99dXdXm2x8pJ4rFc5+g4YX/T5TK1X22IGc8pOamyCTkKkfou1qRz4qtpu6zTxuXQWu/q3XtuF8ZnPZf6atqa+bwR2qbKZcX3vnfvWM9R0f47K6yUXXdgAMqCPDepLMhxE+x8kuNmlI4AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgE3zB8sqOF8=
   </data>
  </layer>
  <layer name="GarageWalls" width="90" height="90">
   <data encoding="base64" compression="zlib">
-   eJzt0LEJACAQA0AHERsR3H9CtfsFVNA7CKQMSQkAAAAAgJfVmR7CHvn2gE/4+YwWerm2AgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAFgGcuABFw==
+   eJzt0MsJgEAMRVGXFqIMiB/svzldpoGZQOYcCGR5ecsCAAAAAEBl539vOPrYswMmYecx7vC3tAoAgPrW7IBJ2JmKjvBfaRVz2bIDJmHnMezcTwv3JLcAAAAAAAAAAAAAAAAAAAAAAAAAALV8qsEC1g==
   </data>
  </layer>
  <layer name="Walls" width="90" height="90">
   <data encoding="base64" compression="zlib">
-   eJzt2tFqgzAUBuBz3cEGYzfbMwy2u8Fu9v5vVYXBEomSxtihfh8ExcJp8xsteIwAAACAc3kcxmvFePqvH3hnpTx6zP2h8tilw3ftwVZzl3Nubu5r17ecc6W5T7VkIefcOPfp/Xk699ac35IRyXZt7T2qWc9b1pXzn173jV619+g58uu7NF4a6sr5PpbOX8S6cwgAAADAsUx7vBHn7Xdvaa539TGM92F8hueiPYyZfheOpc6a89I1nn5WY249//zuj9sz5ty7BzLW+yocT5/1yzl3mdlvrXdrrSO5pfddk4+cy9J3OSKW78lybtd7PW/VS9+7pZxLPWva1P4Pst7SOxcAAAAAAAAAAAAAAAAAAAAAR3EFHvEM5A==
+   eJzt2V1rgzAUBuBc7r6DDcZu1v//H4cwwaZ+nKZJ1O55QMpam5g3UddjSgAAAMz5mWz0cenUz0e6nd+l7bPT8dQ2XbdzazjPeS6PGmN/D77Xa95riowtH1ersf+3nHPRnJ9d30fIOXLdKrl31VrPuZIshnbzMcyNpVXOkXHlosdSmnM+r/k+pTlHnDHnwXWjj5L1XOLVc97qo+d1I+LMOQ+uk9fplvua2Sffvgv6P1rO07/P+D/OkrX5S+m5OYx45JymnJz7aHV/55ac+3Dd6GPPnN8at38kcu6j1++UpXrUVl1qrn5dWtfaU6+cl76z1n/N33D584OU7uer5bOUvXNeE72mRdouqR3W1DLn6Roav5OvmxrrOXJMe+c82KrbbNV+lizldAnsM362dJ6vtRk9lt45t1Ij56iSnMfaUvp7lfO9R8+xVnXtI2iZc81nDaVtHkWkZr+1Fp+9R4xeOecjafWcBgAAAAAAAAAAAAAAAAAAAAAAAEa/1Zkdow==
   </data>
  </layer>
  <layer name="walls2" width="90" height="90">
   <data encoding="base64" compression="zlib">
-   eJzt2iEOwCAMBVD0xJYsM7v/RcksgmDWBnjPUvHTNDWlFAAAAABY15sdAJjOkR0AAAAAAACArZ2DddevKfbmZhjv+99hppmZvRFDn2O0fX5SUsC4u/NmfgEAAAAAAAAAAAAAAAAAAICVVFWnAMs=
+   eJzt2dEKgjAUANA99l5QEL3M///HCHqQlWF4dW6eA2OKoON6dyczJQAAAErX4vxWZRT9u9QeQIfK3AVSyrUH0Khc9LXUXCvGzz5XG0X/IuN8f/fDwvv0+L7Xnku+6z5F5dH9x7VH0DNaMF6XxmvTMNFYLnJenwLv1Rv1E/iXurENcd7GOM55okU58vfInvY35u5ft/hPppW6UTsHltpTPs/1qmWt5fRacc5fjqPrPfFamWutE+dtlHE+0v4qbfJ/AAAAAAAAAAAAAAAAAAAAAAAAACg9AcIQBno=
   </data>
  </layer>
  <objectgroup name="WallsColl">
@@ -279,17 +388,17 @@
     <property name="wall" value=""/>
    </properties>
   </object>
-  <object id="25" x="4406" y="706" width="11" height="265">
+  <object id="25" x="4406" y="706" width="10.3333" height="253.667">
    <properties>
     <property name="wall" value=""/>
    </properties>
   </object>
-  <object id="26" x="4097" y="959" width="192" height="11">
+  <object id="26" x="4096" y="949" width="192" height="11">
    <properties>
     <property name="wall" value=""/>
    </properties>
   </object>
-  <object id="27" x="4352" y="958" width="55" height="12">
+  <object id="27" x="4352" y="949" width="55" height="12">
    <properties>
     <property name="wall" value=""/>
    </properties>
